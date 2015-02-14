@@ -1,0 +1,29 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tumblr.breadcrumbs492.testapplication.DummyActivity">
+
+    <!-- items that appear in the overflow menu -->
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item
+        android:title="View Crumbs"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item
+        android:title="Filter"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item
+        android:title="About"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>
