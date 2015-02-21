@@ -5,26 +5,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <!-- could be replaced by action bar later
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/edittext_location"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:text="Search Tags"/>
+            android:inputType="text"
+            android:hint="@string/edittext_hint_location"
+            android:layout_toLeftOf="@id/button_find"/>
 
         <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:id="@+id/button_find"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search"/>
+            android:text="@string/button_find_text" />
+    </LinearLayout>
 
-        </LinearLayout>-->
-
+<!-- google maps is the fragment here -->
 <fragment
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -35,6 +37,7 @@
     tools:context="com.tumblr.breadcrumbs492.testapplication.MapsActivity"
     android:name="com.google.android.gms.maps.SupportMapFragment" />
 
+    <!-- putting row of buttons on top of the map -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -63,4 +66,5 @@
             android:text="@string/button_3"/>
 
     </LinearLayout>
+    <!-- -->
 </LinearLayout>

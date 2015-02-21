@@ -1,12 +1,21 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,10 +24,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity {
+import java.io.IOException;
+import java.util.List;
+
+public class MapsActivity extends ActionBarActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    //hello world
+    MarkerOptions markerOptions;
+    LatLng latLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +44,90 @@ public class MapsActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+
+        SupportMapFragment supportMapFragment = (SupportMapFragment)
+                getSupportFragmentManager().findFragmentById(R.id.map);
+
+        //get reference to the map
+        mMap = supportMapFragment.getMap();
+
+        //get reference to the find button in the xml
+        Button buttonFind = (Button) findViewById(R.id.button_find);
+
+        //define button click event listener to for the find button
+        View.OnClickListener findClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //get reference to edittext
+                EditText editTextLocation = (EditText) findViewById(R.id.edittext_location);
+
+                //get user input for location
+                String location = editTextLocation.getText().toString();
+
+                if (location != null && !location.equals("")) {
+                    new GeocoderTask().execute(location);
+                }
+            }
+        };
+
+        //set the button click listener to the find button
+        buttonFind.setOnClickListener(findClickListener);
     }
+
+
+    /*
+        Private class for searching addresses on the map.
+     */
+    private class GeocoderTask extends AsyncTask<String, Void, List<Address>> {
+        @Override
+        protected List<Address> doInBackground(String... locationName) {
+            //create instance of Geocoder class
+            Geocoder geocoder = new Geocoder(getBaseContext());
+            List<Address> addresses = null;
+
+            try {
+                //get three instances of addresses that match input text
+                addresses = geocoder.getFromLocationName(locationName[0], 3);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return addresses;
+        }
+
+        @Override
+        protected void onPostExecute(List<Address> addresses) {
+            if (addresses == null || addresses.size() == 0) {
+                Toast.makeText(getBaseContext(), "No Location Found", Toast.LENGTH_SHORT).show();
+            }
+
+            //clear all existing markers on the map
+            mMap.clear();
+
+            //add markers for all matching addresses
+            for (int i = 0; i < addresses.size(); i++) {
+                Address address = (Address) addresses.get(i);
+
+                //create instance of geopoint, to display in google map
+                latLng = new LatLng(address.getLatitude(), address.getLongitude());
+
+                String addressText = String.format("%s, %s",
+                        address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "",
+                        address.getCountryName());
+
+                markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                markerOptions.title(addressText);
+
+                mMap.addMarker(markerOptions);
+
+                //locate the first location
+                if (i == 0) {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                }//end if
+            }//end for
+        }//end onPostExecute
+    }//end private class
 
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
@@ -105,7 +201,8 @@ public class MapsActivity extends FragmentActivity {
         // Zoom in the Google Map
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
         // Text shown when you tap on the red marker
-        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("Consider yourself located"));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("Consider yourself located"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("Your are here."));
 
         // Animate camera to your location
         LatLng myCoordinates = new LatLng(latitude, longitude);

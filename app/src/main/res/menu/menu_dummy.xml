@@ -13,11 +13,6 @@
         app:showAsAction="never" />
 
     <item
-        android:title="View Crumbs"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-
-    <item
         android:title="Filter"
         android:orderInCategory="100"
         app:showAsAction="never" />
