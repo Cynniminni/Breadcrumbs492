@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name" >
+            android:label="Log In" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,8 +28,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DummyActivity"
-            android:label="@string/title_activity_map"
+            android:name=".RegisterActivity"
+            android:label="@string/r_registration"
             android:parentActivityName=".LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

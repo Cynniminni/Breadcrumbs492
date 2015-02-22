@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -26,6 +27,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
+
+//extending FragmentActivity disables ActionBar
 
 public class MapsActivity extends ActionBarActivity {
 
@@ -39,6 +42,19 @@ public class MapsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
     }//end onCreate
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_maps, menu);
+
+        //get SearchView widget reference
+        //ERROR: searchView comes out null for some reason...
+        //SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        //searchView.setIconifiedByDefault(false);//expand the widget by default
+
+        return true;
+    }
 
     @Override
     protected void onResume() {

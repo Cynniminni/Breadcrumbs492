@@ -2,7 +2,8 @@
 <resources>
 
     <!-- action bar strings -->
-    <string name="app_name">Test Application</string>
+    <string name="app_name">Crumbs Application</string>
+    <string name="title_activity_maps">Map</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="action_about">About</string>
@@ -15,8 +16,17 @@
     <string name="enter_password">Enter password</string>
     <string name="signin_or_register">Sign in or register</string>
     <string name="login_as_guest">Log in as guest</string>
-    <string name="title_activity_map">DummyActivity</string>
-    <string name="title_activity_maps">Map</string>
+
+    <!-- register strings -->
+    <string name="r_registration">Register As a User</string>
+    <string name="r_username">Username</string>
+    <string name="r_password">Password</string>
+    <string name="r_email">Email</string>
+    <string name="r_first_name">First Name</string>
+    <string name="r_last_name">Last Name</string>
+    <string name="r_gender">Gender</string>
+    <string name="r_city">City</string>
+    <string name="r_state">State</string>
 
     <!-- map strings -->
     <string name="button_1">Map</string>

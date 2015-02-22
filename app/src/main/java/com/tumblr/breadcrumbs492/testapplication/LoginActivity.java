@@ -24,14 +24,11 @@ public class LoginActivity extends ActionBarActivity {
 
         if (usernameText.equalsIgnoreCase("admin") && passwordText.equals("admin")) {
             //this is the default user login that will launch the map activity
-            //Toast.makeText(getApplicationContext(), "Default login found", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         } else if (usernameText.equals("") && passwordText.equals("")) {
-            //if fields are empty then user wants to register for an account
-            //launch the register activity
-            Toast.makeText(getApplicationContext(), "Register clause fired", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, DummyActivity.class);
+            //if fields are empty then launch register activity
+            Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         } else {
             //this is for all user logins
@@ -42,14 +39,11 @@ public class LoginActivity extends ActionBarActivity {
         }//end if else
     }//end signInOrRegister
 
-    //login as guest button click
+    //when user taps on log in as guest button, start the maps screen
     public void loginAsGuest(View view) {
-        //launch the DummyActivity screen
-        //the user will now move from login screen to the map screen
-        //since they are guests the map screen will have limited features
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
-    }//end loginAsGuest
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
