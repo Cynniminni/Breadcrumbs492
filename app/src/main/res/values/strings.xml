@@ -34,5 +34,7 @@
     <string name="button_3">Crumbs</string>
     <string name="button_find_text">Find</string>
     <string name="edittext_hint_location">Enter location</string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

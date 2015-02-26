@@ -6,22 +6,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class DummyActivity extends ActionBarActivity {
-
-    //method to check if user is logging in as guest or not
-
+public class ProfileActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dummy);
+        setContentView(R.layout.activity_profile);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_dummy, menu);
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
     }
 

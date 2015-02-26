@@ -1,6 +1,8 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -39,22 +41,37 @@ public class RegisterActivity extends ActionBarActivity {
         userInfo[6] = (EditText) findViewById(R.id.et_city);
         userInfo[7] = (EditText) findViewById(R.id.et_state);
 
+        boolean allFieldsFilled = true;
+
         //extract strings from EditText
         userInfoStrings = new String[8];
         for (int i = 0; i < userInfoStrings.length; i++) {
             userInfoStrings[i] = userInfo[i].getText().toString();
+
+            if (userInfoStrings[i].isEmpty()) {
+                //if one any of the fields are blank, change its field to red
+                userInfo[i].setHintTextColor(Color.RED);
+
+                //set boolean flag for checking later
+                allFieldsFilled = false;
+            }
+        }//end for
+
+        if (allFieldsFilled) {
+            //if all fields are filled, verify against database
+
+            //insert user info into database if verified
+
+            //launch MapsActivity as new user
+
+            //log in as new user and start the map activity
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
+        } else {
+            //notify user
+            Toast.makeText(getApplicationContext(), "Please fill in all fields to continue.",
+                    Toast.LENGTH_SHORT).show();
         }
-
-        //verify info for any duplicates
-
-        //push user info to database
-
-        //...
-
-        //log in as new user and start the map activity
-        Toast.makeText(getApplicationContext(), "Register button fired!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Address;
@@ -33,8 +34,58 @@ import java.util.List;
 public class MapsActivity extends ActionBarActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    MarkerOptions markerOptions;
-    LatLng latLng;
+    private MarkerOptions markerOptions;
+    private LatLng latLng;//store user's current location
+    private LatLng[] userCrumbs;//store user's crumbs/tags
+
+    public void markCurrentLocation(View view) {
+        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").
+                snippet("Snippet"));
+
+        // Enable MyLocation Layer of Google Map
+        mMap.setMyLocationEnabled(true);
+        // Get LocationManager object from System Service LOCATION_SERVICE
+        LocationManager locationManager = (LocationManager) getSystemService
+                (Context.LOCATION_SERVICE);
+        // Create a criteria object to retrieve provider
+        Criteria criteria = new Criteria();
+        // Get the name of the best provider
+        String provider = locationManager.getBestProvider(criteria, true);
+        // Get Current Location
+        Location myLocation = locationManager.getLastKnownLocation(provider);
+
+        // set map type
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        // Get latitude of the current location
+        double latitude = myLocation.getLatitude();
+        // Get longitude of the current location
+        double longitude = myLocation.getLongitude();
+        // Create a LatLng object for the current location
+        latLng = new LatLng(latitude, longitude);
+
+        // Show the current location in Google Map
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        // Zoom in the Google Map
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+        // Text shown when you tap on the red marker
+        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).
+                title("Your are here."));
+
+        // Animate camera to your location
+        LatLng myCoordinates = new LatLng(latitude, longitude);
+        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myCoordinates, 12);
+        mMap.animateCamera(yourLocation);
+    }
+
+    //button implementation for adding crumbs to the map
+    public void addCrumbs(View view) {
+        //add a marker to their current location and move camera to it
+        //markCurrentLocation(view);
+
+        //record location in user's crumbs list
+        //userCrumbs[last empty index] = user current location
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +132,7 @@ public class MapsActivity extends ActionBarActivity {
                 String location = editTextLocation.getText().toString();
 
                 if (location != null && !location.equals("")) {
+                    //if location exists, mark it on map
                     new GeocoderTask().execute(location);
                 }
             }

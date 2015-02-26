@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 public class LoginActivity extends ActionBarActivity {
 
-
     //sign in or register button click
     public void signInOrRegister(View view) {
         //get text from text fields
@@ -39,8 +38,8 @@ public class LoginActivity extends ActionBarActivity {
         }//end if else
     }//end signInOrRegister
 
-    //when user taps on log in as guest button, start the maps screen
     public void loginAsGuest(View view) {
+        //automatically launch MapsActivity when signing in as guest
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
