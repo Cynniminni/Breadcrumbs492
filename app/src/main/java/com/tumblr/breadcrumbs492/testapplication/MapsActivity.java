@@ -3,6 +3,7 @@ package com.tumblr.breadcrumbs492.testapplication;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -37,6 +38,27 @@ public class MapsActivity extends ActionBarActivity {
     private MarkerOptions markerOptions;
     private LatLng latLng;//store user's current location
     private LatLng[] userCrumbs;//store user's crumbs/tags
+
+    //button implementation for viewing user profile information
+    public void viewProfile(View view) {
+        //launch ProfileActivity to view user profile
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    //button implementation for viewing user crumbs
+    public void viewMyCrumbs(View view) {
+
+    }
+
+    //button implementation for adding crumbs to the map
+    public void addCrumbs(View view) {
+        //add a marker to their current location and move camera to it
+        //markCurrentLocation(view);
+
+        //record location in user's crumbs list
+        //userCrumbs[last empty index] = user current location
+    }
 
     public void markCurrentLocation(View view) {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").
@@ -77,16 +99,6 @@ public class MapsActivity extends ActionBarActivity {
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myCoordinates, 12);
         mMap.animateCamera(yourLocation);
     }
-
-    //button implementation for adding crumbs to the map
-    public void addCrumbs(View view) {
-        //add a marker to their current location and move camera to it
-        //markCurrentLocation(view);
-
-        //record location in user's crumbs list
-        //userCrumbs[last empty index] = user current location
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

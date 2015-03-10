@@ -10,15 +10,6 @@
     android:orientation="vertical"
     tools:context="com.tumblr.breadcrumbs492.testapplication.ProfileActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1.2"
-        android:layout_gravity="center"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:text="Your Profile"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -32,13 +23,36 @@
             android:textStyle="bold"
             android:text="@string/r_username"/>
 
-        <TextView
-            android:id="@+id/tv_profile_username"
+        <EditText
+            android:id="@+id/profile_username"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:hint="@string/r_username"/>
+            android:editable="false"
+            android:text="Username"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="Password"/>
+
+        <EditText
+            android:id="@+id/profile_password"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:editable="false"
+            android:text="password_here"/>
 
     </LinearLayout>
 
@@ -55,13 +69,13 @@
             android:textStyle="bold"
             android:text="@string/r_email"/>
 
-        <TextView
-            android:id="@+id/tv_profile_email"
+        <EditText
+            android:id="@+id/profile_email"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text="@string/r_email"/>
+            android:editable="false"
+            android:text="Email"/>
 
     </LinearLayout>
 
@@ -76,15 +90,38 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:text="Full Name"/>
+            android:text="First Name"/>
 
-        <TextView
-            android:id="@+id/tv_profile_fullname"
+        <EditText
+            android:id="@+id/profile_firstname"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text="First and Last Name"/>
+            android:editable="false"
+            android:text="First Name"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="Last Name"/>
+
+        <EditText
+            android:id="@+id/profile_lastname"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:text="Last Name"/>
 
     </LinearLayout>
 
@@ -101,12 +138,12 @@
             android:textStyle="bold"
             android:text="Gender"/>
 
-        <TextView
-            android:id="@+id/tv_profile_gender"
+        <EditText
+            android:id="@+id/profile_gender"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
+            android:editable="false"
             android:text="Gender"/>
 
     </LinearLayout>
@@ -122,15 +159,38 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:text="Residence"/>
+            android:text="City"/>
 
-        <TextView
-            android:id="@+id/tv_profile_city"
+        <EditText
+            android:id="@+id/profile_city"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text="City, State"/>
+            android:editable="false"
+            android:text="City"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="State"/>
+
+        <EditText
+            android:id="@+id/profile_state"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:text="State"/>
 
     </LinearLayout>
 
@@ -141,7 +201,9 @@
         android:layout_weight="5"/>
 
     <Button
+        android:id="@+id/profile_editprofile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Profile"/>
+        android:text="Edit Profile"
+        android:onClick="editProfile"/>
 </LinearLayout>
