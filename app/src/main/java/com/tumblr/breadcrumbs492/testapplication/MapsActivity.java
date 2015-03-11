@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,8 @@ public class MapsActivity extends ActionBarActivity {
     private MarkerOptions markerOptions;
     private LatLng latLng;//store user's current location
     private LatLng[] userCrumbs;//store user's crumbs/tags
+
+
 
     //button implementation for viewing user profile information
     public void viewProfile(View view) {
@@ -104,7 +107,19 @@ public class MapsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+
+        //load settings and apply them.
+        SettingsActivity.Settings.loadSettings(this);
     }//end onCreate
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /*
+            Handle any changes made in SettingsActivity by reloading settings. This
+            will display a message saying whether crumbs was set to public or private.
+         */
+        SettingsActivity.Settings.loadSettings(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,6 +132,29 @@ public class MapsActivity extends ActionBarActivity {
         //searchView.setIconifiedByDefault(false);//expand the widget by default
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            /*
+                Start the SettingsActivity. When it ends, send a result
+                back to MapsActivity. The result is any change in the
+                preference.
+             */
+            Intent intent = new Intent();
+            intent.setClass(MapsActivity.this, SettingsActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

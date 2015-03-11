@@ -36,5 +36,16 @@
     <string name="button_3">Add Crumb</string>
     <string name="button_find_text">Find</string>
     <string name="edittext_hint_location">Enter location</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
+    <!-- setting strings -->
+    <!-- entry listings for ListPreference in preferences.xml -->
+    <array name="listentries">
+        <item>sample entry 1</item>
+        <item>sample entry 2</item>
+    </array>
+    <array name="listvalues">
+        <item>sample value 1</item>
+        <item>sample value 2</item>
+    </array>
 </resources>
