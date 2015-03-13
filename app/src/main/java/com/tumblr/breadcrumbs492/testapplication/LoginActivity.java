@@ -8,10 +8,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
+
 
 
 public class LoginActivity extends ActionBarActivity {
 
+    private MyRequestReceiver receiver;
     //sign in or register button click
     public void signInOrRegister(View view) {
         //get text from text fields
@@ -35,6 +40,7 @@ public class LoginActivity extends ActionBarActivity {
             //if successful, it will launch the map activity
             //toast is a UI notification the user will see
             Toast.makeText(getApplicationContext(), "Wrong credentials", Toast.LENGTH_SHORT).show();
+            getUserInfo("getUserInfo", usernameText);
         }//end if else
     }//end signInOrRegister
 
@@ -48,8 +54,20 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //Register your receiver so that the Activity can be notified
+        //when the JSON response came back
+        IntentFilter filter = new IntentFilter(MyRequestReceiver.PROCESS_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new MyRequestReceiver();
+        registerReceiver(receiver, filter);
     }
 
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -71,5 +89,39 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void getUserInfo(String queryID, String username) {
+
+
+        //pass the request to your service so that it can
+        //run outside the scope of the main UI thread
+        Intent msgIntent = new Intent(this, JSONRequest.class);
+        msgIntent.putExtra(JSONRequest.IN_MSG, queryID.trim());
+        msgIntent.putExtra("queryID", queryID.trim());
+        msgIntent.putExtra("jsonObject", "{\"username\":\"" + username.trim() + "\"}");
+        startService(msgIntent);
+    }
+
+    //broadcast receiver to receive messages sent from the JSON IntentService
+    public class MyRequestReceiver extends BroadcastReceiver{
+
+        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.MyRequestReceiver";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String response = null;
+            String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
+
+            if(responseType.trim().equalsIgnoreCase("getUserInfo")){
+                response = intent.getStringExtra(JSONRequest.OUT_MSG);
+                EditText username = (EditText) findViewById(R.id.enter_username);
+                username.setText(response);
+
+            }
+            else{
+                //you can choose to implement another transaction here
+            }
+
+        }
     }
 }
