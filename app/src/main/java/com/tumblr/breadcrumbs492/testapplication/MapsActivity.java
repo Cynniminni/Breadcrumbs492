@@ -35,12 +35,17 @@ import java.util.List;
 
 public class MapsActivity extends ActionBarActivity {
 
+    public final static int REQUEST_SETTINGS = 0;
+    public final static int REQUEST_ADD_CRUMB = 1;
+    public final static String NAME = "name";
+    public final static String COMMENT = "comment";
+    public final static String LATITUDE = "latitude";
+    public final static String LONGITUDE = "longitude";
+
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private MarkerOptions markerOptions;
     private LatLng latLng;//store user's current location
     private LatLng[] userCrumbs;//store user's crumbs/tags
-
-
 
     //button implementation for viewing user profile information
     public void viewProfile(View view) {
@@ -56,14 +61,18 @@ public class MapsActivity extends ActionBarActivity {
 
     //button implementation for adding crumbs to the map
     public void addCrumbs(View view) {
-        //add a marker to their current location and move camera to it
-        //markCurrentLocation(view);
-
-        //record location in user's crumbs list
-        //userCrumbs[last empty index] = user current location
+        Intent intent = new Intent(this, AddCrumbActivity.class);
+        //get user's current location
+        double latitude = latLng.latitude;
+        double longitude = latLng.longitude;
+        //pass into intent
+        intent.putExtra(LATITUDE, latitude);
+        intent.putExtra(LONGITUDE, longitude);
+        //pass intent to AddCrumbActivity with the request code
+        startActivityForResult(intent, REQUEST_ADD_CRUMB);
     }
 
-    public void markCurrentLocation(View view) {
+    public void markCurrentLocation() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").
                 snippet("Snippet"));
 
@@ -89,6 +98,7 @@ public class MapsActivity extends ActionBarActivity {
         // Create a LatLng object for the current location
         latLng = new LatLng(latitude, longitude);
 
+
         // Show the current location in Google Map
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         // Zoom in the Google Map
@@ -113,15 +123,6 @@ public class MapsActivity extends ActionBarActivity {
     }//end onCreate
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /*
-            Handle any changes made in SettingsActivity by reloading settings. This
-            will display a message saying whether crumbs was set to public or private.
-         */
-        SettingsActivity.Settings.loadSettings(this);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_maps, menu);
@@ -143,18 +144,34 @@ public class MapsActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            /*
-                Start the SettingsActivity. When it ends, send a result
-                back to MapsActivity. The result is any change in the
-                preference.
-             */
+            // launch SettingsActivity with the request code. This will be referenced in
+            // onActivityResult
             Intent intent = new Intent();
             intent.setClass(MapsActivity.this, SettingsActivity.class);
-            startActivityForResult(intent, 0);
+            startActivityForResult(intent, REQUEST_SETTINGS);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == REQUEST_SETTINGS) {
+            //Reload settings throughout MapActivity every time user returns from SettingsActivity
+            SettingsActivity.Settings.loadSettings(this);
+        } else if (requestCode == REQUEST_ADD_CRUMB) {
+            if (resultCode == RESULT_OK) {
+                //extract name and comment passed from AddCrumbActivity
+                String name = data.getStringExtra(NAME);
+                String comment = data.getStringExtra(COMMENT);
+
+                //show output
+                Toast.makeText(getApplicationContext(),
+                        "Name = " + name + "Comment = " + comment, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -282,49 +299,6 @@ public class MapsActivity extends ActionBarActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").snippet("Snippet"));
-
-        // Enable MyLocation Layer of Google Map
-        mMap.setMyLocationEnabled(true);
-
-        // Get LocationManager object from System Service LOCATION_SERVICE
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        // Create a criteria object to retrieve provider
-        Criteria criteria = new Criteria();
-
-        // Get the name of the best provider
-        String provider = locationManager.getBestProvider(criteria, true);
-
-        // Get Current Location
-        Location myLocation = locationManager.getLastKnownLocation(provider);
-
-        // set map type
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        // Get latitude of the current location
-        double latitude = myLocation.getLatitude();
-
-        // Get longitude of the current location
-        double longitude = myLocation.getLongitude();
-
-        // Create a LatLng object for the current location
-        LatLng latLng = new LatLng(latitude, longitude);
-
-        // Show the current location in Google Map
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-        // Zoom in the Google Map
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-        // Text shown when you tap on the red marker
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("Consider yourself located"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("Your are here."));
-
-        // Animate camera to your location
-        LatLng myCoordinates = new LatLng(latitude, longitude);
-        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myCoordinates, 12);
-        mMap.animateCamera(yourLocation);
+        markCurrentLocation();
     }
 }

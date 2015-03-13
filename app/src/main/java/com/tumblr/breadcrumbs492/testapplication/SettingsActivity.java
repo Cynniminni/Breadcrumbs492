@@ -3,15 +3,12 @@ package com.tumblr.breadcrumbs492.testapplication;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 
 public class SettingsActivity extends Activity {
-
     /*
         Insert the SettingsFragment class into this activity.
         This will be launched whenever the "Settings" option in the
@@ -27,7 +24,9 @@ public class SettingsActivity extends Activity {
 
     /*
         Load the action bar at the top.
-     */
+        [Issue]:    Doesn't work... trying to add the ToolBar widget ends up overlapping the
+                    settings.
+    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

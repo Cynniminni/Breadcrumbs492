@@ -48,4 +48,5 @@
         <item>sample value 1</item>
         <item>sample value 2</item>
     </array>
+    <string name="title_activity_add_crumb">AddCrumbActivity</string>
 </resources>
