@@ -18,6 +18,7 @@
         android:icon="@mipmap/breadcrumb_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <service android:name=".JSONRequest" />
         <activity
             android:name=".LoginActivity"
             android:label="Crumbs" >

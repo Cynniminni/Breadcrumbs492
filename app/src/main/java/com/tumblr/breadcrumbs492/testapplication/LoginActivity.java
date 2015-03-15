@@ -3,6 +3,7 @@ package com.tumblr.breadcrumbs492.testapplication;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.AsyncTask;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,11 +13,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 
+import java.net.URISyntaxException;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class LoginActivity extends ActionBarActivity {
 
     private MyRequestReceiver receiver;
+    private static boolean loggedIn = false;
     //sign in or register button click
     public void signInOrRegister(View view) {
         //get text from text fields
@@ -39,9 +47,9 @@ public class LoginActivity extends ActionBarActivity {
             //credentials will be checked against a database for verification here
             //if successful, it will launch the map activity
             //toast is a UI notification the user will see
-            Toast.makeText(getApplicationContext(), "Wrong credentials", Toast.LENGTH_SHORT).show();
-            getUserInfo("getUserInfo", usernameText);
-        }//end if else
+           login("login", usernameText, passwordText);
+
+         }//end if else
     }//end signInOrRegister
 
     public void loginAsGuest(View view) {
@@ -90,7 +98,7 @@ public class LoginActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    private void getUserInfo(String queryID, String username) {
+    public void login(String queryID, String username, String passEntered) {
 
 
         //pass the request to your service so that it can
@@ -98,30 +106,62 @@ public class LoginActivity extends ActionBarActivity {
         Intent msgIntent = new Intent(this, JSONRequest.class);
         msgIntent.putExtra(JSONRequest.IN_MSG, queryID.trim());
         msgIntent.putExtra("queryID", queryID.trim());
-        msgIntent.putExtra("jsonObject", "{\"username\":\"" + username.trim() + "\"}");
+        msgIntent.putExtra("jsonObject", "{\"username\":\"" + username.trim() + "\",\"passEntered\":\"" + passEntered + "\"}");
+        msgIntent.putExtra("intent", new Intent(this, MapsActivity.class).toUri(Intent.URI_INTENT_SCHEME));
         startService(msgIntent);
     }
 
     //broadcast receiver to receive messages sent from the JSON IntentService
     public class MyRequestReceiver extends BroadcastReceiver{
 
-        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.MyRequestReceiver";
-
+        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.LoginActivity.MyRequestReceiver";
+        public String response = null;
         @Override
         public void onReceive(Context context, Intent intent) {
-            String response = null;
-            String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
+           Intent mapsIntent = new Intent();
+           String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
 
-            if(responseType.trim().equalsIgnoreCase("getUserInfo")){
-                response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                EditText username = (EditText) findViewById(R.id.enter_username);
-                username.setText(response);
+           if(responseType.trim().equalsIgnoreCase("login")){
+
+               this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+
+               try {
+                   mapsIntent = Intent.parseUri(intent.getStringExtra("intent"), Intent.URI_INTENT_SCHEME);
+               }
+               catch(URISyntaxException e)
+               {
+                   e.printStackTrace();
+               }
+               JSONObject tempJSON = new JSONObject();
+               try {
+                   tempJSON = new JSONObject(response);
+                   if(tempJSON.get("loginResult").equals("true"))
+                   {
+                       loggedIn = true;
+                       Toast.makeText(getApplicationContext(), "login success", Toast.LENGTH_SHORT).show();
+                       startActivity(mapsIntent);
+                   }
+                   else
+                   {
+                       Toast.makeText(getApplicationContext(), "login fail", Toast.LENGTH_SHORT).show();
+                   }
+               }
+               catch(JSONException e)
+               {
+                   Toast.makeText(getApplicationContext(), "login fail", Toast.LENGTH_SHORT).show();
+                   e.printStackTrace();
+               }
+
 
             }
             else{
                 //you can choose to implement another transaction here
             }
 
+        }
+        public String getResponse()
+        {
+            return response;
         }
     }
 }

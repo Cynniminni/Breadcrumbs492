@@ -5,6 +5,7 @@ package com.tumblr.breadcrumbs492.testapplication;
  */
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import android.widget.Toast;
 public class JSONRequest extends IntentService{
 
     private String inMessage;
+    private String receivedIntent;
 
     public static final String IN_MSG = "requestType";
     public static final String OUT_MSG = "outputMessage";
@@ -43,9 +45,11 @@ public class JSONRequest extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
 
+        this.receivedIntent = intent.getStringExtra("intent");
+
         //Get Intent extras that were passed
         inMessage = intent.getStringExtra(IN_MSG);
-        if(inMessage.trim().equalsIgnoreCase("getUserInfo")){
+        if(inMessage.trim().equalsIgnoreCase("login")){
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
             getUserInfo(queryID, jsonObject);
@@ -75,6 +79,7 @@ public class JSONRequest extends IntentService{
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
         broadcastIntent.putExtra(IN_MSG, inMessage);
         broadcastIntent.putExtra(OUT_MSG, response);
+        broadcastIntent.putExtra("intent", receivedIntent);
         sendBroadcast(broadcastIntent);
     }
 
