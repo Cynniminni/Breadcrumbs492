@@ -37,6 +37,7 @@ public class LoginActivity extends ActionBarActivity {
         if (usernameText.equalsIgnoreCase("admin") && passwordText.equals("admin")) {
             //this is the default user login that will launch the map activity
             Intent intent = new Intent(this, MapsActivity.class);
+            intent.putExtra(MapsActivity.GUESTLOGIN, false);
             startActivity(intent);
         } else if (usernameText.equals("") && passwordText.equals("")) {
             //if fields are empty then launch register activity
@@ -55,6 +56,9 @@ public class LoginActivity extends ActionBarActivity {
     public void loginAsGuest(View view) {
         //automatically launch MapsActivity when signing in as guest
         Intent intent = new Intent(this, MapsActivity.class);
+
+        //send boolean to signal it's a guest login
+        intent.putExtra(MapsActivity.GUESTLOGIN, true);
         startActivity(intent);
     }
 
@@ -99,7 +103,8 @@ public class LoginActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
     public void login(String queryID, String username, String passEntered) {
-
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra(MapsActivity.GUESTLOGIN, false);
 
         //pass the request to your service so that it can
         //run outside the scope of the main UI thread
@@ -107,7 +112,7 @@ public class LoginActivity extends ActionBarActivity {
         msgIntent.putExtra(JSONRequest.IN_MSG, queryID.trim());
         msgIntent.putExtra("queryID", queryID.trim());
         msgIntent.putExtra("jsonObject", "{\"username\":\"" + username.trim() + "\",\"passEntered\":\"" + passEntered + "\"}");
-        msgIntent.putExtra("intent", new Intent(this, MapsActivity.class).toUri(Intent.URI_INTENT_SCHEME));
+        msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
         startService(msgIntent);
     }
 

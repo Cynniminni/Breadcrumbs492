@@ -41,6 +41,7 @@ public class MapsActivity extends ActionBarActivity {
     public final static String COMMENT = "comment";
     public final static String LATITUDE = "latitude";
     public final static String LONGITUDE = "longitude";
+    public final static String GUESTLOGIN = "guest login";
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private MarkerOptions markerOptions;
@@ -56,7 +57,9 @@ public class MapsActivity extends ActionBarActivity {
 
     //button implementation for viewing user crumbs
     public void viewMyCrumbs(View view) {
-
+        //launch MyCrumbsActivity to view user crumbs
+        Intent intent = new Intent(this, MyCrumbsActivity.class);
+        startActivity(intent);
     }
 
     //button implementation for adding crumbs to the map
@@ -72,6 +75,7 @@ public class MapsActivity extends ActionBarActivity {
         startActivityForResult(intent, REQUEST_ADD_CRUMB);
     }
 
+    //find user's current location and mark it on the map
     public void markCurrentLocation() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").
                 snippet("Snippet"));
@@ -112,26 +116,39 @@ public class MapsActivity extends ActionBarActivity {
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myCoordinates, 12);
         mMap.animateCamera(yourLocation);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
 
-        //load settings and apply them.
-        SettingsActivity.Settings.loadSettings(this);
+        //get intent received from LoginActivity
+        Intent intent = getIntent();
+        boolean isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, true);
+
+        //get button references
+        Button profileButton = (Button) findViewById(R.id.button_1);
+        Button myCrumbsButton = (Button) findViewById(R.id.button_2);
+
+        if (isGuestLogin) {
+            //disable buttons
+            profileButton.setEnabled(false);
+            myCrumbsButton.setEnabled(false);
+        } else {
+            //enable buttons
+            profileButton.setEnabled(true);
+            profileButton.setEnabled(true);
+
+            //load settings for user login
+            SettingsActivity.Settings.loadSettings(this);
+        }
     }//end onCreate
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_maps, menu);
-
-        //get SearchView widget reference
-        //ERROR: searchView comes out null for some reason...
-        //SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        //searchView.setIconifiedByDefault(false);//expand the widget by default
-
         return true;
     }
 
@@ -168,6 +185,7 @@ public class MapsActivity extends ActionBarActivity {
                 String comment = data.getStringExtra(COMMENT);
 
                 //show output
+                //later this will add a crumb
                 Toast.makeText(getApplicationContext(),
                         "Name = " + name + "Comment = " + comment, Toast.LENGTH_SHORT).show();
             }

@@ -19,6 +19,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <service android:name=".JSONRequest" />
+
         <activity
             android:name=".LoginActivity"
             android:label="Crumbs" >
@@ -71,6 +72,14 @@
         <activity
             android:name=".AddCrumbActivity"
             android:label="@string/title_activity_add_crumb"
+            android:parentActivityName=".MapsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tumblr.breadcrumbs492.testapplication.MapsActivity" />
+        </activity>
+        <activity
+            android:name=".MyCrumbsActivity"
+            android:label="@string/title_activity_my_crumbs"
             android:parentActivityName=".MapsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
