@@ -144,6 +144,7 @@ public class LoginActivity extends ActionBarActivity {
                    {
                        loggedIn = true;
                        Toast.makeText(getApplicationContext(), "login success", Toast.LENGTH_SHORT).show();
+                       mapsIntent.putExtra("username", tempJSON.getString("username"));
                        startActivity(mapsIntent);
                    }
                    else

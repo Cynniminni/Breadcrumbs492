@@ -75,7 +75,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="Email"/>
+            android:text="Email"
+            android:inputType="text" />
 
     </LinearLayout>
 
@@ -98,7 +99,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="First Name"/>
+            android:text="First Name"
+            android:inputType="text" />
 
     </LinearLayout>
 
@@ -121,7 +123,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="Last Name"/>
+            android:text="Last Name"
+            android:inputType="text" />
 
     </LinearLayout>
 
@@ -144,7 +147,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="Gender"/>
+            android:text="Gender"
+            android:inputType="text" />
 
     </LinearLayout>
 
@@ -167,7 +171,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="City"/>
+            android:text="City"
+            android:inputType="text" />
 
     </LinearLayout>
 
@@ -190,7 +195,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="State"/>
+            android:text="State"
+            android:inputType="text" />
 
     </LinearLayout>
 

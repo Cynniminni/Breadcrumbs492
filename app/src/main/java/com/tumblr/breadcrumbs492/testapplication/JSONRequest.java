@@ -24,6 +24,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 import com.tumblr.breadcrumbs492.testapplication.LoginActivity.MyRequestReceiver;
+import com.tumblr.breadcrumbs492.testapplication.ProfileActivity.MyRequestReceiver1;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -45,17 +46,20 @@ public class JSONRequest extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        this.receivedIntent = intent.getStringExtra("intent");
+
 
         //Get Intent extras that were passed
         inMessage = intent.getStringExtra(IN_MSG);
         if(inMessage.trim().equalsIgnoreCase("login")){
+            this.receivedIntent = intent.getStringExtra("intent");
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
             getUserInfo(queryID, jsonObject);
         }
-        else if(inMessage.trim().equalsIgnoreCase("getSomethingElse")){
-            //you can choose to implement another transaction here
+        else if(inMessage.trim().equalsIgnoreCase("getProfile")){
+            String queryID = intent.getStringExtra("queryID");
+            String jsonObject = intent.getStringExtra("jsonObject");
+            getUserInfo(queryID, jsonObject);
         }
 
     }
@@ -75,11 +79,16 @@ public class JSONRequest extends IntentService{
         //from the WEB Service
         Intent broadcastIntent = new Intent();
         broadcastIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        broadcastIntent.setAction(MyRequestReceiver.PROCESS_RESPONSE);
+        if(queryID.equals("login")) {
+            broadcastIntent.setAction(MyRequestReceiver.PROCESS_RESPONSE);
+            broadcastIntent.putExtra("intent", receivedIntent);
+        }
+        else if(queryID.equals("getProfile"))
+            broadcastIntent.setAction(MyRequestReceiver1.PROCESS_RESPONSE);
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
         broadcastIntent.putExtra(IN_MSG, inMessage);
         broadcastIntent.putExtra(OUT_MSG, response);
-        broadcastIntent.putExtra("intent", receivedIntent);
+
         sendBroadcast(broadcastIntent);
     }
 

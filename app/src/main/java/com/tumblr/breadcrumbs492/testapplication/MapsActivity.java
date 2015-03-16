@@ -43,6 +43,7 @@ public class MapsActivity extends ActionBarActivity {
     public final static String LONGITUDE = "longitude";
     public final static String GUESTLOGIN = "guest login";
 
+    private static String username;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private MarkerOptions markerOptions;
     private LatLng latLng;//store user's current location
@@ -52,6 +53,7 @@ public class MapsActivity extends ActionBarActivity {
     public void viewProfile(View view) {
         //launch ProfileActivity to view user profile
         Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 
@@ -126,6 +128,7 @@ public class MapsActivity extends ActionBarActivity {
         //get intent received from LoginActivity
         Intent intent = getIntent();
         boolean isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, true);
+        username = intent.getStringExtra("username");
 
         //get button references
         Button profileButton = (Button) findViewById(R.id.button_1);
