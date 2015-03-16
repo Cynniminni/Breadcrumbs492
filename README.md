@@ -1,6 +1,15 @@
 # TestApplication
 My Test Android Project on Github, for CECS 492A.
 
+<h3>3/15/2015</h3>
+Added the rest of the screens needed for the app: ProfileActivity, MyCrumbsActivity, AddCrumbActivity, and SettingsActivity. LoginActivity now supports user login, and upon guest login disables user features in MapsActivity. Function to add crumbs on db still in progress. Considering moving user profile information into Settings.
+
+<img src="https://cloud.githubusercontent.com/assets/6732705/6659678/09c65130-cb48-11e4-93eb-4918b2ba5884.png" height="400px"/>
+<img src="https://cloud.githubusercontent.com/assets/6732705/6659689/2e092c7a-cb48-11e4-90a3-af6de94d66f9.png" height="400px"/>
+<img src="https://cloud.githubusercontent.com/assets/6732705/6659690/2e0ca724-cb48-11e4-977f-4bf27118d0b3.png" height="400px"/>
+<img src="https://cloud.githubusercontent.com/assets/6732705/6659680/09cd1146-cb48-11e4-8925-bceae5e9a6b1.png" height="400px"/>
+<img src="https://cloud.githubusercontent.com/assets/6732705/6659679/09caf7a8-cb48-11e4-8cc4-c227122efe6f.png" height="400px"/>
+
 <h3>2/21/2015</h3>
 Added RegisterActivity.java and a working search bar to MapsActivity.java for searching locations. Got the ActionBar to appear on Google Maps, but can't seem to get the SearchView widget to expand and work properly since it returns a null reference. Tabbed ActionBar is still confusing...
 
