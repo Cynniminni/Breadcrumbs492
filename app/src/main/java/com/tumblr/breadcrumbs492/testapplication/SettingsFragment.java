@@ -1,7 +1,10 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
+import android.content.SharedPreferences;
 import android.preference.PreferenceFragment;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 /*
     This class sole purpose is to load the preferences screen layout

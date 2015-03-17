@@ -31,11 +31,18 @@ public class AddCrumbActivity extends ActionBarActivity {
         String name = crumbName.getText().toString();
         String comment = crumbComment.getText().toString();
 
-        //place into intent to pass back to MapsActivity
         Intent intent = getIntent();
-        intent.putExtra(MapsActivity.NAME, name);
-        intent.putExtra(MapsActivity.COMMENT, comment);
-        setResult(RESULT_OK, intent);//send result code
+
+        if (name.equals("")) {
+            //if user entered nothing then cancel adding a crumb
+            setResult(RESULT_CANCELED, intent);
+        } else {
+            //place into intent to pass back to MapsActivity
+            intent.putExtra(MapsActivity.NAME, name);
+            intent.putExtra(MapsActivity.COMMENT, comment);
+            setResult(RESULT_OK, intent);//send result code
+        }
+
         finish();//close this activity and return to MapsActivity
     }
 

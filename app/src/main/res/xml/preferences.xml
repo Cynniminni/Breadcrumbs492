@@ -14,7 +14,7 @@
         <ListPreference
             android:key="display_crumbs_radius"
             android:title="Crumbs Display Radius"
-            android:summary="Show crumbs within a radius of:"
+            android:summary="Adjust the radius to display crumbs in around current location"
             android:entries="@array/listentries"
             android:entryValues="@array/listvalues"/>
 

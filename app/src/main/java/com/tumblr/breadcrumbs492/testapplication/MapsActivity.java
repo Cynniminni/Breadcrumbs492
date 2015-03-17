@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 //extending FragmentActivity disables ActionBar
@@ -46,8 +47,8 @@ public class MapsActivity extends ActionBarActivity {
     private static String username;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private MarkerOptions markerOptions;
-    private LatLng latLng;//store user's current location
-    private LatLng[] userCrumbs;//store user's crumbs/tags
+    private LatLng currentLocation;//store user's current location
+    private boolean isGuestLogin;
 
     //button implementation for viewing user profile information
     public void viewProfile(View view) {
@@ -68,8 +69,8 @@ public class MapsActivity extends ActionBarActivity {
     public void addCrumbs(View view) {
         Intent intent = new Intent(this, AddCrumbActivity.class);
         //get user's current location
-        double latitude = latLng.latitude;
-        double longitude = latLng.longitude;
+        double latitude = currentLocation.latitude;
+        double longitude = currentLocation.longitude;
         //pass into intent
         intent.putExtra(LATITUDE, latitude);
         intent.putExtra(LONGITUDE, longitude);
@@ -77,46 +78,53 @@ public class MapsActivity extends ActionBarActivity {
         startActivityForResult(intent, REQUEST_ADD_CRUMB);
     }
 
+    //add a crumb marker on the map
+    public void markCrumb(Crumb crumb) {
+        //add marker with location, name, and comment
+        mMap.addMarker(new MarkerOptions().position(crumb.getLocation())
+                .title(crumb.getName())
+                .snippet(crumb.getComment()));
+    }
+
+    //move camera to current location
+    public void moveCameraToCurrentLocation() {
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+        LatLng myCoordinates = currentLocation;
+        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myCoordinates, 12);
+        mMap.animateCamera(yourLocation);
+    }
+
+    public void saveCurrentLocation() {
+        // Enable MyLocation Layer of Google Map
+        // This "continuously draws an indication of a user's current location and bearing, and
+        // displays UI controls that allow a user to interact with their location"
+        mMap.setMyLocationEnabled(true);
+
+        LocationManager locationManager = (LocationManager) getSystemService
+                (Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, true);
+        Location myLocation = locationManager.getLastKnownLocation(provider);
+
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        double latitude = myLocation.getLatitude();
+        double longitude = myLocation.getLongitude();
+
+        currentLocation = new LatLng(latitude, longitude);
+    }
+
     //find user's current location and mark it on the map
     public void markCurrentLocation() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").
                 snippet("Snippet"));
 
-        // Enable MyLocation Layer of Google Map
-        mMap.setMyLocationEnabled(true);
-        // Get LocationManager object from System Service LOCATION_SERVICE
-        LocationManager locationManager = (LocationManager) getSystemService
-                (Context.LOCATION_SERVICE);
-        // Create a criteria object to retrieve provider
-        Criteria criteria = new Criteria();
-        // Get the name of the best provider
-        String provider = locationManager.getBestProvider(criteria, true);
-        // Get Current Location
-        Location myLocation = locationManager.getLastKnownLocation(provider);
+        saveCurrentLocation();
+        moveCameraToCurrentLocation();
 
-        // set map type
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        // Get latitude of the current location
-        double latitude = myLocation.getLatitude();
-        // Get longitude of the current location
-        double longitude = myLocation.getLongitude();
-        // Create a LatLng object for the current location
-        latLng = new LatLng(latitude, longitude);
-
-
-        // Show the current location in Google Map
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        // Zoom in the Google Map
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-        // Text shown when you tap on the red marker
-        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).
-                title("Your are here."));
-
-        // Animate camera to your location
-        LatLng myCoordinates = new LatLng(latitude, longitude);
-        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myCoordinates, 12);
-        mMap.animateCamera(yourLocation);
+        //mMap.addMarker(new MarkerOptions().position(currentLocation).
+        //        title("Your are here."));
     }
 
     @Override
@@ -127,7 +135,10 @@ public class MapsActivity extends ActionBarActivity {
 
         //get intent received from LoginActivity
         Intent intent = getIntent();
-        boolean isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, false);
+
+        //extract boolean, false is the default value if there is none
+        isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, false);
+
         username = intent.getStringExtra("username");
 
         //get button references
@@ -187,10 +198,22 @@ public class MapsActivity extends ActionBarActivity {
                 String name = data.getStringExtra(NAME);
                 String comment = data.getStringExtra(COMMENT);
 
+                //create a crumb object
+                Crumb crumb = new Crumb(name, comment, currentLocation, new Date());
+
+                //add it to map
+                markCrumb(crumb);
+
+                //move camera to new crumb
+                moveCameraToCurrentLocation();
+
                 //show output
                 //later this will add a crumb
                 Toast.makeText(getApplicationContext(),
                         "Name = " + name + "Comment = " + comment, Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(getApplicationContext(), "Please enter a valid name for your crumb",
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -258,14 +281,14 @@ public class MapsActivity extends ActionBarActivity {
             }
 
             //clear all existing markers on the map
-            mMap.clear();
+            //mMap.clear();
 
             //add markers for all matching addresses
             for (int i = 0; i < addresses.size(); i++) {
                 Address address = (Address) addresses.get(i);
 
                 //create instance of geopoint, to display in google map
-                latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
 
                 String addressText = String.format("%s, %s",
                         address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "",
