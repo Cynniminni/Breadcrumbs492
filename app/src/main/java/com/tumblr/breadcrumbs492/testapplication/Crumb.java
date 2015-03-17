@@ -1,17 +1,16 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
 import com.google.android.gms.maps.model.LatLng;
-
 import java.util.Date;
 
 /**
  * Created by Aphrodite on 3/15/2015.
  */
 public class Crumb {
-    public String name, comment;
-    public LatLng location;
-    public Date date;
-    public int upvote, downvote;
+    private String name, comment;
+    private LatLng location;
+    private Date date;
+    private int upvote, downvote;
 
     //default upvote/downvote values for all crumbs are 0
 
