@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 //extending FragmentActivity disables ActionBar
@@ -184,6 +185,11 @@ public class MapsActivity extends ActionBarActivity {
 
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").snippet("Snippet"));
 
+        Crumb test = new Crumb(new LatLng(33, -118), "Out in the ocean", "Its so blue!", mMap, new Date(3, 1, 1992));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(test.getCoords()));
+        CameraUpdate yourLocation1 = CameraUpdateFactory.newLatLngZoom(new LatLng(33, -118), 12);
+        mMap.animateCamera(yourLocation1);
+
         // Enable MyLocation Layer of Google Map
         mMap.setMyLocationEnabled(true);
 
@@ -194,35 +200,40 @@ public class MapsActivity extends ActionBarActivity {
         Criteria criteria = new Criteria();
 
         // Get the name of the best provider
-        String provider = locationManager.getBestProvider(criteria, true);
+        if(locationManager != null) {
 
-        // Get Current Location
-        Location myLocation = locationManager.getLastKnownLocation(provider);
+            String provider = locationManager.getBestProvider(criteria, true);
 
-        // set map type
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            // Get Current Location
+            Location myLocation = locationManager.getLastKnownLocation(provider);
+            if(myLocation != null) {
+                // set map type
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        // Get latitude of the current location
-        double latitude = myLocation.getLatitude();
+                // Get latitude of the current location
+                double latitude = myLocation.getLatitude();
 
-        // Get longitude of the current location
-        double longitude = myLocation.getLongitude();
+                // Get longitude of the current location
+                double longitude = myLocation.getLongitude();
 
-        // Create a LatLng object for the current location
-        LatLng latLng = new LatLng(latitude, longitude);
+                // Create a LatLng object for the current location
+                LatLng latLng = new LatLng(latitude, longitude);
 
-        // Show the current location in Google Map
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                // Show the current location in Google Map
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-        // Zoom in the Google Map
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-        // Text shown when you tap on the red marker
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("Consider yourself located"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("Your are here."));
 
-        // Animate camera to your location
-        LatLng myCoordinates = new LatLng(latitude, longitude);
-        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myCoordinates, 12);
-        mMap.animateCamera(yourLocation);
+                // Zoom in the Google Map
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+                // Text shown when you tap on the red marker
+                //mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("Consider yourself located"));
+                mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("Your are here."));
+
+                // Animate camera to your location
+                LatLng myCoordinates = new LatLng(latitude, longitude);
+                CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myCoordinates, 12);
+                mMap.animateCamera(yourLocation);
+            }
+        }
     }
 }
