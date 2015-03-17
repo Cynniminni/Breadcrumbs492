@@ -127,7 +127,7 @@ public class MapsActivity extends ActionBarActivity {
 
         //get intent received from LoginActivity
         Intent intent = getIntent();
-        boolean isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, true);
+        boolean isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, false);
         username = intent.getStringExtra("username");
 
         //get button references
