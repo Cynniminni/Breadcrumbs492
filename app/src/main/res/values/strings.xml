@@ -4,6 +4,8 @@
     <!-- action bar strings -->
     <string name="app_name">Crumbs Application</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="title_activity_profile">Your Profile</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="action_about">About</string>
@@ -29,10 +31,23 @@
     <string name="r_state">State</string>
 
     <!-- map strings -->
-    <string name="button_1">Map</string>
-    <string name="button_2">Profile</string>
-    <string name="button_3">Crumbs</string>
+    <string name="button_1">Profile</string>
+    <string name="button_2">My Crumbs</string>
+    <string name="button_3">Add Crumb</string>
     <string name="button_find_text">Find</string>
     <string name="edittext_hint_location">Enter location</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
+    <!-- setting strings -->
+    <!-- entry listings for ListPreference in preferences.xml -->
+    <array name="listentries">
+        <item>sample entry 1</item>
+        <item>sample entry 2</item>
+    </array>
+    <array name="listvalues">
+        <item>sample value 1</item>
+        <item>sample value 2</item>
+    </array>
+    <string name="title_activity_add_crumb">AddCrumbActivity</string>
+    <string name="title_activity_my_crumbs">MyCrumbsActivity</string>
 </resources>

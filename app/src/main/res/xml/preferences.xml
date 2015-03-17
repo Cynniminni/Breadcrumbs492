@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="BreadCrumbs Settings">
+
+        <CheckBoxPreference
+            android:key="public_crumbs_preference"
+            android:title="Toggle Public/Private Crumbs"
+            android:summary="Make your crumbs public"
+            android:defaultValue="true"/>
+
+        <ListPreference
+            android:key="display_crumbs_radius"
+            android:title="Crumbs Display Radius"
+            android:summary="Adjust the radius to display crumbs in around current location"
+            android:entries="@array/listentries"
+            android:entryValues="@array/listvalues"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -3,16 +3,28 @@ package com.tumblr.breadcrumbs492.testapplication;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.AsyncTask;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
+
+import java.net.URISyntaxException;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class LoginActivity extends ActionBarActivity {
 
-
+    private MyRequestReceiver receiver;
+    private static boolean loggedIn = false;
     //sign in or register button click
     public void signInOrRegister(View view) {
         //get text from text fields
@@ -25,6 +37,7 @@ public class LoginActivity extends ActionBarActivity {
         if (usernameText.equalsIgnoreCase("admin") && passwordText.equals("admin")) {
             //this is the default user login that will launch the map activity
             Intent intent = new Intent(this, MapsActivity.class);
+            intent.putExtra(MapsActivity.GUESTLOGIN, false);
             startActivity(intent);
         } else if (usernameText.equals("") && passwordText.equals("")) {
             //if fields are empty then launch register activity
@@ -35,13 +48,17 @@ public class LoginActivity extends ActionBarActivity {
             //credentials will be checked against a database for verification here
             //if successful, it will launch the map activity
             //toast is a UI notification the user will see
-            Toast.makeText(getApplicationContext(), "Wrong credentials", Toast.LENGTH_SHORT).show();
-        }//end if else
+           login("login", usernameText, passwordText);
+
+         }//end if else
     }//end signInOrRegister
 
-    //when user taps on log in as guest button, start the maps screen
     public void loginAsGuest(View view) {
+        //automatically launch MapsActivity when signing in as guest
         Intent intent = new Intent(this, MapsActivity.class);
+
+        //send boolean to signal it's a guest login
+        intent.putExtra(MapsActivity.GUESTLOGIN, true);
         startActivity(intent);
     }
 
@@ -49,8 +66,20 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //Register your receiver so that the Activity can be notified
+        //when the JSON response came back
+        IntentFilter filter = new IntentFilter(MyRequestReceiver.PROCESS_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new MyRequestReceiver();
+        registerReceiver(receiver, filter);
     }
 
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,5 +101,73 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void login(String queryID, String username, String passEntered) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra(MapsActivity.GUESTLOGIN, false);
+
+        //pass the request to your service so that it can
+        //run outside the scope of the main UI thread
+        Intent msgIntent = new Intent(this, JSONRequest.class);
+        msgIntent.putExtra(JSONRequest.IN_MSG, queryID.trim());
+        msgIntent.putExtra("queryID", queryID.trim());
+        msgIntent.putExtra("jsonObject", "{\"username\":\"" + username.trim() + "\",\"passEntered\":\"" + passEntered + "\"}");
+        msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
+        startService(msgIntent);
+    }
+
+    //broadcast receiver to receive messages sent from the JSON IntentService
+    public class MyRequestReceiver extends BroadcastReceiver{
+
+        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.LoginActivity.MyRequestReceiver";
+        public String response = null;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+           Intent mapsIntent = new Intent();
+           String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
+
+           if(responseType.trim().equalsIgnoreCase("login")){
+
+               this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+
+               try {
+                   mapsIntent = Intent.parseUri(intent.getStringExtra("intent"), Intent.URI_INTENT_SCHEME);
+               }
+               catch(URISyntaxException e)
+               {
+                   e.printStackTrace();
+               }
+               JSONObject tempJSON = new JSONObject();
+               try {
+                   tempJSON = new JSONObject(response);
+                   if(tempJSON.get("loginResult").equals("true"))
+                   {
+                       loggedIn = true;
+                       Toast.makeText(getApplicationContext(), "login success", Toast.LENGTH_SHORT).show();
+                       mapsIntent.putExtra("username", tempJSON.getString("username"));
+                       startActivity(mapsIntent);
+                   }
+                   else
+                   {
+                       Toast.makeText(getApplicationContext(), "login fail", Toast.LENGTH_SHORT).show();
+                   }
+               }
+               catch(JSONException e)
+               {
+                   Toast.makeText(getApplicationContext(), "login fail", Toast.LENGTH_SHORT).show();
+                   e.printStackTrace();
+               }
+
+
+            }
+            else{
+                //you can choose to implement another transaction here
+            }
+
+        }
+        public String getResponse()
+        {
+            return response;
+        }
     }
 }

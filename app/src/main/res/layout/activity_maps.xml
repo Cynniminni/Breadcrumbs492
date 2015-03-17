@@ -42,28 +42,32 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#00ffffff">
 
         <Button
             android:id="@+id/button_1"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="@string/button_1"/>
+            android:text="@string/button_1"
+            android:onClick="viewProfile"/>
 
         <Button
             android:id="@+id/button_2"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="@string/button_2"/>
+            android:text="@string/button_2"
+            android:onClick="viewMyCrumbs"/>
 
         <Button
             android:id="@+id/button_3"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="@string/button_3"/>
+            android:text="@string/button_3"
+            android:onClick="addCrumbs"/>
 
     </LinearLayout>
     <!-- -->

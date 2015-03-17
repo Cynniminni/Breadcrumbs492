@@ -1,7 +1,9 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -12,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,28 +36,186 @@ import java.util.List;
 
 public class MapsActivity extends ActionBarActivity {
 
+    public final static int REQUEST_SETTINGS = 0;
+    public final static int REQUEST_ADD_CRUMB = 1;
+    public final static String NAME = "name";
+    public final static String COMMENT = "comment";
+    public final static String LATITUDE = "latitude";
+    public final static String LONGITUDE = "longitude";
+    public final static String GUESTLOGIN = "guest login";
+
+    private static String username;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    MarkerOptions markerOptions;
-    LatLng latLng;
+    private MarkerOptions markerOptions;
+    private LatLng currentLocation;//store user's current location
+    private boolean isGuestLogin;
+
+    //button implementation for viewing user profile information
+    public void viewProfile(View view) {
+        //launch ProfileActivity to view user profile
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
+    }
+
+    //button implementation for viewing user crumbs
+    public void viewMyCrumbs(View view) {
+        //launch MyCrumbsActivity to view user crumbs
+        Intent intent = new Intent(this, MyCrumbsActivity.class);
+        startActivity(intent);
+    }
+
+    //button implementation for adding crumbs to the map
+    public void addCrumbs(View view) {
+        Intent intent = new Intent(this, AddCrumbActivity.class);
+        //get user's current location
+        double latitude = currentLocation.latitude;
+        double longitude = currentLocation.longitude;
+        //pass into intent
+        intent.putExtra(LATITUDE, latitude);
+        intent.putExtra(LONGITUDE, longitude);
+        //pass intent to AddCrumbActivity with the request code
+        startActivityForResult(intent, REQUEST_ADD_CRUMB);
+    }
+
+    //add a crumb marker on the map
+    public void markCrumb(Crumb crumb) {
+        //add marker with location, name, and comment
+        mMap.addMarker(new MarkerOptions().position(crumb.getLocation())
+                .title(crumb.getName())
+                .snippet(crumb.getComment()));
+    }
+
+    //move camera to current location
+    public void moveCameraToCurrentLocation() {
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+        LatLng myCoordinates = currentLocation;
+        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myCoordinates, 12);
+        mMap.animateCamera(yourLocation);
+    }
+
+    public void saveCurrentLocation() {
+        // Enable MyLocation Layer of Google Map
+        // This "continuously draws an indication of a user's current location and bearing, and
+        // displays UI controls that allow a user to interact with their location"
+        mMap.setMyLocationEnabled(true);
+
+        LocationManager locationManager = (LocationManager) getSystemService
+                (Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, true);
+        Location myLocation = locationManager.getLastKnownLocation(provider);
+
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        double latitude = myLocation.getLatitude();
+        double longitude = myLocation.getLongitude();
+
+        currentLocation = new LatLng(latitude, longitude);
+    }
+
+    //find user's current location and mark it on the map
+    public void markCurrentLocation() {
+        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").
+                snippet("Snippet"));
+
+        saveCurrentLocation();
+        moveCameraToCurrentLocation();
+
+        //mMap.addMarker(new MarkerOptions().position(currentLocation).
+        //        title("Your are here."));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+
+        //get intent received from LoginActivity
+        Intent intent = getIntent();
+
+        //extract boolean, false is the default value if there is none
+        isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, false);
+
+        username = intent.getStringExtra("username");
+
+        //get button references
+        Button profileButton = (Button) findViewById(R.id.button_1);
+        Button myCrumbsButton = (Button) findViewById(R.id.button_2);
+
+        if (isGuestLogin) {
+            //disable buttons
+            profileButton.setEnabled(false);
+            myCrumbsButton.setEnabled(false);
+        } else {
+            //enable buttons
+            profileButton.setEnabled(true);
+            profileButton.setEnabled(true);
+
+            //load settings for user login
+            SettingsActivity.Settings.loadSettings(this);
+        }
     }//end onCreate
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_maps, menu);
-
-        //get SearchView widget reference
-        //ERROR: searchView comes out null for some reason...
-        //SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        //searchView.setIconifiedByDefault(false);//expand the widget by default
-
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            // launch SettingsActivity with the request code. This will be referenced in
+            // onActivityResult
+            Intent intent = new Intent();
+            intent.setClass(MapsActivity.this, SettingsActivity.class);
+            startActivityForResult(intent, REQUEST_SETTINGS);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == REQUEST_SETTINGS) {
+            //Reload settings throughout MapActivity every time user returns from SettingsActivity
+            SettingsActivity.Settings.loadSettings(this);
+        } else if (requestCode == REQUEST_ADD_CRUMB) {
+            if (resultCode == RESULT_OK) {
+                //extract name and comment passed from AddCrumbActivity
+                String name = data.getStringExtra(NAME);
+                String comment = data.getStringExtra(COMMENT);
+
+                //create a crumb object
+                Crumb crumb = new Crumb(name, comment, currentLocation, new Date());
+
+                //add it to map
+                markCrumb(crumb);
+
+                //move camera to new crumb
+                moveCameraToCurrentLocation();
+
+                //show output
+                //later this will add a crumb
+                Toast.makeText(getApplicationContext(),
+                        "Name = " + name + "Comment = " + comment, Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(getApplicationContext(), "Please enter a valid name for your crumb",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -82,6 +243,7 @@ public class MapsActivity extends ActionBarActivity {
                 String location = editTextLocation.getText().toString();
 
                 if (location != null && !location.equals("")) {
+                    //if location exists, mark it on map
                     new GeocoderTask().execute(location);
                 }
             }
@@ -119,14 +281,14 @@ public class MapsActivity extends ActionBarActivity {
             }
 
             //clear all existing markers on the map
-            mMap.clear();
+            //mMap.clear();
 
             //add markers for all matching addresses
             for (int i = 0; i < addresses.size(); i++) {
                 Address address = (Address) addresses.get(i);
 
                 //create instance of geopoint, to display in google map
-                latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
 
                 String addressText = String.format("%s, %s",
                         address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "",
@@ -181,6 +343,7 @@ public class MapsActivity extends ActionBarActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+<<<<<<< HEAD
         //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
 
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").snippet("Snippet"));
@@ -235,5 +398,8 @@ public class MapsActivity extends ActionBarActivity {
                 mMap.animateCamera(yourLocation);
             }
         }
+=======
+        markCurrentLocation();
+>>>>>>> d922682707462cd5ddc6198c4b9466eff35aae92
     }
 }
