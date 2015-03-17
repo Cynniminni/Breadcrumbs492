@@ -1,0 +1,17 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch MoreGUI
+# Changes to be committed:
+#	modified:   app/src/main/java/com/tumblr/breadcrumbs492/testapplication/Crumb.java
+#
+# Changes not staged for commit:
+#	modified:   .idea/modules.xml
+#	modified:   .idea/vcs.xml
+#	deleted:    TestApplication.iml
+#	modified:   app/app.iml
+#
+# Untracked files:
+#	Breadcrumbs492.iml
+#
+
