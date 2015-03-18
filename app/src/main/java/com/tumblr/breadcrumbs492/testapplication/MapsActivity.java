@@ -118,7 +118,7 @@ public class MapsActivity extends ActionBarActivity {
                 (Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         String provider = locationManager.getBestProvider(criteria, true);
-        Location myLocation = locationManager.getLastKnownLocation(provider);
+        Location myLocation = new Location(provider);  //locationManager.getLastKnownLocation(provider);
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
