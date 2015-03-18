@@ -25,6 +25,10 @@ import org.apache.http.params.HttpParams;
 
 import com.tumblr.breadcrumbs492.testapplication.LoginActivity.MyRequestReceiver;
 import com.tumblr.breadcrumbs492.testapplication.ProfileActivity.MyRequestReceiver1;
+import com.tumblr.breadcrumbs492.testapplication.AddCrumbActivity.MyRequestReceiver2;
+import com.tumblr.breadcrumbs492.testapplication.MyCrumbsActivity.MyRequestReceiver3;
+import com.tumblr.breadcrumbs492.testapplication.MapsActivity.MyRequestReceiver4;
+import com.tumblr.breadcrumbs492.testapplication.RegisterActivity.MyRequestReceiver5;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -50,17 +54,20 @@ public class JSONRequest extends IntentService{
 
         //Get Intent extras that were passed
         inMessage = intent.getStringExtra(IN_MSG);
-        if(inMessage.trim().equalsIgnoreCase("login")){
+        if(inMessage.trim().equals("login")){
             this.receivedIntent = intent.getStringExtra("intent");
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
             getUserInfo(queryID, jsonObject);
         }
-        else if(inMessage.trim().equalsIgnoreCase("getProfile")){
+        else if(inMessage.trim().equals("getProfile")||inMessage.trim().equals("addCrumb")
+                ||inMessage.trim().equals("getCrumbs")||inMessage.trim().equals("getAllCrumbs")
+                ||inMessage.trim().equals("register")){
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
             getUserInfo(queryID, jsonObject);
         }
+
 
     }
 
@@ -85,6 +92,14 @@ public class JSONRequest extends IntentService{
         }
         else if(queryID.equals("getProfile"))
             broadcastIntent.setAction(MyRequestReceiver1.PROCESS_RESPONSE);
+        else if(queryID.equals("addCrumb"))
+            broadcastIntent.setAction(MyRequestReceiver2.PROCESS_RESPONSE);
+        else if(queryID.equals("getCrumbs"))
+            broadcastIntent.setAction(MyRequestReceiver3.PROCESS_RESPONSE);
+        else if(queryID.equals("getAllCrumbs"))
+            broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
+        else if(queryID.equals("register"))
+            broadcastIntent.setAction(MyRequestReceiver5.PROCESS_RESPONSE);
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
         broadcastIntent.putExtra(IN_MSG, inMessage);
         broadcastIntent.putExtra(OUT_MSG, response);
