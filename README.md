@@ -1,5 +1,5 @@
-# TestApplication
-My Test Android Project on Github, for CECS 492A.
+# <a href="http://www.breadcrumbs492.tumblr.com/">Breadcrumbs 492</a>.
+ "We are a team in CSULB's CECS 492A course, Team Bread Crumbs. Our objective is to develop a mobile app called "Crumbs" that will allow users to connect and share their favorite locations by leaving their tags on a map."
 
 <h3>3/15/2015</h3>
 Added the rest of the screens needed for the app: ProfileActivity, MyCrumbsActivity, AddCrumbActivity, and SettingsActivity. LoginActivity now supports user login, and upon guest login disables user features in MapsActivity. Function to add crumbs on db still in progress. Considering moving user profile information into Settings.

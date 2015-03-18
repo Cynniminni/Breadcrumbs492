@@ -176,6 +176,15 @@ public class MapsActivity extends ActionBarActivity {
 
             //load settings for user login
             SettingsActivity.Settings.loadSettings(this);
+<<<<<<< HEAD
+=======
+            //Register your receiver so that the Activity can be notified
+            //when the JSON response came back
+            IntentFilter filter = new IntentFilter(MyRequestReceiver4.PROCESS_RESPONSE);
+            filter.addCategory(Intent.CATEGORY_DEFAULT);
+            receiver = new MyRequestReceiver4();
+            registerReceiver(receiver, filter);
+>>>>>>> origin/master
 
             //populate user information fields through database
             Intent msgIntent = new Intent(this, JSONRequest.class);
@@ -399,6 +408,7 @@ public class MapsActivity extends ActionBarActivity {
                 JSONArray tempJSON = new JSONArray();
                 try {
                     tempJSON = new JSONArray(response);
+<<<<<<< HEAD
 
                     String name, comment;
                     LatLng location;

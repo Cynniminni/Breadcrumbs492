@@ -37,6 +37,7 @@ public class AddCrumbActivity extends ActionBarActivity {
     private String name;
     private String comment;
     private String addResult;
+<<<<<<< HEAD
 
     //implement adding a crumb to the map
     public void addCrumb(View view) {
@@ -148,6 +149,7 @@ public class AddCrumbActivity extends ActionBarActivity {
         public String response = null;
         @Override
         public void onReceive(Context context, Intent intent) {
+<<<<<<< HEAD
 
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
             Intent addCrumbIntent = new Intent(AddCrumbActivity.this, MapsActivity.class);
@@ -173,6 +175,7 @@ public class AddCrumbActivity extends ActionBarActivity {
                 }
 
 
+<<<<<<< HEAD
                 addCrumbIntent.putExtra("username", uName);
                 startActivity(addCrumbIntent);//close this activity and return to MapsActivity
             }
