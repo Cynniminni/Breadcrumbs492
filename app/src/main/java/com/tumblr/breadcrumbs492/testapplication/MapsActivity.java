@@ -1,9 +1,11 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
 import android.app.ActionBar;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -16,8 +18,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -28,7 +33,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +59,8 @@ public class MapsActivity extends ActionBarActivity {
     private LatLng currentLocation;//store user's current location
     private boolean isGuestLogin;
 
+    private MyRequestReceiver4 receiver;
+
     //button implementation for viewing user profile information
     public void viewProfile(View view) {
         //launch ProfileActivity to view user profile
@@ -62,6 +73,7 @@ public class MapsActivity extends ActionBarActivity {
     public void viewMyCrumbs(View view) {
         //launch MyCrumbsActivity to view user crumbs
         Intent intent = new Intent(this, MyCrumbsActivity.class);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 
@@ -74,6 +86,7 @@ public class MapsActivity extends ActionBarActivity {
         //pass into intent
         intent.putExtra(LATITUDE, latitude);
         intent.putExtra(LONGITUDE, longitude);
+        intent.putExtra("username", username);
         //pass intent to AddCrumbActivity with the request code
         startActivityForResult(intent, REQUEST_ADD_CRUMB);
     }
@@ -156,8 +169,28 @@ public class MapsActivity extends ActionBarActivity {
 
             //load settings for user login
             SettingsActivity.Settings.loadSettings(this);
+            //Register your receiver so that the Activity can be notified
+            //when the JSON response came back
+            IntentFilter filter = new IntentFilter(MyRequestReceiver4.PROCESS_RESPONSE);
+            filter.addCategory(Intent.CATEGORY_DEFAULT);
+            receiver = new MyRequestReceiver4();
+            registerReceiver(receiver, filter);
+
+            //populate user information fields through database
+            Intent msgIntent = new Intent(this, JSONRequest.class);
+            msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
+            msgIntent.putExtra("queryID", "getAllCrumbs");
+            msgIntent.putExtra("jsonObject", "{\"username\":\"" + username + "\"}");
+
+            startService(msgIntent);
         }
     }//end onCreate
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -344,5 +377,60 @@ public class MapsActivity extends ActionBarActivity {
      */
     private void setUpMap() {
         markCurrentLocation();
+    }
+
+    //broadcast receiver to receive messages sent from the JSON IntentService
+    public class MyRequestReceiver4 extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.MapsActivity.MyRequestReceiver";
+        public String response = null;
+        private ListView listView;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
+
+            if(responseType.trim().equalsIgnoreCase("getAllCrumbs")){
+
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+
+                JSONArray tempJSON = new JSONArray();
+                try {
+                    tempJSON = new JSONArray(response);
+                    System.out.println(tempJSON.toString());
+                    String name, comment;
+                    LatLng location;
+                    Date date;
+                    Crumb[] crumbsArr = new Crumb[tempJSON.length()];
+
+                    for(int i = 0; i < tempJSON.length(); i++)
+                    {
+                        name = tempJSON.getJSONObject(i).getString("crumbName");
+                        comment = tempJSON.getJSONObject(i).getString("comment");
+                        location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"),tempJSON.getJSONObject(i).getDouble("longitude"));
+                        date = Calendar.getInstance().getTime();
+                        crumbsArr[i] = new Crumb(name, comment, location, date);
+                        markCrumb(crumbsArr[i]);
+                    }
+                }
+                catch(JSONException e)
+                {
+                    Toast.makeText(getApplicationContext(), "get crumbs failed", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+
+
+            }
+            else{
+                //you can choose to implement another transaction here
+            }
+
+        }
+        public String getResponse()
+        {
+            return response;
+        }
     }
 }

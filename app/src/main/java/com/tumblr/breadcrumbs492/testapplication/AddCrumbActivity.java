@@ -1,6 +1,9 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +19,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
+
 
 public class AddCrumbActivity extends ActionBarActivity {
 
@@ -24,32 +32,54 @@ public class AddCrumbActivity extends ActionBarActivity {
     private EditText crumbComment;
     private double latitude;
     private double longitude;
-
+    private String uName;
+    private MyRequestReceiver2 receiver;
+    private String name;
+    private String comment;
+    private String addResult;
     //implement adding a crumb to the map
     public void addCrumb(View view) {
         //extract String input from user
-        String name = crumbName.getText().toString();
-        String comment = crumbComment.getText().toString();
+        name = crumbName.getText().toString();
+        comment = crumbComment.getText().toString();
 
+        //get username
         Intent intent = getIntent();
+        uName = intent.getStringExtra("username");
 
         if (name.equals("")) {
             //if user entered nothing then cancel adding a crumb
             setResult(RESULT_CANCELED, intent);
         } else {
+            JSONObject jObject = new JSONObject();
+            Intent msgIntent = new Intent(this, JSONRequest.class);
+            msgIntent.putExtra(JSONRequest.IN_MSG, "addCrumb");
+            msgIntent.putExtra("queryID", "addCrumb");
+            msgIntent.putExtra("jsonObject", "{\"username\":\"" + uName + "\",\"name\":\"" + name
+                    + "\",\"comment\":\"" + comment + "\",\"latitude\":\""
+                    + latitude + "\",\"longitude\":\"" + longitude  + "\"}");
+            msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
+            startService(msgIntent);
+
             //place into intent to pass back to MapsActivity
             intent.putExtra(MapsActivity.NAME, name);
             intent.putExtra(MapsActivity.COMMENT, comment);
             setResult(RESULT_OK, intent);//send result code
         }
 
-        finish();//close this activity and return to MapsActivity
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_crumb);
+
+        //Register your receiver so that the Activity can be notified
+        //when the JSON response came back
+        IntentFilter filter = new IntentFilter(MyRequestReceiver2.PROCESS_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new MyRequestReceiver2();
+        registerReceiver(receiver, filter);
 
         //get references to the EditText fields
         crumbName = (EditText) findViewById(R.id.addcrumb_name);
@@ -74,9 +104,18 @@ public class AddCrumbActivity extends ActionBarActivity {
                 title("Your are here."));
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(location, 12);
         map.animateCamera(yourLocation);
+
+
+
+
+
     }
 
-
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -100,5 +139,50 @@ public class AddCrumbActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    //broadcast receiver to receive messages sent from the JSON IntentService
+    public class MyRequestReceiver2 extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.AddCrumbActivity.MyRequestReceiver";
+        public String response = null;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            System.out.println(intent.getStringExtra(JSONRequest.IN_MSG));
+            String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
+            Intent addCrumbIntent = new Intent();
+            if(responseType.trim().equalsIgnoreCase("addCrumb")){
+
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+
+                JSONObject tempJSON = new JSONObject();
+
+
+
+                try {
+                    tempJSON = new JSONObject(response);
+                    if(tempJSON.getString("addCrumbResult").trim().equals("true"))
+                    {
+                        Toast.makeText(getApplicationContext(), "successfully added crumb", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch(JSONException e)
+                {
+                    Toast.makeText(getApplicationContext(), "add crumb failed", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+
+                finish();//close this activity and return to MapsActivity
+            }
+            else{
+                //you can choose to implement another transaction here
+            }
+
+        }
+
+        public String getResponse()
+        {
+            return response;
+        }
     }
 }
