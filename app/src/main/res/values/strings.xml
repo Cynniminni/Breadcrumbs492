@@ -50,4 +50,7 @@
     </array>
     <string name="title_activity_add_crumb">AddCrumbActivity</string>
     <string name="title_activity_my_crumbs">MyCrumbsActivity</string>
+
+    <!-- facebook app id string -->
+    <string name="app_id">1415878208713851</string>
 </resources>
