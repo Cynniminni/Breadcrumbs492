@@ -31,6 +31,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_crumbs);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         username = getIntent().getStringExtra("username");
 
@@ -40,10 +41,6 @@ public class MyCrumbsActivity extends ActionBarActivity {
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         receiver = new MyRequestReceiver3();
         registerReceiver(receiver, filter);
-
-        //populate user information fields through database
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
 
         Intent msgIntent = new Intent(this, JSONRequest.class);
         msgIntent.putExtra(JSONRequest.IN_MSG, "getCrumbs");
@@ -58,6 +55,14 @@ public class MyCrumbsActivity extends ActionBarActivity {
     protected void onDestroy() {
         unregisterReceiver(receiver);
         super.onDestroy();
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("username", username);
+        setResult(RESULT_OK, intent);
+        finish();
+        super.onBackPressed();
     }
 
     @Override
@@ -81,8 +86,11 @@ public class MyCrumbsActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        else if(id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+            return super.onOptionsItemSelected(item);
     }
     //broadcast receiver to receive messages sent from the JSON IntentService
     public class MyRequestReceiver3 extends BroadcastReceiver {
@@ -99,12 +107,10 @@ public class MyCrumbsActivity extends ActionBarActivity {
             if(responseType.trim().equalsIgnoreCase("getCrumbs")){
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println(response);
+
                 JSONArray tempJSON = new JSONArray();
                 try {
                     tempJSON = new JSONArray(response);
-                    System.out.println(tempJSON.toString());
-
                 }
                 catch(JSONException e)
                 {

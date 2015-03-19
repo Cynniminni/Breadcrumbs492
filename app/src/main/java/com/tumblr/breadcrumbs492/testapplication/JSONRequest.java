@@ -28,7 +28,6 @@ import com.tumblr.breadcrumbs492.testapplication.ProfileActivity.MyRequestReceiv
 import com.tumblr.breadcrumbs492.testapplication.AddCrumbActivity.MyRequestReceiver2;
 import com.tumblr.breadcrumbs492.testapplication.MyCrumbsActivity.MyRequestReceiver3;
 import com.tumblr.breadcrumbs492.testapplication.MapsActivity.MyRequestReceiver4;
-<<<<<<< HEAD
 import com.tumblr.breadcrumbs492.testapplication.RegisterActivity.MyRequestReceiver5;
 
 import android.app.IntentService;
@@ -62,7 +61,6 @@ public class JSONRequest extends IntentService{
             getUserInfo(queryID, jsonObject);
         }
         else if(inMessage.trim().equals("getProfile")||inMessage.trim().equals("addCrumb")
-<<<<<<< HEAD
                 ||inMessage.trim().equals("getCrumbs")||inMessage.trim().equals("getAllCrumbs")
                 ||inMessage.trim().equals("register")){
             String queryID = intent.getStringExtra("queryID");
@@ -100,7 +98,6 @@ public class JSONRequest extends IntentService{
             broadcastIntent.setAction(MyRequestReceiver3.PROCESS_RESPONSE);
         else if(queryID.equals("getAllCrumbs"))
             broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
-<<<<<<< HEAD
         else if(queryID.equals("register"))
             broadcastIntent.setAction(MyRequestReceiver5.PROCESS_RESPONSE);
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);

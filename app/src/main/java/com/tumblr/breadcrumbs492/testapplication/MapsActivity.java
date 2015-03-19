@@ -47,6 +47,8 @@ public class MapsActivity extends ActionBarActivity {
 
     public final static int REQUEST_SETTINGS = 0;
     public final static int REQUEST_ADD_CRUMB = 1;
+    public final static int REQUEST_PROFILE = 2;
+    public final static int REQUEST_MYCRUMBS = 3;
     public final static String NAME = "name";
     public final static String COMMENT = "comment";
     public final static String LATITUDE = "latitude";
@@ -66,7 +68,7 @@ public class MapsActivity extends ActionBarActivity {
         //launch ProfileActivity to view user profile
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra("username", username);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_PROFILE);
     }
 
     //button implementation for viewing user crumbs
@@ -74,7 +76,7 @@ public class MapsActivity extends ActionBarActivity {
         //launch MyCrumbsActivity to view user crumbs
         Intent intent = new Intent(this, MyCrumbsActivity.class);
         intent.putExtra("username", username);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_MYCRUMBS);
     }
 
     //button implementation for adding crumbs to the map
@@ -113,12 +115,17 @@ public class MapsActivity extends ActionBarActivity {
         // This "continuously draws an indication of a user's current location and bearing, and
         // displays UI controls that allow a user to interact with their location"
         mMap.setMyLocationEnabled(true);
-
+        Location myLocation;
         LocationManager locationManager = (LocationManager) getSystemService
                 (Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         String provider = locationManager.getBestProvider(criteria, true);
-        Location myLocation = new Location(provider);  //locationManager.getLastKnownLocation(provider);
+        if(locationManager.getLastKnownLocation(provider) == null) {
+            myLocation = new Location(provider);
+        }
+        else {
+            myLocation = locationManager.getLastKnownLocation(provider);
+        }
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
@@ -176,15 +183,7 @@ public class MapsActivity extends ActionBarActivity {
 
             //load settings for user login
             SettingsActivity.Settings.loadSettings(this);
-<<<<<<< HEAD
-=======
-            //Register your receiver so that the Activity can be notified
-            //when the JSON response came back
-            IntentFilter filter = new IntentFilter(MyRequestReceiver4.PROCESS_RESPONSE);
-            filter.addCategory(Intent.CATEGORY_DEFAULT);
-            receiver = new MyRequestReceiver4();
-            registerReceiver(receiver, filter);
->>>>>>> origin/master
+
 
             //populate user information fields through database
             Intent msgIntent = new Intent(this, JSONRequest.class);
@@ -258,6 +257,10 @@ public class MapsActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Please enter a valid name for your crumb",
                         Toast.LENGTH_SHORT).show();
             }
+        }
+        else if (requestCode == REQUEST_PROFILE || requestCode == REQUEST_MYCRUMBS)
+        {
+            username = data.getStringExtra("username");
         }
     }
 
@@ -408,7 +411,6 @@ public class MapsActivity extends ActionBarActivity {
                 JSONArray tempJSON = new JSONArray();
                 try {
                     tempJSON = new JSONArray(response);
-<<<<<<< HEAD
 
                     String name, comment;
                     LatLng location;

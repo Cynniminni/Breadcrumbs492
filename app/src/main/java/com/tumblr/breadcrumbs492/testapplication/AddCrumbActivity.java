@@ -37,7 +37,6 @@ public class AddCrumbActivity extends ActionBarActivity {
     private String name;
     private String comment;
     private String addResult;
-<<<<<<< HEAD
 
     //implement adding a crumb to the map
     public void addCrumb(View view) {
@@ -75,6 +74,7 @@ public class AddCrumbActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_crumb);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Register your receiver so that the Activity can be notified
         //when the JSON response came back
@@ -118,6 +118,16 @@ public class AddCrumbActivity extends ActionBarActivity {
         unregisterReceiver(receiver);
         super.onDestroy();
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("username", uName);
+        setResult(RESULT_OK, intent);
+        finish();
+        super.onBackPressed();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -139,7 +149,10 @@ public class AddCrumbActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         }
-
+        else if(id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
     //broadcast receiver to receive messages sent from the JSON IntentService
@@ -149,7 +162,7 @@ public class AddCrumbActivity extends ActionBarActivity {
         public String response = null;
         @Override
         public void onReceive(Context context, Intent intent) {
-<<<<<<< HEAD
+
 
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
             Intent addCrumbIntent = new Intent(AddCrumbActivity.this, MapsActivity.class);
@@ -174,8 +187,6 @@ public class AddCrumbActivity extends ActionBarActivity {
                     e.printStackTrace();
                 }
 
-
-<<<<<<< HEAD
                 addCrumbIntent.putExtra("username", uName);
                 startActivity(addCrumbIntent);//close this activity and return to MapsActivity
             }
