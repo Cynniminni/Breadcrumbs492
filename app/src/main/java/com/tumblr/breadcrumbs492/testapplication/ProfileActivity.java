@@ -71,6 +71,7 @@ public class ProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Register your receiver so that the Activity can be notified
         //when the JSON response came back
@@ -123,6 +124,16 @@ public class ProfileActivity extends ActionBarActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("username", uName);
+        setResult(RESULT_OK, intent);
+        finish();
+        super.onBackPressed();
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_profile, menu);
@@ -143,7 +154,10 @@ public class ProfileActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         }
-
+        else if(id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
     //broadcast receiver to receive messages sent from the JSON IntentService

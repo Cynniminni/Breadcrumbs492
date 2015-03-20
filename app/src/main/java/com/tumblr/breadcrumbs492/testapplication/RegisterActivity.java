@@ -1,6 +1,9 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v4.app.NavUtils;
@@ -13,18 +16,35 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class RegisterActivity extends ActionBarActivity {
 
     private EditText[] userInfo;
     private String[] userInfoStrings;
+    private MyRequestReceiver5 receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        //Register your receiver so that the Activity can be notified
+        //when the JSON response came back
+        IntentFilter filter = new IntentFilter(MyRequestReceiver5.PROCESS_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new MyRequestReceiver5();
+        registerReceiver(receiver, filter);
+
+    }
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 
     public void onCancel(View view) {
+        unregisterReceiver(receiver);
         //go back to parent activity, which is the login screen
         NavUtils.navigateUpFromSameTask(this);
     }
@@ -59,14 +79,22 @@ public class RegisterActivity extends ActionBarActivity {
 
         if (allFieldsFilled) {
             //if all fields are filled, verify against database
-
             //insert user info into database if verified
+            Intent msgIntent = new Intent(this, JSONRequest.class);
+            msgIntent.putExtra(JSONRequest.IN_MSG, "register");
+            msgIntent.putExtra("queryID", "register");
+            msgIntent.putExtra("jsonObject", "{\"username\":\"" + userInfoStrings[0] + "\",\"password\":\""
+                    + userInfoStrings[1] + "\",\"email\":\"" + userInfoStrings[2] + "\",\"firstName\":\""
+                    + userInfoStrings[3] +  "\",\"lastName\":\"" + userInfoStrings[4] + "\",\"gender\":\""
+                    + userInfoStrings[5] +  "\",\"city\":\"" + userInfoStrings[6] + "\",\"state\":\""
+                    + userInfoStrings[7] + "\"}");
+
+            startService(msgIntent);
+
 
             //launch MapsActivity as new user
 
-            //log in as new user and start the map activity
-            Intent intent = new Intent(this, MapsActivity.class);
-            startActivity(intent);
+
         } else {
             //notify user
             Toast.makeText(getApplicationContext(), "Please fill in all fields to continue.",
@@ -79,5 +107,48 @@ public class RegisterActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_register, menu);
         return true;
+    }
+    //broadcast receiver to receive messages sent from the JSON IntentService
+    public class MyRequestReceiver5 extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.RegisterActivity.MyRequestReceiver";
+        public String response = null;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
+
+            if(responseType.trim().equalsIgnoreCase("register")){
+
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+
+                JSONObject tempJSON = new JSONObject();
+                try {
+                    tempJSON = new JSONObject(response);
+                    if(tempJSON.getString("registerResult").equals("true"))
+                    {
+                        //log in as new user and start the map activity
+                        Intent intent1 = new Intent(RegisterActivity.this, MapsActivity.class);
+                        intent1.putExtra("username", userInfoStrings[0]);
+                        startActivity(intent1);
+                    }
+                }
+                catch(JSONException e)
+                {
+                    Toast.makeText(getApplicationContext(), "register error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+
+            }
+            else{
+                //you can choose to implement another transaction here
+            }
+
+        }
+        public String getResponse()
+        {
+            return response;
+        }
     }
 }

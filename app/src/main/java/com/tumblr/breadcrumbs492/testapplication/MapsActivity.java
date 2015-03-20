@@ -1,9 +1,11 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
 import android.app.ActionBar;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -16,8 +18,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -28,7 +33,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +47,8 @@ public class MapsActivity extends ActionBarActivity {
 
     public final static int REQUEST_SETTINGS = 0;
     public final static int REQUEST_ADD_CRUMB = 1;
+    public final static int REQUEST_PROFILE = 2;
+    public final static int REQUEST_MYCRUMBS = 3;
     public final static String NAME = "name";
     public final static String COMMENT = "comment";
     public final static String LATITUDE = "latitude";
@@ -50,19 +61,22 @@ public class MapsActivity extends ActionBarActivity {
     private LatLng currentLocation;//store user's current location
     private boolean isGuestLogin;
 
+    private MyRequestReceiver4 receiver;
+
     //button implementation for viewing user profile information
     public void viewProfile(View view) {
         //launch ProfileActivity to view user profile
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra("username", username);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_PROFILE);
     }
 
     //button implementation for viewing user crumbs
     public void viewMyCrumbs(View view) {
         //launch MyCrumbsActivity to view user crumbs
         Intent intent = new Intent(this, MyCrumbsActivity.class);
-        startActivity(intent);
+        intent.putExtra("username", username);
+        startActivityForResult(intent, REQUEST_MYCRUMBS);
     }
 
     //button implementation for adding crumbs to the map
@@ -74,6 +88,7 @@ public class MapsActivity extends ActionBarActivity {
         //pass into intent
         intent.putExtra(LATITUDE, latitude);
         intent.putExtra(LONGITUDE, longitude);
+        intent.putExtra("username", username);
         //pass intent to AddCrumbActivity with the request code
         startActivityForResult(intent, REQUEST_ADD_CRUMB);
     }
@@ -100,12 +115,17 @@ public class MapsActivity extends ActionBarActivity {
         // This "continuously draws an indication of a user's current location and bearing, and
         // displays UI controls that allow a user to interact with their location"
         mMap.setMyLocationEnabled(true);
-
+        Location myLocation;
         LocationManager locationManager = (LocationManager) getSystemService
                 (Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         String provider = locationManager.getBestProvider(criteria, true);
-        Location myLocation = locationManager.getLastKnownLocation(provider);
+        if(locationManager.getLastKnownLocation(provider) == null) {
+            myLocation = new Location(provider);
+        }
+        else {
+            myLocation = locationManager.getLastKnownLocation(provider);
+        }
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
@@ -141,6 +161,13 @@ public class MapsActivity extends ActionBarActivity {
 
         username = intent.getStringExtra("username");
 
+        //Register your receiver so that the Activity can be notified
+        //when the JSON response came back
+        IntentFilter filter = new IntentFilter(MyRequestReceiver4.PROCESS_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new MyRequestReceiver4();
+        registerReceiver(receiver, filter);
+
         //get button references
         Button profileButton = (Button) findViewById(R.id.button_1);
         Button myCrumbsButton = (Button) findViewById(R.id.button_2);
@@ -156,8 +183,23 @@ public class MapsActivity extends ActionBarActivity {
 
             //load settings for user login
             SettingsActivity.Settings.loadSettings(this);
+
+
+            //populate user information fields through database
+            Intent msgIntent = new Intent(this, JSONRequest.class);
+            msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
+            msgIntent.putExtra("queryID", "getAllCrumbs");
+            msgIntent.putExtra("jsonObject", "{\"username\":\"" + username + "\"}");
+
+            startService(msgIntent);
         }
     }//end onCreate
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -215,6 +257,10 @@ public class MapsActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Please enter a valid name for your crumb",
                         Toast.LENGTH_SHORT).show();
             }
+        }
+        else if (requestCode == REQUEST_PROFILE || requestCode == REQUEST_MYCRUMBS)
+        {
+            username = data.getStringExtra("username");
         }
     }
 
@@ -343,63 +389,61 @@ public class MapsActivity extends ActionBarActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-<<<<<<< HEAD
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").snippet("Snippet"));
-
-        Crumb test = new Crumb(new LatLng(33, -118), "Out in the ocean", "Its so blue!", mMap, new Date(3, 1, 1992));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(test.getCoords()));
-        CameraUpdate yourLocation1 = CameraUpdateFactory.newLatLngZoom(new LatLng(33, -118), 12);
-        mMap.animateCamera(yourLocation1);
-
-        // Enable MyLocation Layer of Google Map
-        mMap.setMyLocationEnabled(true);
-
-        // Get LocationManager object from System Service LOCATION_SERVICE
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        // Create a criteria object to retrieve provider
-        Criteria criteria = new Criteria();
-
-        // Get the name of the best provider
-        if(locationManager != null) {
-
-            String provider = locationManager.getBestProvider(criteria, true);
-
-            // Get Current Location
-            Location myLocation = locationManager.getLastKnownLocation(provider);
-            if(myLocation != null) {
-                // set map type
-                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-                // Get latitude of the current location
-                double latitude = myLocation.getLatitude();
-
-                // Get longitude of the current location
-                double longitude = myLocation.getLongitude();
-
-                // Create a LatLng object for the current location
-                LatLng latLng = new LatLng(latitude, longitude);
-
-                // Show the current location in Google Map
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-
-                // Zoom in the Google Map
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-                // Text shown when you tap on the red marker
-                //mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("Consider yourself located"));
-                mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("Your are here."));
-
-                // Animate camera to your location
-                LatLng myCoordinates = new LatLng(latitude, longitude);
-                CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(myCoordinates, 12);
-                mMap.animateCamera(yourLocation);
-            }
-        }
-=======
         markCurrentLocation();
->>>>>>> d922682707462cd5ddc6198c4b9466eff35aae92
+    }
+
+    //broadcast receiver to receive messages sent from the JSON IntentService
+    public class MyRequestReceiver4 extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.MapsActivity.MyRequestReceiver";
+        public String response = null;
+        private ListView listView;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
+
+            if(responseType.trim().equalsIgnoreCase("getAllCrumbs")){
+
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+
+                JSONArray tempJSON = new JSONArray();
+                try {
+                    tempJSON = new JSONArray(response);
+
+                    String name, comment;
+                    LatLng location;
+                    Date date;
+                    Crumb[] crumbsArr = new Crumb[tempJSON.length()];
+
+                    for(int i = 0; i < tempJSON.length(); i++)
+                    {
+                        name = tempJSON.getJSONObject(i).getString("crumbName");
+                        comment = tempJSON.getJSONObject(i).getString("comment");
+                        location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"),tempJSON.getJSONObject(i).getDouble("longitude"));
+                        date = Calendar.getInstance().getTime();
+                        crumbsArr[i] = new Crumb(name, comment, location, date);
+                        markCrumb(crumbsArr[i]);
+                    }
+                }
+                catch(JSONException e)
+                {
+                    Toast.makeText(getApplicationContext(), "get crumbs failed", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+
+
+            }
+            else{
+                //you can choose to implement another transaction here
+            }
+
+        }
+        public String getResponse()
+        {
+            return response;
+        }
     }
 }
