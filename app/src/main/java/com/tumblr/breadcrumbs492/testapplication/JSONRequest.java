@@ -5,7 +5,6 @@ package com.tumblr.breadcrumbs492.testapplication;
  */
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,6 @@ import com.tumblr.breadcrumbs492.testapplication.RegisterActivity.MyRequestRecei
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 public class JSONRequest extends IntentService{
 

@@ -1,11 +1,14 @@
 package com.tumblr.breadcrumbs492.testapplication;
 import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.test.mock.MockContext;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.app.Activity;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
@@ -28,13 +31,12 @@ public class FacebookFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_login, container, false);
 
-        LoginButton authButton = (LoginButton) view.findViewById(R.id.authButton);
+        LoginButton authButton = (LoginButton) getActivity().findViewById(R.id.authButton);
         authButton.setFragment(this);
         //authButton.setReadPermissions(Arrays.asList("user_likes", "user_status"));
 
-        return view;
+        return null;
     }
 
     @Override

@@ -35,7 +35,7 @@
             android:parentActivityName=".LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tumblr.breadcrumbs492.testapplication.LoginActivity" />
+                android:value=".LoginActivity" />
         </activity>
 
         <meta-data
@@ -55,7 +55,7 @@
             android:label="@string/title_activity_maps" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tumblr.breadcrumbs492.testapplication.LoginActivity" />
+                android:value=".LoginActivity" />
         </activity>
         <activity
             android:name=".ProfileActivity"
