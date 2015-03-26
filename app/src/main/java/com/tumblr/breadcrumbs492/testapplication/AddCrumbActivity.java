@@ -46,7 +46,7 @@ public class AddCrumbActivity extends ActionBarActivity {
 
         //get username
         Intent intent = getIntent();
-        uName = intent.getStringExtra("username");
+        uName = GlobalContainer.user.getInfo()[0];
 
         if (name.equals("")) {
             //if user entered nothing then cancel adding a crumb
@@ -56,7 +56,8 @@ public class AddCrumbActivity extends ActionBarActivity {
             Intent msgIntent = new Intent(this, JSONRequest.class);
             msgIntent.putExtra(JSONRequest.IN_MSG, "addCrumb");
             msgIntent.putExtra("queryID", "addCrumb");
-            msgIntent.putExtra("jsonObject", "{\"username\":\"" + uName + "\",\"name\":\"" + name
+            msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
+                    + GlobalContainer.user.getInfo()[1] + "\",\"name\":\"" + name
                     + "\",\"comment\":\"" + comment + "\",\"latitude\":\""
                     + latitude + "\",\"longitude\":\"" + longitude  + "\"}");
             msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
@@ -122,7 +123,6 @@ public class AddCrumbActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra("username", uName);
         setResult(RESULT_OK, intent);
         finish();
         super.onBackPressed();
@@ -187,8 +187,8 @@ public class AddCrumbActivity extends ActionBarActivity {
                     e.printStackTrace();
                 }
 
-                addCrumbIntent.putExtra("username", uName);
                 startActivity(addCrumbIntent);//close this activity and return to MapsActivity
+                finish();
             }
             else{
                 //you can choose to implement another transaction here

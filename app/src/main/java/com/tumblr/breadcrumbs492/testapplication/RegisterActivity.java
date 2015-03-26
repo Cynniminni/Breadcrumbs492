@@ -129,7 +129,7 @@ public class RegisterActivity extends ActionBarActivity {
                     {
                         //log in as new user and start the map activity
                         Intent intent1 = new Intent(RegisterActivity.this, MapsActivity.class);
-                        intent1.putExtra("username", userInfoStrings[0]);
+                        intent1.putExtra("email", userInfoStrings[1]);
                         startActivity(intent1);
                     }
                 }

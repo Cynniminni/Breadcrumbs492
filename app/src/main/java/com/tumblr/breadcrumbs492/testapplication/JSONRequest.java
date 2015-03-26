@@ -58,9 +58,9 @@ public class JSONRequest extends IntentService{
             String jsonObject = intent.getStringExtra("jsonObject");
             getUserInfo(queryID, jsonObject);
         }
-        else if(inMessage.trim().equals("getProfile")||inMessage.trim().equals("addCrumb")
+        else if(inMessage.trim().equals("getProfileInit")||inMessage.trim().equals("getProfile")||inMessage.trim().equals("addCrumb")
                 ||inMessage.trim().equals("getCrumbs")||inMessage.trim().equals("getAllCrumbs")
-                ||inMessage.trim().equals("register")){
+                ||inMessage.trim().equals("register")||inMessage.trim().equals("registerInit")){
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
             getUserInfo(queryID, jsonObject);
@@ -84,20 +84,25 @@ public class JSONRequest extends IntentService{
         //from the WEB Service
         Intent broadcastIntent = new Intent();
         broadcastIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        if(queryID.equals("login")) {
-            broadcastIntent.setAction(MyRequestReceiver.PROCESS_RESPONSE);
-            broadcastIntent.putExtra("intent", receivedIntent);
+        if(!inMessage.equalsIgnoreCase("registerInit")) {
+            if (queryID.equals("login")) {
+                broadcastIntent.setAction(MyRequestReceiver.PROCESS_RESPONSE);
+                broadcastIntent.putExtra("intent", receivedIntent);
+            } else if (queryID.equals("getProfile"))
+                broadcastIntent.setAction(MyRequestReceiver1.PROCESS_RESPONSE);
+            else if (queryID.equals("addCrumb"))
+                broadcastIntent.setAction(MyRequestReceiver2.PROCESS_RESPONSE);
+            else if (queryID.equals("getCrumbs"))
+                broadcastIntent.setAction(MyRequestReceiver3.PROCESS_RESPONSE);
+            else if (queryID.equals("getAllCrumbs"))
+                broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
+            else if (queryID.equals("getProfileInit"))
+                broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
+            else if (queryID.equals("register"))
+                broadcastIntent.setAction(MyRequestReceiver5.PROCESS_RESPONSE);
         }
-        else if(queryID.equals("getProfile"))
-            broadcastIntent.setAction(MyRequestReceiver1.PROCESS_RESPONSE);
-        else if(queryID.equals("addCrumb"))
-            broadcastIntent.setAction(MyRequestReceiver2.PROCESS_RESPONSE);
-        else if(queryID.equals("getCrumbs"))
-            broadcastIntent.setAction(MyRequestReceiver3.PROCESS_RESPONSE);
-        else if(queryID.equals("getAllCrumbs"))
+        else if(inMessage.equalsIgnoreCase("registerInit"))
             broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
-        else if(queryID.equals("register"))
-            broadcastIntent.setAction(MyRequestReceiver5.PROCESS_RESPONSE);
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
         broadcastIntent.putExtra(IN_MSG, inMessage);
         broadcastIntent.putExtra(OUT_MSG, response);

@@ -15,9 +15,12 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.LoginButton;
 
+import java.util.Arrays;
+
 public class FacebookFragment extends Fragment {
 
     private static final String TAG = "MainFragment";
+
 
     private UiLifecycleHelper uiHelper;
     private Session.StatusCallback callback = new Session.StatusCallback() {
@@ -34,7 +37,7 @@ public class FacebookFragment extends Fragment {
 
         LoginButton authButton = (LoginButton) getActivity().findViewById(R.id.authButton);
         authButton.setFragment(this);
-        //authButton.setReadPermissions(Arrays.asList("user_likes", "user_status"));
+        authButton.setReadPermissions(Arrays.asList("email"));
 
         return null;
     }
@@ -89,8 +92,12 @@ public class FacebookFragment extends Fragment {
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
             Log.i(TAG, "Logged in...");
-            Intent intent = new Intent(FacebookFragment.this.getActivity(), MapsActivity.class);
-            startActivity(intent);
+            if(!GlobalContainer.loggedIn) {
+                GlobalContainer.loggedIn = true;
+                Intent intent = new Intent(FacebookFragment.this.getActivity(), MapsActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
         } else if (state.isClosed()) {
             Log.i(TAG, "Logged out...");
         }

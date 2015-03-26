@@ -24,7 +24,7 @@ import java.util.List;
 public class MyCrumbsActivity extends ActionBarActivity {
 
 
-    private String username;
+
     private MyRequestReceiver3 receiver;
 
     @Override
@@ -33,7 +33,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_my_crumbs);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        username = getIntent().getStringExtra("username");
+
 
         //Register your receiver so that the Activity can be notified
         //when the JSON response came back
@@ -45,7 +45,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
         Intent msgIntent = new Intent(this, JSONRequest.class);
         msgIntent.putExtra(JSONRequest.IN_MSG, "getCrumbs");
         msgIntent.putExtra("queryID", "getCrumbs");
-        msgIntent.putExtra("jsonObject", "{\"username\":\"" + username + "\"}");
+        msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
 
         startService(msgIntent);
 
@@ -59,7 +59,6 @@ public class MyCrumbsActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra("username", username);
         setResult(RESULT_OK, intent);
         finish();
         super.onBackPressed();

@@ -28,6 +28,8 @@ import java.util.TimerTask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.facebook.Session;
+
 
 public class LoginActivity extends ActionBarActivity {
     private FacebookFragment fbFragment;
@@ -74,6 +76,10 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        GlobalContainer.userIsInitialized = false;
+        GlobalContainer.loggedIn = false;
+        if(Session.getActiveSession() != null)
+            Session.getActiveSession().closeAndClearTokenInformation();
 
         //retrieve the hash key to log in with facebook
         try {
@@ -181,6 +187,7 @@ public class LoginActivity extends ActionBarActivity {
                    {
                        loggedIn = true;
                        Toast.makeText(getApplicationContext(), "login success", Toast.LENGTH_SHORT).show();
+                       mapsIntent.putExtra("email", tempJSON.getString("email"));
                        mapsIntent.putExtra("username", tempJSON.getString("username"));
                        startActivity(mapsIntent);
                    }

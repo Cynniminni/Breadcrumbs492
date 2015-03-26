@@ -34,7 +34,6 @@ public class ProfileActivity extends ActionBarActivity {
     private EditText state;
     private Button editProfileButton;
     private boolean isEditingProfile;
-    private String uName;
     private MyRequestReceiver1 receiver;
 
     //button implementation for editing user profile information
@@ -81,13 +80,13 @@ public class ProfileActivity extends ActionBarActivity {
         registerReceiver(receiver, filter);
 
         //populate user information fields through database
-        Intent intent = getIntent();
-        uName = intent.getStringExtra("username");
 
         Intent msgIntent = new Intent(this, JSONRequest.class);
         msgIntent.putExtra(JSONRequest.IN_MSG, "getProfile");
         msgIntent.putExtra("queryID", "getProfile");
-        msgIntent.putExtra("jsonObject", "{\"username\":\"" + uName + "\"}");
+        msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0]
+                            + "\",\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
+
 
         startService(msgIntent);
 
@@ -105,8 +104,8 @@ public class ProfileActivity extends ActionBarActivity {
         state = (EditText) findViewById(R.id.profile_state);
 
         //place into array for easy looping later
-        userInfo[0] = username;
-        userInfo[1] = password;
+        userInfo[0] = password;
+        userInfo[1] = username;
         userInfo[2] = email;
         userInfo[3] = firstName;
         userInfo[4] = lastName;
@@ -114,6 +113,10 @@ public class ProfileActivity extends ActionBarActivity {
         userInfo[6] = city;
         userInfo[7] = state;
 
+        for(int i = 1; i < userInfo.length; i++)
+        {
+            userInfo[i].setText(GlobalContainer.user.getInfo()[i-1]);
+        }
         //get Button reference
         editProfileButton = (Button) findViewById(R.id.profile_editprofile);
     }
@@ -126,7 +129,6 @@ public class ProfileActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra("username", uName);
         setResult(RESULT_OK, intent);
         finish();
         super.onBackPressed();
@@ -177,12 +179,7 @@ public class ProfileActivity extends ActionBarActivity {
                 JSONObject tempJSON = new JSONObject();
                 try {
                     tempJSON = new JSONObject(response);
-                    username.setText(tempJSON.getString("username"));
-                    email.setText(tempJSON.getString("email"));
                     password.setText(tempJSON.getString("password"));
-                    firstName.setText(tempJSON.getString("firstName"));
-                    lastName.setText(tempJSON.getString("lastName"));
-                    gender.setText(tempJSON.getString("gender"));
                     city.setText(tempJSON.getString("city"));
                     state.setText(tempJSON.getString("state"));
                 }
