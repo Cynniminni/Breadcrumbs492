@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -26,6 +27,10 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.model.GraphUser;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +40,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+<<<<<<< HEAD
+=======
+import org.json.JSONObject;
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -55,19 +64,27 @@ public class MapsActivity extends ActionBarActivity {
     public final static String LONGITUDE = "longitude";
     public final static String GUESTLOGIN = "guest login";
 
+    private static String email;
     private static String username;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private MarkerOptions markerOptions;
     private LatLng currentLocation;//store user's current location
     private boolean isGuestLogin;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
     private MyRequestReceiver4 receiver;
 
     //button implementation for viewing user profile information
     public void viewProfile(View view) {
         //launch ProfileActivity to view user profile
         Intent intent = new Intent(this, ProfileActivity.class);
+<<<<<<< HEAD
         intent.putExtra("username", username);
+=======
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         startActivityForResult(intent, REQUEST_PROFILE);
     }
 
@@ -75,7 +92,10 @@ public class MapsActivity extends ActionBarActivity {
     public void viewMyCrumbs(View view) {
         //launch MyCrumbsActivity to view user crumbs
         Intent intent = new Intent(this, MyCrumbsActivity.class);
+<<<<<<< HEAD
         intent.putExtra("username", username);
+=======
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         startActivityForResult(intent, REQUEST_MYCRUMBS);
     }
 
@@ -88,7 +108,11 @@ public class MapsActivity extends ActionBarActivity {
         //pass into intent
         intent.putExtra(LATITUDE, latitude);
         intent.putExtra(LONGITUDE, longitude);
+<<<<<<< HEAD
         intent.putExtra("username", username);
+=======
+
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         //pass intent to AddCrumbActivity with the request code
         startActivityForResult(intent, REQUEST_ADD_CRUMB);
     }
@@ -153,13 +177,82 @@ public class MapsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
 
-        //get intent received from LoginActivity
-        Intent intent = getIntent();
+        //Register your receiver so that the Activity can be notified
+        //when the JSON response came back
+        IntentFilter filter = new IntentFilter(MyRequestReceiver4.PROCESS_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new MyRequestReceiver4();
+        registerReceiver(receiver, filter);
 
-        //extract boolean, false is the default value if there is none
-        isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, false);
+        if (Session.getActiveSession().isOpened()) {
 
-        username = intent.getStringExtra("username");
+            Request.newMeRequest(Session.getActiveSession(),new Request.GraphUserCallback() {
+
+                   @Override
+                    public void onCompleted(GraphUser user, Response response) {
+                        if (response != null) {
+                            try {
+                                    GlobalContainer.user = new User(user.getName(),
+                                            (String) user.getProperty("email"),
+                                            (String) user.getProperty("first_name"),
+                                            (String) user.getProperty("last_name"),
+                                            (String) user.getProperty("gender"),
+                                    "city", "state");
+
+                                GlobalContainer.userIsInitialized = true;
+                                username = user.getName();
+                                email = (String) user.getProperty("email");
+
+                                Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
+                                msgIntent.putExtra(JSONRequest.IN_MSG, "registerInit");
+                                msgIntent.putExtra("queryID", "register");
+                                msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"password\":\""
+                                        + user.getId() + "\",\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\",\"firstName\":\""
+                                        + GlobalContainer.user.getInfo()[2] +  "\",\"lastName\":\"" + GlobalContainer.user.getInfo()[3] + "\",\"gender\":\""
+                                        + GlobalContainer.user.getInfo()[4] +  "\",\"city\":\"" + GlobalContainer.user.getInfo()[5] + "\",\"state\":\""
+                                        + GlobalContainer.user.getInfo()[6] + "\"}");
+
+                                startService(msgIntent);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+                }).executeAsync();
+            }
+        else{
+            //non-facebook login
+            //get intent received from LoginActivity
+            Intent intent = getIntent();
+            email = intent.getStringExtra("email");
+            username = intent.getStringExtra("username");
+            //extract boolean, false is the default value if there is none
+            isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, false);
+
+            if(!GlobalContainer.userIsInitialized) {
+                //initialize user object
+                //populate user information fields through database
+                Intent msgIntent2 = new Intent(this, JSONRequest.class);
+                msgIntent2.putExtra(JSONRequest.IN_MSG, "getProfileInit");
+                msgIntent2.putExtra("queryID", "getProfileInit");
+                msgIntent2.putExtra("jsonObject", "{\"username\":\"" + username
+                        + "\",\"email\":\"" + email + "\"}");
+                startService(msgIntent2);
+             }
+            else
+            {
+                //user is initialized so get all crumbs
+                Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
+                msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
+                msgIntent.putExtra("queryID", "getAllCrumbs");
+                msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
+
+                startService(msgIntent);
+            }
+        }
+
+
 
         //Register your receiver so that the Activity can be notified
         //when the JSON response came back
@@ -184,6 +277,7 @@ public class MapsActivity extends ActionBarActivity {
             //load settings for user login
             SettingsActivity.Settings.loadSettings(this);
 
+<<<<<<< HEAD
 
             //populate user information fields through database
             Intent msgIntent = new Intent(this, JSONRequest.class);
@@ -192,12 +286,30 @@ public class MapsActivity extends ActionBarActivity {
             msgIntent.putExtra("jsonObject", "{\"username\":\"" + username + "\"}");
 
             startService(msgIntent);
+=======
+            if(GlobalContainer.user.getInfo()[0] != null && Session.getActiveSession().isClosed())
+            {
+                //get all crumbs if user is already defined
+                Intent msgIntent = new Intent(this, JSONRequest.class);
+                msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
+                msgIntent.putExtra("queryID", "getAllCrumbs");
+                msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
+
+                startService(msgIntent);
+            }
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         }
     }//end onCreate
 
     @Override
     protected void onDestroy() {
         unregisterReceiver(receiver);
+<<<<<<< HEAD
+=======
+
+        username = null;
+        email = null;
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         super.onDestroy();
     }
 
@@ -260,7 +372,11 @@ public class MapsActivity extends ActionBarActivity {
         }
         else if (requestCode == REQUEST_PROFILE || requestCode == REQUEST_MYCRUMBS)
         {
+<<<<<<< HEAD
             username = data.getStringExtra("username");
+=======
+            email = GlobalContainer.user.getInfo()[1];
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         }
     }
 
@@ -408,7 +524,11 @@ public class MapsActivity extends ActionBarActivity {
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
 
+<<<<<<< HEAD
                 JSONArray tempJSON = new JSONArray();
+=======
+                JSONArray tempJSON;
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
                 try {
                     tempJSON = new JSONArray(response);
 
@@ -436,10 +556,66 @@ public class MapsActivity extends ActionBarActivity {
 
 
             }
+<<<<<<< HEAD
             else{
                 //you can choose to implement another transaction here
             }
 
+=======
+            else if(responseType.trim().equalsIgnoreCase("getProfileInit")){
+
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+
+                JSONObject tempJSON;
+                try {
+                    tempJSON = new JSONObject(response);
+
+                    GlobalContainer.user = new User(tempJSON.getString("username"), tempJSON.getString("email"),
+                            tempJSON.getString("firstName"),tempJSON.getString("lastName"), tempJSON.getString("gender"),
+                            tempJSON.getString("city"), tempJSON.getString("state"));
+
+                    GlobalContainer.userIsInitialized = true;
+                    //populate user information fields through database
+                    Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
+                    msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
+                    msgIntent.putExtra("queryID", "getAllCrumbs");
+                    msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
+
+                    startService(msgIntent);
+                }
+                catch(JSONException e)
+                {
+                    Toast.makeText(getApplicationContext(), "get user failed", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+            else if(responseType.trim().equalsIgnoreCase("registerInit")){
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+                JSONObject tempJSON;
+                try {
+                    tempJSON = new JSONObject(response);
+                    if(tempJSON.get("registerResult").equals("alreadyRegistered"))
+                        Toast.makeText(getApplicationContext(), "Already Registered", Toast.LENGTH_SHORT).show();
+                    else if(tempJSON.get("registerResult").equals("true"))
+                        Toast.makeText(getApplicationContext(), "Register success", Toast.LENGTH_SHORT).show();
+
+                    //initialize user object
+                    //populate user information fields through database
+                    Intent msgIntent2 = new Intent(MapsActivity.this, JSONRequest.class);
+                    msgIntent2.putExtra(JSONRequest.IN_MSG, "getProfileInit");
+                    msgIntent2.putExtra("queryID", "getProfileInit");
+                    msgIntent2.putExtra("jsonObject", "{\"username\":\"" + username
+                            + "\",\"email\":\"" + email + "\"}");
+
+                    startService(msgIntent2);
+                }
+                catch(JSONException e)
+                {
+                    Toast.makeText(getApplicationContext(), "Register user failed", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         }
         public String getResponse()
         {

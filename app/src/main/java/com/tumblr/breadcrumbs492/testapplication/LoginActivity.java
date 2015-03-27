@@ -1,9 +1,14 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.os.AsyncTask;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,16 +18,21 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 
+
 import java.net.URISyntaxException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.facebook.Session;
+
 
 public class LoginActivity extends ActionBarActivity {
-
+    private FacebookFragment fbFragment;
     private MyRequestReceiver receiver;
     private static boolean loggedIn = false;
     //sign in or register button click
@@ -66,6 +76,39 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        GlobalContainer.userIsInitialized = false;
+        GlobalContainer.loggedIn = false;
+        if(Session.getActiveSession() != null)
+            Session.getActiveSession().closeAndClearTokenInformation();
+
+        //retrieve the hash key to log in with facebook
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.tumblr.breadcrumbs492.testapplication",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+
+        if (savedInstanceState == null) {
+            // Add the fragment on initial activity setup
+            fbFragment = new FacebookFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(android.R.id.content, fbFragment)
+                    .commit();
+        } else {
+            // Or set the fragment from restored state info
+            fbFragment = (FacebookFragment) getSupportFragmentManager()
+                    .findFragmentById(android.R.id.content);
+        }
 
         //Register your receiver so that the Activity can be notified
         //when the JSON response came back
@@ -144,6 +187,7 @@ public class LoginActivity extends ActionBarActivity {
                    {
                        loggedIn = true;
                        Toast.makeText(getApplicationContext(), "login success", Toast.LENGTH_SHORT).show();
+                       mapsIntent.putExtra("email", tempJSON.getString("email"));
                        mapsIntent.putExtra("username", tempJSON.getString("username"));
                        startActivity(mapsIntent);
                    }

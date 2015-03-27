@@ -5,7 +5,6 @@ package com.tumblr.breadcrumbs492.testapplication;
  */
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,6 @@ import com.tumblr.breadcrumbs492.testapplication.RegisterActivity.MyRequestRecei
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 public class JSONRequest extends IntentService{
 
@@ -60,9 +58,15 @@ public class JSONRequest extends IntentService{
             String jsonObject = intent.getStringExtra("jsonObject");
             getUserInfo(queryID, jsonObject);
         }
+<<<<<<< HEAD
         else if(inMessage.trim().equals("getProfile")||inMessage.trim().equals("addCrumb")
                 ||inMessage.trim().equals("getCrumbs")||inMessage.trim().equals("getAllCrumbs")
                 ||inMessage.trim().equals("register")){
+=======
+        else if(inMessage.trim().equals("getProfileInit")||inMessage.trim().equals("getProfile")||inMessage.trim().equals("addCrumb")
+                ||inMessage.trim().equals("getCrumbs")||inMessage.trim().equals("getAllCrumbs")
+                ||inMessage.trim().equals("register")||inMessage.trim().equals("registerInit")){
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
             getUserInfo(queryID, jsonObject);
@@ -86,10 +90,24 @@ public class JSONRequest extends IntentService{
         //from the WEB Service
         Intent broadcastIntent = new Intent();
         broadcastIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        if(queryID.equals("login")) {
-            broadcastIntent.setAction(MyRequestReceiver.PROCESS_RESPONSE);
-            broadcastIntent.putExtra("intent", receivedIntent);
+        if(!inMessage.equalsIgnoreCase("registerInit")) {
+            if (queryID.equals("login")) {
+                broadcastIntent.setAction(MyRequestReceiver.PROCESS_RESPONSE);
+                broadcastIntent.putExtra("intent", receivedIntent);
+            } else if (queryID.equals("getProfile"))
+                broadcastIntent.setAction(MyRequestReceiver1.PROCESS_RESPONSE);
+            else if (queryID.equals("addCrumb"))
+                broadcastIntent.setAction(MyRequestReceiver2.PROCESS_RESPONSE);
+            else if (queryID.equals("getCrumbs"))
+                broadcastIntent.setAction(MyRequestReceiver3.PROCESS_RESPONSE);
+            else if (queryID.equals("getAllCrumbs"))
+                broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
+            else if (queryID.equals("getProfileInit"))
+                broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
+            else if (queryID.equals("register"))
+                broadcastIntent.setAction(MyRequestReceiver5.PROCESS_RESPONSE);
         }
+<<<<<<< HEAD
         else if(queryID.equals("getProfile"))
             broadcastIntent.setAction(MyRequestReceiver1.PROCESS_RESPONSE);
         else if(queryID.equals("addCrumb"))
@@ -100,6 +118,10 @@ public class JSONRequest extends IntentService{
             broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
         else if(queryID.equals("register"))
             broadcastIntent.setAction(MyRequestReceiver5.PROCESS_RESPONSE);
+=======
+        else if(inMessage.equalsIgnoreCase("registerInit"))
+            broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
         broadcastIntent.putExtra(IN_MSG, inMessage);
         broadcastIntent.putExtra(OUT_MSG, response);

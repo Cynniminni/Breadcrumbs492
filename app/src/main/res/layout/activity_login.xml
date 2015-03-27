@@ -16,6 +16,25 @@
 -->
     <!-- action bar appears when program is run on a device -->
 
+<<<<<<< HEAD
+=======
+    <EditText
+        android:id="@+id/enter_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_username"
+        android:inputType="text"
+        android:editable="true" />
+
+    <EditText
+        android:id="@+id/enter_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="@string/enter_password"
+        android:editable="true" />
+
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
     <Button
         android:id="@+id/signin_or_register"
         android:background="@drawable/button_style"
@@ -36,6 +55,7 @@
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:text="@string/login_as_guest"
+<<<<<<< HEAD
         android:textColor="#FFFFFF"
         android:onClick="loginAsGuest"
         android:layout_gravity="center_horizontal|bottom"
@@ -108,3 +128,15 @@
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
+=======
+        android:onClick="loginAsGuest"/>
+
+    <com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        />
+</LinearLayout>
+>>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
