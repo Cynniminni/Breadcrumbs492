@@ -1,12 +1,5 @@
 package com.tumblr.breadcrumbs492.testapplication;
-<<<<<<< HEAD
 
-/**
- * Created by Aaron on 3/19/2015.
- */
-public class FacebookFragment {
-}
-=======
 import android.content.Intent;
 import android.content.Context;
 import android.os.Bundle;
@@ -111,4 +104,4 @@ public class FacebookFragment extends Fragment {
         }
     }
 }
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
+

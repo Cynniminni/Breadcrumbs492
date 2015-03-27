@@ -24,11 +24,6 @@ import java.util.List;
 public class MyCrumbsActivity extends ActionBarActivity {
 
 
-<<<<<<< HEAD
-    private String username;
-=======
-
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
     private MyRequestReceiver3 receiver;
 
     @Override
@@ -36,25 +31,6 @@ public class MyCrumbsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_crumbs);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-<<<<<<< HEAD
-        username = getIntent().getStringExtra("username");
-
-        //Register your receiver so that the Activity can be notified
-        //when the JSON response came back
-        IntentFilter filter = new IntentFilter(MyRequestReceiver3.PROCESS_RESPONSE);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        receiver = new MyRequestReceiver3();
-        registerReceiver(receiver, filter);
-
-        Intent msgIntent = new Intent(this, JSONRequest.class);
-        msgIntent.putExtra(JSONRequest.IN_MSG, "getCrumbs");
-        msgIntent.putExtra("queryID", "getCrumbs");
-        msgIntent.putExtra("jsonObject", "{\"username\":\"" + username + "\"}");
-
-        startService(msgIntent);
-=======
-
 
         //Register your receiver so that the Activity can be notified
         //when the JSON response came back
@@ -67,7 +43,6 @@ public class MyCrumbsActivity extends ActionBarActivity {
         msgIntent.putExtra(JSONRequest.IN_MSG, "getCrumbs");
         msgIntent.putExtra("queryID", "getCrumbs");
         msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
 
         startService(msgIntent);
 
@@ -81,21 +56,6 @@ public class MyCrumbsActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
-        super.onBackPressed();
-    }
-
-    }
-    @Override
-    protected void onDestroy() {
-        unregisterReceiver(receiver);
-        super.onDestroy();
-    }
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra("username", username);
         setResult(RESULT_OK, intent);
         finish();
         super.onBackPressed();
@@ -194,21 +154,11 @@ public class MyCrumbsActivity extends ActionBarActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
-<<<<<<< HEAD
-
             }
             else{
                 //you can choose to implement another transaction here
             }
 
-=======
-
-            }
-            else{
-                //you can choose to implement another transaction here
-            }
-
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         }
         public String getResponse()
         {

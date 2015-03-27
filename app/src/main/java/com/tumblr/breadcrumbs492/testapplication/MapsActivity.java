@@ -40,10 +40,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-<<<<<<< HEAD
-=======
 import org.json.JSONObject;
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
+
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -71,20 +69,13 @@ public class MapsActivity extends ActionBarActivity {
     private LatLng currentLocation;//store user's current location
     private boolean isGuestLogin;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
     private MyRequestReceiver4 receiver;
 
     //button implementation for viewing user profile information
     public void viewProfile(View view) {
         //launch ProfileActivity to view user profile
         Intent intent = new Intent(this, ProfileActivity.class);
-<<<<<<< HEAD
-        intent.putExtra("username", username);
-=======
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
+
         startActivityForResult(intent, REQUEST_PROFILE);
     }
 
@@ -92,10 +83,6 @@ public class MapsActivity extends ActionBarActivity {
     public void viewMyCrumbs(View view) {
         //launch MyCrumbsActivity to view user crumbs
         Intent intent = new Intent(this, MyCrumbsActivity.class);
-<<<<<<< HEAD
-        intent.putExtra("username", username);
-=======
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         startActivityForResult(intent, REQUEST_MYCRUMBS);
     }
 
@@ -108,11 +95,8 @@ public class MapsActivity extends ActionBarActivity {
         //pass into intent
         intent.putExtra(LATITUDE, latitude);
         intent.putExtra(LONGITUDE, longitude);
-<<<<<<< HEAD
-        intent.putExtra("username", username);
-=======
 
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
+
         //pass intent to AddCrumbActivity with the request code
         startActivityForResult(intent, REQUEST_ADD_CRUMB);
     }
@@ -253,14 +237,6 @@ public class MapsActivity extends ActionBarActivity {
         }
 
 
-
-        //Register your receiver so that the Activity can be notified
-        //when the JSON response came back
-        IntentFilter filter = new IntentFilter(MyRequestReceiver4.PROCESS_RESPONSE);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        receiver = new MyRequestReceiver4();
-        registerReceiver(receiver, filter);
-
         //get button references
         Button profileButton = (Button) findViewById(R.id.button_1);
         Button myCrumbsButton = (Button) findViewById(R.id.button_2);
@@ -277,16 +253,6 @@ public class MapsActivity extends ActionBarActivity {
             //load settings for user login
             SettingsActivity.Settings.loadSettings(this);
 
-<<<<<<< HEAD
-
-            //populate user information fields through database
-            Intent msgIntent = new Intent(this, JSONRequest.class);
-            msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
-            msgIntent.putExtra("queryID", "getAllCrumbs");
-            msgIntent.putExtra("jsonObject", "{\"username\":\"" + username + "\"}");
-
-            startService(msgIntent);
-=======
             if(GlobalContainer.user.getInfo()[0] != null && Session.getActiveSession().isClosed())
             {
                 //get all crumbs if user is already defined
@@ -297,19 +263,14 @@ public class MapsActivity extends ActionBarActivity {
 
                 startService(msgIntent);
             }
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         }
     }//end onCreate
 
     @Override
     protected void onDestroy() {
         unregisterReceiver(receiver);
-<<<<<<< HEAD
-=======
-
         username = null;
         email = null;
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         super.onDestroy();
     }
 
@@ -372,11 +333,8 @@ public class MapsActivity extends ActionBarActivity {
         }
         else if (requestCode == REQUEST_PROFILE || requestCode == REQUEST_MYCRUMBS)
         {
-<<<<<<< HEAD
-            username = data.getStringExtra("username");
-=======
+
             email = GlobalContainer.user.getInfo()[1];
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         }
     }
 
@@ -524,11 +482,8 @@ public class MapsActivity extends ActionBarActivity {
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
 
-<<<<<<< HEAD
-                JSONArray tempJSON = new JSONArray();
-=======
+
                 JSONArray tempJSON;
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
                 try {
                     tempJSON = new JSONArray(response);
 
@@ -556,12 +511,6 @@ public class MapsActivity extends ActionBarActivity {
 
 
             }
-<<<<<<< HEAD
-            else{
-                //you can choose to implement another transaction here
-            }
-
-=======
             else if(responseType.trim().equalsIgnoreCase("getProfileInit")){
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
@@ -615,7 +564,7 @@ public class MapsActivity extends ActionBarActivity {
                     e.printStackTrace();
                 }
             }
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
+
         }
         public String getResponse()
         {

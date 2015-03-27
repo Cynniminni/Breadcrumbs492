@@ -129,10 +129,6 @@ public class ProfileActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-<<<<<<< HEAD
-        intent.putExtra("username", uName);
-=======
->>>>>>> 927438b789a85ce4fc3c5dbd3870b20f9520bfa1
         setResult(RESULT_OK, intent);
         finish();
         super.onBackPressed();
