@@ -30,12 +30,14 @@ public class AddCrumbActivity extends ActionBarActivity {
     private GoogleMap map;
     private EditText crumbName;
     private EditText crumbComment;
+    private EditText crumbTags;
     private double latitude;
     private double longitude;
     private String uName;
     private MyRequestReceiver2 receiver;
     private String name;
     private String comment;
+    private String tags;
     private String addResult;
 
     //implement adding a crumb to the map
@@ -43,9 +45,10 @@ public class AddCrumbActivity extends ActionBarActivity {
         //extract String input from user
         name = crumbName.getText().toString();
         comment = crumbComment.getText().toString();
+        tags = crumbTags.getText().toString();
 
         //get username
-        Intent intent = getIntent();
+        Intent intent = new Intent(this, MapsActivity.class);
         uName = GlobalContainer.user.getInfo()[0];
 
 
@@ -61,7 +64,8 @@ public class AddCrumbActivity extends ActionBarActivity {
             msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
                     + GlobalContainer.user.getInfo()[1] + "\",\"name\":\"" + name
                     + "\",\"comment\":\"" + comment + "\",\"latitude\":\""
-                    + latitude + "\",\"longitude\":\"" + longitude  + "\"}");
+                    + latitude + "\",\"longitude\":\"" + longitude  + "\",\"tags\":\"" + tags
+                    + "\"}");
             msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
             startService(msgIntent);
 
@@ -69,6 +73,7 @@ public class AddCrumbActivity extends ActionBarActivity {
             intent.putExtra(MapsActivity.NAME, name);
             intent.putExtra(MapsActivity.COMMENT, comment);
             setResult(RESULT_OK, intent);//send result code
+            finish();
         }
 
     }
@@ -89,6 +94,7 @@ public class AddCrumbActivity extends ActionBarActivity {
         //get references to the EditText fields
         crumbName = (EditText) findViewById(R.id.addcrumb_name);
         crumbComment = (EditText) findViewById(R.id.addcrumb_comment);
+        crumbTags = (EditText) findViewById(R.id.addcrumb_tags);
 
         //get reference to the map
         SupportMapFragment supportMapFragment = (SupportMapFragment)

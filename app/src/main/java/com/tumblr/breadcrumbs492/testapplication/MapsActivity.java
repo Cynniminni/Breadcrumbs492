@@ -253,16 +253,16 @@ public class MapsActivity extends ActionBarActivity {
             //load settings for user login
             SettingsActivity.Settings.loadSettings(this);
 
-            if(GlobalContainer.user.getInfo()[0] != null && Session.getActiveSession().isClosed())
-            {
-                //get all crumbs if user is already defined
-                Intent msgIntent = new Intent(this, JSONRequest.class);
-                msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
-                msgIntent.putExtra("queryID", "getAllCrumbs");
-                msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
-
-                startService(msgIntent);
-            }
+//            if(GlobalContainer.user.getInfo()[0] != null && Session.getActiveSession().isClosed())
+//            {
+//                //get all crumbs if user is already defined
+//                Intent msgIntent = new Intent(this, JSONRequest.class);
+//                msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
+//                msgIntent.putExtra("queryID", "getAllCrumbs");
+//                msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
+//
+//                startService(msgIntent);
+//            }
         }
     }//end onCreate
 
@@ -365,6 +365,13 @@ public class MapsActivity extends ActionBarActivity {
                 if (location != null && !location.equals("")) {
                     //if location exists, mark it on map
                     new GeocoderTask().execute(location);
+
+                    //insert code to find tags
+                    Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
+                    msgIntent.putExtra(JSONRequest.IN_MSG, "findTags");
+                    msgIntent.putExtra("queryID", "findTags");
+                    msgIntent.putExtra("jsonObject", "{\"tag\":\"" + location.trim() + "\"}");
+                    startService(msgIntent);
                 }
             }
         };
@@ -563,6 +570,35 @@ public class MapsActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "Register user failed", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
+            }
+            else if(responseType.trim().equalsIgnoreCase("findTags")){
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+                JSONArray tempJSON;
+                mMap.clear();
+                try {
+                    tempJSON = new JSONArray(response);
+
+                    String name, comment;
+                    LatLng location;
+                    Date date;
+                    Crumb[] crumbsArr = new Crumb[tempJSON.length()];
+
+                    for(int i = 0; i < tempJSON.length(); i++)
+                    {
+                        name = tempJSON.getJSONObject(i).getString("crumbName");
+                        comment = tempJSON.getJSONObject(i).getString("comment");
+                        location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"),tempJSON.getJSONObject(i).getDouble("longitude"));
+                        date = Calendar.getInstance().getTime();
+                        crumbsArr[i] = new Crumb(name, comment, location, date);
+                        markCrumb(crumbsArr[i]);
+                    }
+                }
+                catch(JSONException e)
+                {
+                    Toast.makeText(getApplicationContext(), "get crumbs failed", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
             }
 
         }
