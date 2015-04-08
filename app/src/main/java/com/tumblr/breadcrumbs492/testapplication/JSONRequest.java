@@ -77,7 +77,7 @@ public class JSONRequest extends IntentService{
         //prepare to make Http request
         String url = "http://54.153.38.154:8080/crumbs/CrumbsServer";
 
-        //add name value pair for the country code
+        //add name value pair for the query needed
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
         nameValuePairs.add(new BasicNameValuePair("queryID",queryID));
         nameValuePairs.add(new BasicNameValuePair("jsonObject",jsonObject));
