@@ -115,6 +115,8 @@ public class JSONRequest extends IntentService{
 
         else if(inMessage.equalsIgnoreCase("registerInit"))
             broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
+
+
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
         broadcastIntent.putExtra(IN_MSG, inMessage);
         broadcastIntent.putExtra(OUT_MSG, response);

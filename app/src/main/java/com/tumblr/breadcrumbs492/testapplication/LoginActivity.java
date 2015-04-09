@@ -190,6 +190,7 @@ public class LoginActivity extends ActionBarActivity {
                        mapsIntent.putExtra("email", tempJSON.getString("email"));
                        mapsIntent.putExtra("username", tempJSON.getString("username"));
                        startActivity(mapsIntent);
+                       finish();
                    }
                    else
                    {

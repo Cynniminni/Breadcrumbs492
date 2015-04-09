@@ -59,8 +59,9 @@ public class MyCrumbsActivity extends ActionBarActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
+        Intent intent = new Intent(this, MapsActivity.class);
         setResult(RESULT_OK, intent);
+        startActivity(intent);
         finish();
         super.onBackPressed();
     }
@@ -169,6 +170,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         intent.putExtra(CRUMB_COMMENT, comments[itemPosition]);
                         intent.putExtra(CRUMB_TAGS, tags[itemPosition]);
                         startActivity(intent);
+                        finish();
                     }
                 });
             }

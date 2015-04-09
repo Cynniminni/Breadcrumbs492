@@ -77,6 +77,7 @@ public class MapsActivity extends ActionBarActivity {
         Intent intent = new Intent(this, ProfileActivity.class);
 
         startActivityForResult(intent, REQUEST_PROFILE);
+        finish();
     }
 
     //button implementation for viewing user crumbs
@@ -84,6 +85,7 @@ public class MapsActivity extends ActionBarActivity {
         //launch MyCrumbsActivity to view user crumbs
         Intent intent = new Intent(this, MyCrumbsActivity.class);
         startActivityForResult(intent, REQUEST_MYCRUMBS);
+        finish();
     }
 
     //button implementation for adding crumbs to the map
@@ -333,8 +335,8 @@ public class MapsActivity extends ActionBarActivity {
         }
         else if (requestCode == REQUEST_PROFILE || requestCode == REQUEST_MYCRUMBS)
         {
-
-            email = GlobalContainer.user.getInfo()[1];
+            username = data.getStringExtra("username");
+            email = data.getStringExtra("email");
         }
     }
 

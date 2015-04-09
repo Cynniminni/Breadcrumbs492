@@ -1,5 +1,6 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +22,7 @@ import java.net.URISyntaxException;
 public class ProfileActivity extends ActionBarActivity {
 
     private final int USER_FIELDS = 8;
-    private final String SAVE_CHANGES = "Save Changes";
+    private final String SAVE_CHANGES = "Saving Changes";
     private final String EDIT_PROFILE = "Edit Profile";
     private EditText[] userInfo = new EditText[USER_FIELDS];
     private EditText username;
@@ -58,7 +59,7 @@ public class ProfileActivity extends ActionBarActivity {
                     + "\",\"gender\":\"" + gender.getText().toString().charAt(0) + "\",\"city\":\"" + city.getText().toString()
                     +  "\",\"state\":\"" + state.getText().toString() + "\"}");
 
-            msgIntent.putExtra("intent", msgIntent.toUri(Intent.URI_INTENT_SCHEME));
+
             startService(msgIntent);
 
             //possibly need to send back to intent for ProfileActivity?
@@ -97,12 +98,12 @@ public class ProfileActivity extends ActionBarActivity {
 
         //populate user information fields through database
 
+        Intent intent = getIntent();
         Intent msgIntent = new Intent(this, JSONRequest.class);
         msgIntent.putExtra(JSONRequest.IN_MSG, "getProfile");
         msgIntent.putExtra("queryID", "getProfile");
         msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0]
                             + "\",\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
-
 
         startService(msgIntent);
 
@@ -146,8 +147,8 @@ public class ProfileActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
+        Intent intent = new Intent(ProfileActivity.this, MapsActivity.class);
+        startActivity(intent);
         finish();
         super.onBackPressed();
 
@@ -214,9 +215,20 @@ public class ProfileActivity extends ActionBarActivity {
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
                 JSONObject tempJSON = new JSONObject();
 
+
                 try {
                     tempJSON = new JSONObject(response);
+
                     if (tempJSON.getString("updateProfileResult").equals("true")) {
+
+                        Intent intent2 = new Intent(ProfileActivity.this, MapsActivity.class);
+                        intent2.putExtra("username",tempJSON.getString("username"));
+                        intent2.putExtra("email",tempJSON.getString("email"));
+                        startActivity(intent2);
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "profile edit failed", Toast.LENGTH_SHORT).show();
                         Intent intent2 = new Intent(ProfileActivity.this, MapsActivity.class);
                         startActivity(intent2);
                         finish();
@@ -225,6 +237,9 @@ public class ProfileActivity extends ActionBarActivity {
                 catch(JSONException e)
                 {
                     Toast.makeText(getApplicationContext(), "profile edit failed", Toast.LENGTH_SHORT).show();
+                    Intent intent2 = new Intent(ProfileActivity.this, MapsActivity.class);
+                    startActivity(intent2);
+                    finish();
                     e.printStackTrace();
                 }
             }
