@@ -132,7 +132,7 @@ public class EditCrumb extends ActionBarActivity {
 
     public class MyRequestReceiver6 extends BroadcastReceiver {
 
-        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.AddCrumbActivity.MyRequestReceiver";
+        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.EditCrumb.MyRequestReceiver";
         public String response = null;
 
         @Override

@@ -231,7 +231,7 @@
         android:id="@+id/profile_editprofile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Changes"
+        android:text="Edit Profile"
         android:onClick="editProfile"
         android:background="@drawable/button_style"
         android:textColor="#FFFFFF"

@@ -46,18 +46,21 @@ public class ProfileActivity extends ActionBarActivity {
                 userInfo[i].setFocusable(true);
                 userInfo[i].setClickable(true);
             }
-            ///////////////////UpdateProfile//////////////////
-            //should save any edited user info to database here
-            /*
-            Intent msgIntent = new Intent(this, ProfileActivity.class);
+
+            GlobalContainer.userIsInitialized = false;
+            Intent msgIntent = new Intent(this, JSONRequest.class);
             msgIntent.putExtra(JSONRequest.IN_MSG, "updateProfile");
             msgIntent.putExtra("queryID", "updateProfile");
-            msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0]
-                    + "\",\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
+            msgIntent.putExtra("jsonObject", "{\"username\":\"" + username.getText().toString() + "\",\"oldUsername\":\"" + GlobalContainer.user.getInfo()[0]
+                    + "\",\"oldEmail\":\"" + GlobalContainer.user.getInfo()[1] + "\",\"password\":\""
+                    + password.getText().toString() + "\",\"email\":\"" + email.getText().toString()
+                    + "\",\"firstName\":\"" + firstName.getText().toString() + "\",\"lastName\":\"" + lastName.getText().toString()
+                    + "\",\"gender\":\"" + gender.getText().toString().charAt(0) + "\",\"city\":\"" + city.getText().toString()
+                    +  "\",\"state\":\"" + state.getText().toString() + "\"}");
 
             msgIntent.putExtra("intent", msgIntent.toUri(Intent.URI_INTENT_SCHEME));
             startService(msgIntent);
-            */
+
             //possibly need to send back to intent for ProfileActivity?
 
             //change button text and boolean
@@ -207,22 +210,23 @@ public class ProfileActivity extends ActionBarActivity {
 
             }
             else if(responseType.trim().equalsIgnoreCase("updateProfile"))
-            { /* ///////////////////UpdateProfile//////////////////
-                //you can choose to implement another transaction here
+            {
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
                 JSONObject tempJSON = new JSONObject();
 
                 try {
                     tempJSON = new JSONObject(response);
-                    password.setText(tempJSON.getString("password"));
-                    city.setText(tempJSON.getString("city"));
-                    state.setText(tempJSON.getString("state"));
+                    if (tempJSON.getString("updateProfileResult").equals("true")) {
+                        Intent intent2 = new Intent(ProfileActivity.this, MapsActivity.class);
+                        startActivity(intent2);
+                        finish();
+                    }
                 }
                 catch(JSONException e)
                 {
                     Toast.makeText(getApplicationContext(), "profile edit failed", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
-                } */
+                }
             }
 
         }

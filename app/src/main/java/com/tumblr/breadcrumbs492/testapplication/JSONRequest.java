@@ -28,6 +28,7 @@ import com.tumblr.breadcrumbs492.testapplication.AddCrumbActivity.MyRequestRecei
 import com.tumblr.breadcrumbs492.testapplication.MyCrumbsActivity.MyRequestReceiver3;
 import com.tumblr.breadcrumbs492.testapplication.MapsActivity.MyRequestReceiver4;
 import com.tumblr.breadcrumbs492.testapplication.RegisterActivity.MyRequestReceiver5;
+import com.tumblr.breadcrumbs492.testapplication.EditCrumb.MyRequestReceiver6;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -62,7 +63,8 @@ public class JSONRequest extends IntentService{
         else if(inMessage.trim().equals("getProfileInit")||inMessage.trim().equals("getProfile")||inMessage.trim().equals("addCrumb")
                 ||inMessage.trim().equals("getCrumbs")||inMessage.trim().equals("getAllCrumbs")
                 ||inMessage.trim().equals("register")||inMessage.trim().equals("registerInit")
-                ||inMessage.trim().equals("findTags")){
+                ||inMessage.trim().equals("findTags")||inMessage.trim().equals("editCrumb")
+                ||inMessage.trim().equals("updateProfile")){
 
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
@@ -93,6 +95,8 @@ public class JSONRequest extends IntentService{
                 broadcastIntent.putExtra("intent", receivedIntent);
             } else if (queryID.equals("getProfile"))
                 broadcastIntent.setAction(MyRequestReceiver1.PROCESS_RESPONSE);
+            else if (queryID.equals("updateProfile"))
+                broadcastIntent.setAction(MyRequestReceiver1.PROCESS_RESPONSE);
             else if (queryID.equals("addCrumb"))
                 broadcastIntent.setAction(MyRequestReceiver2.PROCESS_RESPONSE);
             else if (queryID.equals("getCrumbs"))
@@ -105,6 +109,8 @@ public class JSONRequest extends IntentService{
                 broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
             else if (queryID.equals("register"))
                 broadcastIntent.setAction(MyRequestReceiver5.PROCESS_RESPONSE);
+            else if (queryID.equals("editCrumb"))
+                broadcastIntent.setAction(MyRequestReceiver6.PROCESS_RESPONSE);
         }
 
         else if(inMessage.equalsIgnoreCase("registerInit"))
