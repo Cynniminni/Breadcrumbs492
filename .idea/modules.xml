@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AddCrumbActivityTest/AddCrumbActivityTest.iml" filepath="$PROJECT_DIR$/AddCrumbActivityTest/AddCrumbActivityTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Breadcrumbs492.iml" filepath="$PROJECT_DIR$/Breadcrumbs492.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testingcrumb/testingcrumb.iml" filepath="$PROJECT_DIR$/testingcrumb/testingcrumb.iml" />
     </modules>
   </component>
 </project>

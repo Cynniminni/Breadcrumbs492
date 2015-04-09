@@ -3,7 +3,7 @@
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
-        <option name="GRADLE_PROJECT_PATH" value=":app" />
+        <option name="GRADLE_PROJECT_PATH" value=":AddCrumbActivityTest" />
       </configuration>
     </facet>
     <facet type="android" name="Android">
@@ -18,7 +18,7 @@
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/debug/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -54,9 +54,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/assets" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/aidl" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
@@ -81,29 +81,10 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 21 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" scope="TEST" name="uiautomator-v18-2.0.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="espresso-core-2.0" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="javax.annotation-api-1.2" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-library-1.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="javax.inject-1" level="project" />
-    <orderEntry type="library" exported="" name="play-services-6.5.87" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-integration-1.1" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="junit-dep-4.10" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="javawriter-2.1.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.1" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="testing-support-lib-0.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="espresso-idling-resource-2.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="jsr305-2.0.1" level="project" />
-    <orderEntry type="library" exported="" name="robotium-solo-5.3.2-SNAPSHOT" level="project" />
-    <orderEntry type="module" module-name="facebook" exported="" />
+    <orderEntry type="library" exported="" scope="TEST" name="robotium-solo-5.3.2-SNAPSHOT" level="project" />
   </component>
 </module>
 
