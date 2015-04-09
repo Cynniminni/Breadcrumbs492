@@ -9,62 +9,47 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import org.json.JSONException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URISyntaxException;
 
+public class EditCrumb extends ActionBarActivity {
 
-public class AddCrumbActivity extends ActionBarActivity {
-
-    private GoogleMap map;
-    private EditText crumbName;
-    private EditText crumbComment;
-    private EditText crumbTags;
-    private double latitude;
-    private double longitude;
-    private String uName;
-    private MyRequestReceiver2 receiver;
+    private MyRequestReceiver6 receiver;
     private String name;
     private String comment;
     private String tags;
-    private String addResult;
+    private String id;
+    private EditText crumbName;
+    private EditText crumbComment;
+    private EditText crumbTags;
 
-    //implement adding a crumb to the map
-    public void addCrumb(View view) {
-        //extract String input from user
+    public void editCrumb(View view) {
         name = crumbName.getText().toString();
         comment = crumbComment.getText().toString();
         tags = crumbTags.getText().toString();
-
-        //get username
         Intent intent = new Intent(this, MapsActivity.class);
-        uName = GlobalContainer.user.getInfo()[0];
-
+        Intent intent2 = getIntent();
+        id = intent2.getStringExtra(MyCrumbsActivity.CRUMB_ID);
 
         if (name.equals("")) {
             //if user entered nothing then cancel adding a crumb
             setResult(RESULT_CANCELED, intent);
         } else {
-            JSONObject jObject = new JSONObject();
             Intent msgIntent = new Intent(this, JSONRequest.class);
-            msgIntent.putExtra(JSONRequest.IN_MSG, "addCrumb");
-            msgIntent.putExtra("queryID", "addCrumb");
+            msgIntent.putExtra(JSONRequest.IN_MSG, "editCrumb");
+            msgIntent.putExtra("queryID", "editCrumb");
 
             msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
-                    + GlobalContainer.user.getInfo()[1] + "\",\"name\":\"" + name
-                    + "\",\"comment\":\"" + comment + "\",\"latitude\":\""
-                    + latitude + "\",\"longitude\":\"" + longitude  + "\",\"tags\":\"" + tags
+                    + GlobalContainer.user.getInfo()[1] + "\",\"crumbID\":\"" + id + "\",\"crumbName\":\"" + name
+                    + "\",\"comment\":\"" + comment + "\",\"tags\":\"" + tags
                     + "\"}");
             msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
             startService(msgIntent);
@@ -75,46 +60,31 @@ public class AddCrumbActivity extends ActionBarActivity {
             setResult(RESULT_OK, intent);//send result code
             finish();
         }
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_crumb);
+        setContentView(R.layout.activity_edit_crumb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Register your receiver so that the Activity can be notified
         //when the JSON response came back
-        IntentFilter filter = new IntentFilter(MyRequestReceiver2.PROCESS_RESPONSE);
+        IntentFilter filter = new IntentFilter(MyRequestReceiver6.PROCESS_RESPONSE);
         filter.addCategory(Intent.CATEGORY_DEFAULT);
-        receiver = new MyRequestReceiver2();
+        receiver = new MyRequestReceiver6();
         registerReceiver(receiver, filter);
 
         //get references to the EditText fields
-        crumbName = (EditText) findViewById(R.id.addcrumb_name);
-        crumbComment = (EditText) findViewById(R.id.addcrumb_comment);
-        crumbTags = (EditText) findViewById(R.id.addcrumb_tags);
+        crumbName = (EditText) findViewById(R.id.editcrumb_name);
+        crumbComment = (EditText) findViewById(R.id.editcrumb_comment);
+        crumbTags = (EditText) findViewById(R.id.editcrumb_tags);
 
-        //get reference to the map
-        SupportMapFragment supportMapFragment = (SupportMapFragment)
-                getSupportFragmentManager().findFragmentById(R.id.map);
-        map = supportMapFragment.getMap();
-
-        //get user location
-        latitude = getIntent().getDoubleExtra(MapsActivity.LATITUDE, 0);
-        longitude = getIntent().getDoubleExtra(MapsActivity.LONGITUDE, 0);
-        LatLng location = new LatLng(latitude, longitude);
-
-        //mark user location on map
-        map.setMyLocationEnabled(true);
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        map.moveCamera(CameraUpdateFactory.newLatLng(location));
-        map.animateCamera(CameraUpdateFactory.zoomTo(14));
-        map.addMarker(new MarkerOptions().position(location).
-                title("Your are here."));
-        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(location, 12);
-        map.animateCamera(yourLocation);
+        //populate edittext fields with selected crumb attributes
+        Intent intent3 = getIntent();
+        crumbName.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_NAME));
+        crumbComment.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_COMMENT));
+        crumbTags.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_TAGS));
     }
 
     @Override
@@ -131,10 +101,11 @@ public class AddCrumbActivity extends ActionBarActivity {
         super.onBackPressed();
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_crumb, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_crumb, menu);
         return true;
     }
 
@@ -158,51 +129,39 @@ public class AddCrumbActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    //broadcast receiver to receive messages sent from the JSON IntentService
-    public class MyRequestReceiver2 extends BroadcastReceiver {
+
+    public class MyRequestReceiver6 extends BroadcastReceiver {
 
         public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.AddCrumbActivity.MyRequestReceiver";
         public String response = null;
+
         @Override
         public void onReceive(Context context, Intent intent) {
-
-
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
-            Intent addCrumbIntent = new Intent(AddCrumbActivity.this, MapsActivity.class);
-            if(responseType.trim().equalsIgnoreCase("addCrumb")){
+            Intent editCrumbIntent = new Intent(EditCrumb.this, MapsActivity.class);
+            if (responseType.trim().equalsIgnoreCase("editCrumb")) {
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
 
                 JSONObject tempJSON = new JSONObject();
 
-
-
                 try {
                     tempJSON = new JSONObject(response);
-                    if(tempJSON.getString("addCrumbResult").trim().equals("true"))
-                    {
-                        Toast.makeText(getApplicationContext(), "successfully added crumb", Toast.LENGTH_SHORT).show();
+                    if (tempJSON.getString("editCrumbResult").trim().equals("true")) {
+                        Toast.makeText(getApplicationContext(), "successfully edited crumb", Toast.LENGTH_SHORT).show();
                     }
-                }
-                catch(JSONException e)
-                {
-                    Toast.makeText(getApplicationContext(), "add crumb failed", Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    Toast.makeText(getApplicationContext(), "edit crumb failed", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
 
-                startActivity(addCrumbIntent);//close this activity and return to MapsActivity
+                startActivity(editCrumbIntent);//close this activity and return to MapsActivity
                 finish();
 
-            }
-            else{
+            } else {
                 //you can choose to implement another transaction here
             }
 
-        }
-
-        public String getResponse()
-        {
-            return response;
         }
     }
 }

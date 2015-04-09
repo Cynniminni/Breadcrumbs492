@@ -25,6 +25,10 @@ public class MyCrumbsActivity extends ActionBarActivity {
 
 
     private MyRequestReceiver3 receiver;
+    public final static String CRUMB_NAME = "crumbName";
+    public final static String CRUMB_COMMENT = "crumbComment";
+    public final static String CRUMB_TAGS = "crumbsTags";
+    public final static String CRUMB_ID = "crumbID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,12 +119,18 @@ public class MyCrumbsActivity extends ActionBarActivity {
                 }
 //get ListView reference from xml
                 listView = (ListView) findViewById(R.id.list);
-                String[] values = new String[tempJSON.length()];
+                final String[] names = new String[tempJSON.length()];
+                final String[] ids = new String[tempJSON.length()];
+                final String[] comments = new String[tempJSON.length()];
+                final String[] tags = new String[tempJSON.length()];
                 try {
                     //define a sample array of values
                     //this will be replaced later with a list of crumb names from db
                     for (int i = 0; i < tempJSON.length(); i++) {
-                        values[i] = tempJSON.getJSONObject(i).getString("crumbName");
+                        names[i] = tempJSON.getJSONObject(i).getString("crumbName");
+                        ids[i] = tempJSON.getJSONObject(i).getString("crumbID");
+                        comments[i] = tempJSON.getJSONObject(i).getString("comment");
+                        tags[i] = tempJSON.getJSONObject(i).getString("tags");
 
                     }
                 }
@@ -135,7 +145,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
             for each row. I want to show both crumb name and date created
          */
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                        (MyCrumbsActivity.this, android.R.layout.simple_list_item_1, values);
+                        (MyCrumbsActivity.this, android.R.layout.simple_list_item_1, names);
                 listView.setAdapter(adapter);
 
                 //add ListView item click listener to interact with each item
@@ -152,6 +162,13 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(),
                                 "Position :" + itemPosition + "  ListItem : " + itemValue,
                                 Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(MyCrumbsActivity.this, EditCrumb.class);
+                        intent.putExtra(CRUMB_NAME, names[itemPosition]);
+                        intent.putExtra(CRUMB_ID, ids[itemPosition]);
+                        intent.putExtra(CRUMB_COMMENT, comments[itemPosition]);
+                        intent.putExtra(CRUMB_TAGS, tags[itemPosition]);
+                        startActivity(intent);
                     }
                 });
             }
