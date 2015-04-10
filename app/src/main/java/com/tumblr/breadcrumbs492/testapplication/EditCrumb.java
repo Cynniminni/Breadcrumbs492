@@ -95,8 +95,9 @@ public class EditCrumb extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
+        Intent intent = new Intent(EditCrumb.this, MyCrumbsActivity.class);
+        startActivity(intent);
+        //setResult(RESULT_OK, intent);
         finish();
         super.onBackPressed();
     }
