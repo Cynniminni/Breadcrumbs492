@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_launcher"
+        android:id="@+id/crumbImage"
+        android:focusable="false"/>
+
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/crumbName"
+            android:text="Crumb Name Here"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:textSize="20sp"
+            android:paddingTop="5dp"
+            android:focusable="false"/>
+
+        <TextView
+            android:id="@+id/crumbDate"
+            android:text="Crumb Date Here"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:inputType="date"
+            android:textSize="10sp"
+            android:paddingTop="5dp"
+            android:focusable="false"/>
+
+        </LinearLayout>
+
+</LinearLayout>

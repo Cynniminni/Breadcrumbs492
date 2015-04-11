@@ -12,30 +12,57 @@
     android:textColor="#FFFFFF"
     tools:context="com.tumblr.breadcrumbs492.testapplication.EditCrumb">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Crumb Name"
+        android:id="@+id/nameTextView"
+        android:textColor="#FFFFFF"/>
+
     <EditText
         android:id="@+id/editcrumb_name"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.42"
+        android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"/>
+        android:textColorHint="#FFFFFF"
+        android:maxLines="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Crumb Description"
+        android:id="@+id/descripTextView"
+        android:textColor="#FFFFFF"/>
 
     <EditText
         android:id="@+id/editcrumb_comment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.43"
+        android:layout_weight="1.15"
         android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"/>
+        android:textColorHint="#FFFFFF"
+        android:inputType="textCapSentences"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Crumb Tags (Separated with commas)"
+        android:id="@+id/tagsTextView"
+        android:autoText="false"
+        android:textColor="#FFFFFF"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editcrumb_tags"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.76"
+        android:layout_weight="0.40"
         android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF" />
+        android:textColorHint="#FFFFFF"
+        android:maxLines="1"/>
 
     <Button
         android:layout_width="match_parent"

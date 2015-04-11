@@ -42,7 +42,8 @@
         android:layout_alignTop="@+id/tv_username"
         android:layout_toRightOf="@+id/tv_username"
         android:layout_alignRight="@+id/whiteRec"
-        android:layout_alignEnd="@+id/whiteRec" />
+        android:layout_alignEnd="@+id/whiteRec"
+        android:maxLines="1"/>
 
 
     <TextView
@@ -67,7 +68,8 @@
         android:hint="Password"
         android:layout_below="@+id/et_username"
         android:layout_alignLeft="@+id/et_username"
-        android:layout_alignStart="@+id/et_username" />
+        android:layout_alignStart="@+id/et_username"
+        android:maxLines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -92,7 +94,8 @@
         android:ems="10"
         android:layout_alignTop="@+id/tv_email"
         android:layout_alignLeft="@+id/et_password"
-        android:layout_alignStart="@+id/et_password" />
+        android:layout_alignStart="@+id/et_password"
+        android:maxLines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -119,7 +122,8 @@
         android:layout_alignLeft="@+id/et_email"
         android:layout_alignStart="@+id/et_email"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:maxLines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -146,7 +150,8 @@
         android:layout_alignLeft="@+id/et_first_name"
         android:layout_alignStart="@+id/et_first_name"
         android:layout_alignRight="@+id/et_username"
-        android:layout_alignEnd="@+id/et_username" />
+        android:layout_alignEnd="@+id/et_username"
+        android:maxLines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -172,7 +177,8 @@
         android:layout_alignLeft="@+id/et_last_name"
         android:layout_alignStart="@+id/et_last_name"
         android:layout_alignRight="@+id/et_last_name"
-        android:layout_alignEnd="@+id/et_last_name" />
+        android:layout_alignEnd="@+id/et_last_name"
+        android:maxLines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -198,7 +204,8 @@
         android:layout_alignLeft="@+id/et_gender"
         android:layout_alignStart="@+id/et_gender"
         android:layout_alignRight="@+id/et_gender"
-        android:layout_alignEnd="@+id/et_gender" />
+        android:layout_alignEnd="@+id/et_gender"
+        android:maxLines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -224,7 +231,8 @@
         android:hint="State"
         android:layout_below="@+id/et_city"
         android:layout_alignLeft="@+id/et_city"
-        android:layout_alignStart="@+id/et_city" />
+        android:layout_alignStart="@+id/et_city"
+        android:maxLines="1"/>
 
     <Button
         android:id="@+id/b_cancel"

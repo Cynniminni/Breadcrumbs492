@@ -58,7 +58,7 @@ public class EditCrumb extends ActionBarActivity {
             intent.putExtra(MapsActivity.NAME, name);
             intent.putExtra(MapsActivity.COMMENT, comment);
             setResult(RESULT_OK, intent);//send result code
-            finish();
+            //finish();
         }
     }
 
@@ -139,7 +139,7 @@ public class EditCrumb extends ActionBarActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
-            Intent editCrumbIntent = new Intent(EditCrumb.this, MapsActivity.class);
+
             if (responseType.trim().equalsIgnoreCase("editCrumb")) {
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
@@ -149,15 +149,17 @@ public class EditCrumb extends ActionBarActivity {
                 try {
                     tempJSON = new JSONObject(response);
                     if (tempJSON.getString("editCrumbResult").trim().equals("true")) {
+                        Intent editCrumbIntent = new Intent(EditCrumb.this, MapsActivity.class);
                         Toast.makeText(getApplicationContext(), "successfully edited crumb", Toast.LENGTH_SHORT).show();
+                        startActivity(editCrumbIntent);//close this activity and return to MapsActivity
+                        finish();
                     }
                 } catch (JSONException e) {
                     Toast.makeText(getApplicationContext(), "edit crumb failed", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
 
-                startActivity(editCrumbIntent);//close this activity and return to MapsActivity
-                finish();
+
 
             } else {
                 //you can choose to implement another transaction here

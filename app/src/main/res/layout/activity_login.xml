@@ -23,9 +23,7 @@
         android:textColor="#FFFFFF"
         android:onClick="signInOrRegister"
         android:layout_gravity="center"
-        android:layout_marginTop="38dp"
         android:layout_below="@+id/whiteRec"
-        android:layout_alignLeft="@+id/whiteRec"
         android:layout_alignStart="@+id/whiteRec" />
 
     <Button
@@ -38,11 +36,8 @@
         android:onClick="loginAsGuest"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_below="@+id/signin_or_register"
-        android:layout_alignLeft="@+id/signin_or_register"
         android:layout_alignStart="@+id/signin_or_register"
-        android:layout_marginTop="15dp"
-        android:layout_alignRight="@+id/signin_or_register"
-        android:layout_alignEnd="@+id/signin_or_register" />
+        android:layout_alignEnd="@+id/enter_password" />
 
 
     <ImageView
@@ -52,6 +47,7 @@
         android:src="@drawable/white_rectangle"
         android:layout_alignTop="@+id/enter_username"
         android:layout_centerHorizontal="true" />
+
     <EditText
         android:id="@+id/enter_password"
         android:layout_width="280dp"
@@ -61,8 +57,8 @@
         android:hint="@string/enter_password"
         android:gravity="center"
         android:layout_below="@+id/enter_username"
-        android:layout_alignLeft="@+id/enter_username"
-        android:layout_alignStart="@+id/enter_username" />
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"/>
 
     <EditText
         android:id="@+id/enter_username"
@@ -70,9 +66,10 @@
         android:layout_height="50dp"
         android:hint="@string/enter_username"
         android:gravity="center"
-        android:layout_marginTop="162dp"
+        android:layout_marginTop="171dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignEnd="@+id/whiteRec"
+        android:maxLines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -102,7 +99,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_above="@+id/textView2"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/login_as_guest"
+        android:layout_alignEnd="@+id/login_as_guest"
+        android:layout_alignStart="@+id/login_as_guest" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/crumb_logo"
+        android:src="@drawable/crumbs_logo"
+        android:layout_above="@+id/whiteRec"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp" />
 
 </RelativeLayout>

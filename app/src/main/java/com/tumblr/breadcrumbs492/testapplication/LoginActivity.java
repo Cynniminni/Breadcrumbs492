@@ -78,6 +78,8 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
         GlobalContainer.userIsInitialized = false;
         GlobalContainer.loggedIn = false;
+        EditText username = (EditText) findViewById(R.id.enter_username);
+        username.requestFocus();
         if(Session.getActiveSession() != null)
             Session.getActiveSession().closeAndClearTokenInformation();
 
