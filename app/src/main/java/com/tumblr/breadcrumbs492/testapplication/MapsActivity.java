@@ -366,7 +366,8 @@ public class MapsActivity extends ActionBarActivity {
 
                 if (location != null && !location.equals("")) {
                     //if location exists, mark it on map
-                    new GeocoderTask().execute(location);
+                    //new GeocoderTask().execute(location);
+                    //not using Geocoder class will remove the Google location searches
 
                     //insert code to find tags
                     Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
@@ -374,6 +375,7 @@ public class MapsActivity extends ActionBarActivity {
                     msgIntent.putExtra("queryID", "findTags");
                     msgIntent.putExtra("jsonObject", "{\"tag\":\"" + location.trim() + "\"}");
                     startService(msgIntent);
+
                 }
             }
         };
@@ -510,6 +512,7 @@ public class MapsActivity extends ActionBarActivity {
                         crumbsArr[i] = new Crumb(name, comment, location, date);
                         markCrumb(crumbsArr[i]);
                     }
+
                 }
                 catch(JSONException e)
                 {
