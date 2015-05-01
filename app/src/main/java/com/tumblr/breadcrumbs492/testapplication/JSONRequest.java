@@ -64,7 +64,7 @@ public class JSONRequest extends IntentService{
                 ||inMessage.trim().equals("getCrumbs")||inMessage.trim().equals("getAllCrumbs")
                 ||inMessage.trim().equals("register")||inMessage.trim().equals("registerInit")
                 ||inMessage.trim().equals("findTags")||inMessage.trim().equals("editCrumb")
-                ||inMessage.trim().equals("updateProfile")){
+                ||inMessage.trim().equals("updateProfile")||inMessage.trim().equals("deleteCrumb")){
 
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
@@ -110,6 +110,8 @@ public class JSONRequest extends IntentService{
             else if (queryID.equals("register"))
                 broadcastIntent.setAction(MyRequestReceiver5.PROCESS_RESPONSE);
             else if (queryID.equals("editCrumb"))
+                broadcastIntent.setAction(MyRequestReceiver6.PROCESS_RESPONSE);
+            else if (queryID.equals("deleteCrumb"))
                 broadcastIntent.setAction(MyRequestReceiver6.PROCESS_RESPONSE);
         }
 

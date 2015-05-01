@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -30,6 +31,8 @@ public class EditCrumb extends ActionBarActivity {
     private EditText crumbName;
     private EditText crumbComment;
     private EditText crumbTags;
+    private TextView crumbDate;
+    private TextView crumbRating;
 
     public void editCrumb(View view) {
         name = crumbName.getText().toString();
@@ -62,6 +65,23 @@ public class EditCrumb extends ActionBarActivity {
         }
     }
 
+    public void deleteCrumb(View view){
+        Intent intent = new Intent(this, MapsActivity.class);
+        Intent intent2 = getIntent();
+        id = intent2.getStringExtra(MyCrumbsActivity.CRUMB_ID);
+
+        Intent msgIntent = new Intent(this, JSONRequest.class);
+        msgIntent.putExtra(JSONRequest.IN_MSG, "deleteCrumb");
+        msgIntent.putExtra("queryID", "deleteCrumb");
+
+        msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"crumbID\":\"" + id
+                + "\"}");
+        msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
+        startService(msgIntent);
+        setResult(RESULT_OK, intent);//send result code
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,16 +95,19 @@ public class EditCrumb extends ActionBarActivity {
         receiver = new MyRequestReceiver6();
         registerReceiver(receiver, filter);
 
-        //get references to the EditText fields
+        //get references to the EditText and TextView fields
         crumbName = (EditText) findViewById(R.id.editcrumb_name);
         crumbComment = (EditText) findViewById(R.id.editcrumb_comment);
         crumbTags = (EditText) findViewById(R.id.editcrumb_tags);
+        crumbDate = (TextView) findViewById((R.id.dateTextView));
 
-        //populate edittext fields with selected crumb attributes
+        //populate EditTexts and TextViews  fields with selected crumb attributes
         Intent intent3 = getIntent();
         crumbName.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_NAME));
         crumbComment.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_COMMENT));
         crumbTags.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_TAGS));
+        crumbDate.setText("Crumb dropped on " + intent3.getStringExtra(MyCrumbsActivity.CRUMB_DATE));
+        crumbRating.setText("Rating: " + intent3.getStringExtra(MyCrumbsActivity.CRUMB_RATING));
     }
 
     @Override
@@ -141,11 +164,8 @@ public class EditCrumb extends ActionBarActivity {
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
 
             if (responseType.trim().equalsIgnoreCase("editCrumb")) {
-
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-
                 JSONObject tempJSON = new JSONObject();
-
                 try {
                     tempJSON = new JSONObject(response);
                     if (tempJSON.getString("editCrumbResult").trim().equals("true")) {
@@ -159,10 +179,23 @@ public class EditCrumb extends ActionBarActivity {
                     e.printStackTrace();
                 }
 
+            } else if (responseType.trim().equalsIgnoreCase("deleteCrumb")) {
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+                JSONObject tempJSON = new JSONObject();
+                try {
+                    tempJSON = new JSONObject(response);
+                    if (tempJSON.getString("deleteCrumbResult").trim().equals("true")) {
+                        Intent editCrumbIntent = new Intent(EditCrumb.this, MapsActivity.class);
+                        Toast.makeText(getApplicationContext(), "successfully deleted crumb", Toast.LENGTH_SHORT).show();
+                        startActivity(editCrumbIntent);//close this activity and return to MapsActivity
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(getApplicationContext(), "edit crumb failed", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
 
 
-            } else {
-                //you can choose to implement another transaction here
             }
 
         }

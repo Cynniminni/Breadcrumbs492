@@ -20,7 +20,7 @@
         <TextView
             android:id="@+id/crumbName"
             android:text="Crumb Name Here"
-            android:layout_width="wrap_content"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
@@ -32,7 +32,7 @@
         <TextView
             android:id="@+id/crumbDate"
             android:text="Crumb Date Here"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:inputType="date"
@@ -40,6 +40,20 @@
             android:paddingTop="5dp"
             android:focusable="false"/>
 
-        </LinearLayout>
+    </LinearLayout>
+
+    <!--<Button
+        style="?android:attr/buttonStyleSmall"
+        android:id="@+id/deleteCrumb"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Delete"
+        android:onClick="onDelete"
+        android:focusable="false"/>-->
+
 
 </LinearLayout>

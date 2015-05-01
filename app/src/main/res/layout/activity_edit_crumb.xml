@@ -15,6 +15,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Date Created"
+        android:id="@+id/dateTextView"
+        android:layout_gravity="right"
+        android:textColor="#FFFFFF"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Crumb Rating"
+        android:id="@+id/ratingTextView"
+        android:layout_gravity="right"
+        android:textColor="#FFFFFF"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Crumb Name"
         android:id="@+id/nameTextView"
@@ -66,11 +84,18 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.7"
+        android:layout_height="wrap_content"
         android:background="@drawable/button_style"
         android:textColor="#FFFFFF"
         android:text="Save Changes"
         android:onClick="editCrumb"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style"
+        android:textColor="#FFFFFF"
+        android:text="Delete Crumb"
+        android:onClick="deleteCrumb"/>
 
 </LinearLayout>

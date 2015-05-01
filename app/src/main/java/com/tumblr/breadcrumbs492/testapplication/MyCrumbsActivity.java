@@ -19,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Calendar;
@@ -32,6 +34,8 @@ public class MyCrumbsActivity extends ActionBarActivity {
     public final static String CRUMB_COMMENT = "crumbComment";
     public final static String CRUMB_TAGS = "crumbsTags";
     public final static String CRUMB_ID = "crumbID";
+    public final static String CRUMB_RATING = "crumbRating";
+    public final static String CRUMB_DATE = "crumbDate";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,24 +129,32 @@ public class MyCrumbsActivity extends ActionBarActivity {
 
                 //get ListView reference from xml
                 listView = (ListView) findViewById(R.id.list);
+                //array declarations that store all of the users' crumbs' attributes
                 final String[] names = new String[tempJSON.length()];
                 final String[] ids = new String[tempJSON.length()];
                 final String[] comments = new String[tempJSON.length()];
                 final String[] tags = new String[tempJSON.length()];
                 final Date[] dates = new Date[tempJSON.length()];
                 final Integer[] imgID = new Integer[1];
-                Date d = new Date();
+                final Integer[] ratings = new Integer[tempJSON.length()];
 
                 try {
-                    //define a sample array of values
-                    //this will be replaced later with a list of crumb names from db
+                    //populate the arrays with each crumbs' attributes
                     for (int i = 0; i < tempJSON.length(); i++) {
                         names[i] = tempJSON.getJSONObject(i).getString("crumbName");
                         ids[i] = tempJSON.getJSONObject(i).getString("crumbID");
                         comments[i] = tempJSON.getJSONObject(i).getString("comment");
                         tags[i] = tempJSON.getJSONObject(i).getString("tags");
-                        dates[i] = d;
+                        ratings[i] = tempJSON.getJSONObject(i).getInt("rating");
 
+                        String dateString = tempJSON.getJSONObject(i).getString("date");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        try {
+                            Date crumbDate = sdf.parse(dateString);
+                            dates[i] = crumbDate;
+                        }catch(ParseException e){
+                            e.printStackTrace();
+                        }
                     }
                 }
                 catch(JSONException j)
@@ -154,6 +166,8 @@ public class MyCrumbsActivity extends ActionBarActivity {
 
                 CustomListAdapter adapter = new CustomListAdapter(MyCrumbsActivity.this, names, dates, imgID);
                 listView.setAdapter(adapter);
+
+
         /*
             simple_list_item_1 is a built-in Android template that shows only one line of text
             for each row. I want to show both crumb name and date created
@@ -176,12 +190,15 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(),
                                 "Position :" + itemPosition + "  ListItem : " + itemValue,
                                 Toast.LENGTH_SHORT).show();
-
+                        //position that was clicked determines array element to retrieve
+                        //attributes of crumb selected and passed to EditCrumb activity
                         Intent intent = new Intent(MyCrumbsActivity.this, EditCrumb.class);
                         intent.putExtra(CRUMB_NAME, names[itemPosition]);
                         intent.putExtra(CRUMB_ID, ids[itemPosition]);
                         intent.putExtra(CRUMB_COMMENT, comments[itemPosition]);
                         intent.putExtra(CRUMB_TAGS, tags[itemPosition]);
+                        intent.putExtra(CRUMB_RATING, ratings[itemPosition]);
+                        intent.putExtra(CRUMB_DATE, dates[itemPosition]);
                         startActivity(intent);
                         finish();
                     }
