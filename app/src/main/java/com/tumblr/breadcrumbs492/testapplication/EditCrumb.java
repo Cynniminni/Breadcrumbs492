@@ -100,15 +100,14 @@ public class EditCrumb extends ActionBarActivity {
         crumbComment = (EditText) findViewById(R.id.editcrumb_comment);
         crumbTags = (EditText) findViewById(R.id.editcrumb_tags);
         crumbDate = (TextView) findViewById((R.id.dateTextView));
-        crumbRating = (TextView) findViewById(R.id.ratingTextView);
 
         //populate EditTexts and TextViews  fields with selected crumb attributes
         Intent intent3 = getIntent();
         crumbName.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_NAME));
         crumbComment.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_COMMENT));
         crumbTags.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_TAGS));
-        crumbDate.setText("Crumb dropped on " + intent3.getSerializableExtra(MyCrumbsActivity.CRUMB_DATE).toString());
-        crumbRating.setText("Rating: " + intent3.getIntExtra(MyCrumbsActivity.CRUMB_RATING, 0));
+        crumbDate.setText("Crumb dropped on " + intent3.getStringExtra(MyCrumbsActivity.CRUMB_DATE));
+        crumbRating.setText("Rating: " + intent3.getStringExtra(MyCrumbsActivity.CRUMB_RATING));
     }
 
     @Override

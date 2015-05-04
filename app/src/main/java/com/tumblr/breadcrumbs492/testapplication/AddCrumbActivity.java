@@ -23,10 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 
 public class AddCrumbActivity extends ActionBarActivity {
@@ -60,10 +56,6 @@ public class AddCrumbActivity extends ActionBarActivity {
             //if user entered nothing then cancel adding a crumb
             setResult(RESULT_CANCELED, intent);
         } else {
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String crumbDate = sdf.format(Calendar.getInstance().getTime());
-
             JSONObject jObject = new JSONObject();
             Intent msgIntent = new Intent(this, JSONRequest.class);
             msgIntent.putExtra(JSONRequest.IN_MSG, "addCrumb");
@@ -72,8 +64,8 @@ public class AddCrumbActivity extends ActionBarActivity {
             msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
                     + GlobalContainer.user.getInfo()[1] + "\",\"name\":\"" + name
                     + "\",\"comment\":\"" + comment + "\",\"latitude\":\""
-                    + latitude + "\",\"longitude\":\"" + longitude + "\",\"crumbDate\":\"" + crumbDate
-                    + "\",\"tags\":\"" + tags + "\"}");
+                    + latitude + "\",\"longitude\":\"" + longitude  + "\",\"tags\":\"" + tags
+                    + "\"}");
             msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
             startService(msgIntent);
 
