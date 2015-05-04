@@ -77,7 +77,6 @@ public class JSONRequest extends IntentService{
     private void getUserInfo(String queryID, String jsonObject) {
 
         //prepare to make Http request
-        String url = "http://10.0.2.2:8080/crumbs/CrumbsServer";
 
         //add name value pair for the query needed
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
