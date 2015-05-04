@@ -46,6 +46,8 @@ import org.json.JSONObject;
 
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -317,7 +319,7 @@ public class MapsActivity extends ActionBarActivity {
                 String comment = data.getStringExtra(COMMENT);
 
                 //create a crumb object
-                Crumb crumb = new Crumb(name, comment, currentLocation, new Date());
+                Crumb crumb = new Crumb(name, comment, currentLocation, new Date(), 0);
 
                 //add it to map
                 markCrumb(crumb);
@@ -492,15 +494,25 @@ public class MapsActivity extends ActionBarActivity {
                     tempJSON = new JSONArray(response);
                     String name, comment;
                     LatLng location;
-                    Date date;
+                    Date date = new Date();
                     Crumb[] crumbsArr = new Crumb[tempJSON.length()];
+
+                    int upvotes = 0;
+
                     for(int i = 0; i < tempJSON.length(); i++)
                     {
+                        String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        try {
+                            date = sdf.parse(dateString);
+                        }catch(ParseException e){
+                            e.printStackTrace();
+                        }
                         name = tempJSON.getJSONObject(i).getString("crumbName");
                         comment = tempJSON.getJSONObject(i).getString("comment");
                         location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"),tempJSON.getJSONObject(i).getDouble("longitude"));
-                        date = Calendar.getInstance().getTime();
-                        crumbsArr[i] = new Crumb(name, comment, location, date);
+                        upvotes = tempJSON.getJSONObject(i).getInt("upvotes");
+                        crumbsArr[i] = new Crumb(name, comment, location, date, upvotes);
                         markCrumb(crumbsArr[i]);
                     }
 
@@ -576,15 +588,24 @@ public class MapsActivity extends ActionBarActivity {
                     tempJSON = new JSONArray(response);
                     String name, comment;
                     LatLng location;
-                    Date date;
-                    final Crumb[] crumbsArr = new Crumb[tempJSON.length()];
-                    if(tempJSON.length() > 0) {
+                    Date date = new Date();
+                    int upvotes = 0;
+
+                    Crumb[] crumbsArr = new Crumb[tempJSON.length()];
+                    if (tempJSON.length() > 0) {
                         for (int i = 0; i < tempJSON.length(); i++) {
+                            String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            try {
+                                date = sdf.parse(dateString);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                             name = tempJSON.getJSONObject(i).getString("crumbName");
                             comment = tempJSON.getJSONObject(i).getString("comment");
                             location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"), tempJSON.getJSONObject(i).getDouble("longitude"));
-                            date = Calendar.getInstance().getTime();
-                            crumbsArr[i] = new Crumb(name, comment, location, date);
+                            upvotes = tempJSON.getJSONObject(i).getInt("upvotes");
+                            crumbsArr[i] = new Crumb(name, comment, location, date, upvotes);
                             markCrumb(crumbsArr[i]);
                         }
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(crumbsArr[tempJSON.length() - 1].getLocation()));                        //when search is determined to have a result, make button to display all results visible
@@ -602,8 +623,7 @@ public class MapsActivity extends ActionBarActivity {
                             }
                         };
                         displayAll.setOnClickListener(viewAllClickListener);
-                    }
-                    else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "No results found. Please try again.", Toast.LENGTH_SHORT).show();
                     }
                 }

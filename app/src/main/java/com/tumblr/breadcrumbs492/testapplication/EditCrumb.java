@@ -69,14 +69,14 @@ public class EditCrumb extends ActionBarActivity {
 
     public void deleteCrumb(View view){
         Intent intent3 = getIntent();
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_DARK)
                 .setTitle("Deleting Crumb")
-                .setMessage("Are you sure you want to delete " + intent3.getStringExtra(MyCrumbsActivity.CRUMB_NAME) + " ?")
+                .setMessage("Are you sure you want to delete " + intent3.getStringExtra(MyCrumbsActivity.CRUMB_NAME) + "?")
                 //setting ClickListener for selection of yes in alert dialog
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
-                        Intent intent = new Intent(EditCrumb.this.getApplicationContext(), MapsActivity.class);
+                        Intent intent = new Intent(EditCrumb.this.getApplicationContext(), MyCrumbsActivity.class);
                         Intent intent2 = getIntent();
                         id = intent2.getStringExtra(MyCrumbsActivity.CRUMB_ID);
 
@@ -124,14 +124,15 @@ public class EditCrumb extends ActionBarActivity {
         crumbComment = (EditText) findViewById(R.id.editcrumb_comment);
         crumbTags = (EditText) findViewById(R.id.editcrumb_tags);
         crumbDate = (TextView) findViewById((R.id.dateTextView));
+        crumbRating = (TextView) findViewById(R.id.ratingTextView);
 
         //populate EditTexts and TextViews  fields with selected crumb attributes
         Intent intent3 = getIntent();
         crumbName.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_NAME));
         crumbComment.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_COMMENT));
         crumbTags.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_TAGS));
-        crumbDate.setText("Crumb dropped on " + intent3.getStringExtra(MyCrumbsActivity.CRUMB_DATE));
-        crumbRating.setText("Rating: " + intent3.getStringExtra(MyCrumbsActivity.CRUMB_RATING));
+        crumbDate.setText("Crumb dropped on " + intent3.getSerializableExtra(MyCrumbsActivity.CRUMB_DATE).toString());
+        crumbRating.setText("Rating: " + intent3.getIntExtra(MyCrumbsActivity.CRUMB_RATING, 0));
     }
 
     @Override

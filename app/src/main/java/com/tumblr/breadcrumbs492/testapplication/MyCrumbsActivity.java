@@ -136,7 +136,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
                 final String[] tags = new String[tempJSON.length()];
                 final Date[] dates = new Date[tempJSON.length()];
                 final Integer[] imgID = new Integer[1];
-                final Integer[] ratings = new Integer[tempJSON.length()];
+                final Integer[] upvotes = new Integer[tempJSON.length()];
 
                 try {
                     //populate the arrays with each crumbs' attributes
@@ -145,9 +145,9 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         ids[i] = tempJSON.getJSONObject(i).getString("crumbID");
                         comments[i] = tempJSON.getJSONObject(i).getString("comment");
                         tags[i] = tempJSON.getJSONObject(i).getString("tags");
-                        ratings[i] = tempJSON.getJSONObject(i).getInt("rating");
+                        upvotes[i] = tempJSON.getJSONObject(i).getInt("upvotes");
 
-                        String dateString = tempJSON.getJSONObject(i).getString("date");
+                        String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             Date crumbDate = sdf.parse(dateString);
@@ -197,7 +197,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         intent.putExtra(CRUMB_ID, ids[itemPosition]);
                         intent.putExtra(CRUMB_COMMENT, comments[itemPosition]);
                         intent.putExtra(CRUMB_TAGS, tags[itemPosition]);
-                        intent.putExtra(CRUMB_RATING, ratings[itemPosition]);
+                        intent.putExtra(CRUMB_RATING, upvotes[itemPosition]);
                         intent.putExtra(CRUMB_DATE, dates[itemPosition]);
                         startActivity(intent);
                         finish();
