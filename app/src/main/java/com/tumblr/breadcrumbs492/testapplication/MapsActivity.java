@@ -44,6 +44,8 @@ import org.json.JSONObject;
 
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -316,7 +318,7 @@ public class MapsActivity extends ActionBarActivity {
                 String comment = data.getStringExtra(COMMENT);
 
                 //create a crumb object
-                Crumb crumb = new Crumb(name, comment, currentLocation, new Date());
+                Crumb crumb = new Crumb(name, comment, currentLocation, new Date(), 0);
 
                 //add it to map
                 markCrumb(crumb);
@@ -500,16 +502,24 @@ public class MapsActivity extends ActionBarActivity {
 
                     String name, comment;
                     LatLng location;
-                    Date date;
+                    Date date = new Date();
                     Crumb[] crumbsArr = new Crumb[tempJSON.length()];
+                    int rating = 0;
 
                     for(int i = 0; i < tempJSON.length(); i++)
                     {
+                        String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        try {
+                            date = sdf.parse(dateString);
+                        }catch(ParseException e){
+                            e.printStackTrace();
+                        }
                         name = tempJSON.getJSONObject(i).getString("crumbName");
                         comment = tempJSON.getJSONObject(i).getString("comment");
                         location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"),tempJSON.getJSONObject(i).getDouble("longitude"));
-                        date = Calendar.getInstance().getTime();
-                        crumbsArr[i] = new Crumb(name, comment, location, date);
+                        rating = tempJSON.getJSONObject(i).getInt("upvotes");
+                        crumbsArr[i] = new Crumb(name, comment, location, date, rating);
                         markCrumb(crumbsArr[i]);
                     }
 
@@ -585,16 +595,24 @@ public class MapsActivity extends ActionBarActivity {
 
                     String name, comment;
                     LatLng location;
-                    Date date;
+                    Date date = new Date();
+                    int rating = 0;
                     Crumb[] crumbsArr = new Crumb[tempJSON.length()];
 
                     for(int i = 0; i < tempJSON.length(); i++)
                     {
+                        String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        try {
+                                date = sdf.parse(dateString);
+                        }catch(ParseException e){
+                            e.printStackTrace();
+                        }
                         name = tempJSON.getJSONObject(i).getString("crumbName");
                         comment = tempJSON.getJSONObject(i).getString("comment");
                         location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"),tempJSON.getJSONObject(i).getDouble("longitude"));
-                        date = Calendar.getInstance().getTime();
-                        crumbsArr[i] = new Crumb(name, comment, location, date);
+                        rating = tempJSON.getJSONObject(i).getInt("upvotes");
+                        crumbsArr[i] = new Crumb(name, comment, location, date, rating);
                         markCrumb(crumbsArr[i]);
                     }
                 }

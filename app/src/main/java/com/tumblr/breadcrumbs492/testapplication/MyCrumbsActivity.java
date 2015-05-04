@@ -145,9 +145,9 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         ids[i] = tempJSON.getJSONObject(i).getString("crumbID");
                         comments[i] = tempJSON.getJSONObject(i).getString("comment");
                         tags[i] = tempJSON.getJSONObject(i).getString("tags");
-                        ratings[i] = tempJSON.getJSONObject(i).getInt("rating");
+                        ratings[i] = tempJSON.getJSONObject(i).getInt("upvotes");
 
-                        String dateString = tempJSON.getJSONObject(i).getString("date");
+                        String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             Date crumbDate = sdf.parse(dateString);

@@ -10,8 +10,8 @@ public class Crumb {
     private String name, comment;
     private LatLng location;
     private Date date;
-    // upvote and downvotes will be for display on UI
-    private int upvote, downvote;
+    // rating is how many upvotes a crumb has received
+    private int rating;
     // score will be some function of upvotes and downvotes but will not be shown
     // it is used to determine placement when sorting
     private int score;
@@ -23,18 +23,16 @@ public class Crumb {
         comment = "Default comment";
         location = new LatLng(0, 0);
         date = new Date();
-        upvote = 0;
-        downvote = 0;
+        rating = 0;
         score = 0;
     }
 
-    public Crumb(String name, String comment, LatLng location, Date date) {
+    public Crumb(String name, String comment, LatLng location, Date date, int rating) {
         this.name = name;
         this.comment = comment;
         this.location = location;
         this.date = date;
-        upvote = 0;
-        downvote = 0;
+        this.rating = rating;
         score = 0;
     }
 
@@ -54,12 +52,8 @@ public class Crumb {
         return date;
     }
 
-    public int getUpvote() {
-        return upvote;
-    }
-
-    public int getDownvote() {
-        return downvote;
+    public int getRating() {
+        return rating;
     }
 
     public void setName(String name) {
@@ -79,11 +73,7 @@ public class Crumb {
     }
 
     // Will probably only use these for testing
-    public void setUpvote(int upvote) {
-        this.upvote = upvote;
-    }
-
-    public void setDownvote(int downvote) {
-        this.downvote = downvote;
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }
