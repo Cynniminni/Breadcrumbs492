@@ -54,4 +54,5 @@
     <!-- facebook app id string -->
     <string name="app_id">1415878208713851</string>
     <string name="title_activity_edit_crumb">EditCrumb</string>
+    <string name="title_activity_search_results">SearchResults</string>
 </resources>

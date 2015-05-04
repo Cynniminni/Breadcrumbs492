@@ -34,16 +34,37 @@
     </LinearLayout>
 
     <!-- google maps is the fragment here -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="361dp"
+        android:layout_weight="0.48">
     <fragment
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_height="match_parent"
         android:id="@+id/map"
         tools:context="com.tumblr.breadcrumbs492.testapplication.MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true" />
+
+    <Button
+        android:id="@+id/button_display_all"
+        android:background="@drawable/button_style"
+        android:textColor="#FFFFFF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:text="View All Results"
+        android:padding="10dp"
+        android:paddingRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:onClick="viewFindResults"/>
+    </RelativeLayout>
+
 
 
     <!-- putting row of buttons on top of the map -->

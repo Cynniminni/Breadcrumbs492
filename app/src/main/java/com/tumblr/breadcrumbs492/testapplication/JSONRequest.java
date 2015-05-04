@@ -29,6 +29,8 @@ import com.tumblr.breadcrumbs492.testapplication.MyCrumbsActivity.MyRequestRecei
 import com.tumblr.breadcrumbs492.testapplication.MapsActivity.MyRequestReceiver4;
 import com.tumblr.breadcrumbs492.testapplication.RegisterActivity.MyRequestReceiver5;
 import com.tumblr.breadcrumbs492.testapplication.EditCrumb.MyRequestReceiver6;
+import com.tumblr.breadcrumbs492.testapplication.SearchResults.MyRequestReceiver7;
+
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -64,7 +66,8 @@ public class JSONRequest extends IntentService{
                 ||inMessage.trim().equals("getCrumbs")||inMessage.trim().equals("getAllCrumbs")
                 ||inMessage.trim().equals("register")||inMessage.trim().equals("registerInit")
                 ||inMessage.trim().equals("findTags")||inMessage.trim().equals("editCrumb")
-                ||inMessage.trim().equals("updateProfile")||inMessage.trim().equals("deleteCrumb")){
+                ||inMessage.trim().equals("updateProfile")||inMessage.trim().equals("deleteCrumb")
+                ||inMessage.trim().equals("findTagsResults")){
 
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
@@ -113,6 +116,8 @@ public class JSONRequest extends IntentService{
                 broadcastIntent.setAction(MyRequestReceiver6.PROCESS_RESPONSE);
             else if (queryID.equals("deleteCrumb"))
                 broadcastIntent.setAction(MyRequestReceiver6.PROCESS_RESPONSE);
+            else if (queryID.equals("findTagsResults"))
+                broadcastIntent.setAction(MyRequestReceiver7.PROCESS_RESPONSE);
         }
 
         else if(inMessage.equalsIgnoreCase("registerInit"))

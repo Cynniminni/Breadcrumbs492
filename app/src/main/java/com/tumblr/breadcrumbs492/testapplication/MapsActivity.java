@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.Request;
@@ -56,11 +58,13 @@ public class MapsActivity extends ActionBarActivity {
     public final static int REQUEST_ADD_CRUMB = 1;
     public final static int REQUEST_PROFILE = 2;
     public final static int REQUEST_MYCRUMBS = 3;
+    public final static int REQUEST_FIND_CRUMB = 4;
     public final static String NAME = "name";
     public final static String COMMENT = "comment";
     public final static String LATITUDE = "latitude";
     public final static String LONGITUDE = "longitude";
     public final static String GUESTLOGIN = "guest login";
+    public final static String SEARCH = "search";
 
     private static String email;
     private static String username;
@@ -97,8 +101,6 @@ public class MapsActivity extends ActionBarActivity {
         //pass into intent
         intent.putExtra(LATITUDE, latitude);
         intent.putExtra(LONGITUDE, longitude);
-
-
         //pass intent to AddCrumbActivity with the request code
         startActivityForResult(intent, REQUEST_ADD_CRUMB);
     }
@@ -206,7 +208,7 @@ public class MapsActivity extends ActionBarActivity {
                         }
                     }
                 }).executeAsync();
-            }
+        }
         else{
             //non-facebook login
             //get intent received from LoginActivity
@@ -225,7 +227,7 @@ public class MapsActivity extends ActionBarActivity {
                 msgIntent2.putExtra("jsonObject", "{\"username\":\"" + username
                         + "\",\"email\":\"" + email + "\"}");
                 startService(msgIntent2);
-             }
+            }
             else
             {
                 //user is initialized so get all crumbs
@@ -237,7 +239,6 @@ public class MapsActivity extends ActionBarActivity {
                 startService(msgIntent);
             }
         }
-
 
         //get button references
         Button profileButton = (Button) findViewById(R.id.button_1);
@@ -375,7 +376,6 @@ public class MapsActivity extends ActionBarActivity {
                     msgIntent.putExtra("queryID", "findTags");
                     msgIntent.putExtra("jsonObject", "{\"tag\":\"" + location.trim() + "\"}");
                     startService(msgIntent);
-
                 }
             }
         };
@@ -383,7 +383,6 @@ public class MapsActivity extends ActionBarActivity {
         //set the button click listener to the find button
         buttonFind.setOnClickListener(findClickListener);
     }
-
 
     /*
         Private class for searching addresses on the map.
@@ -479,30 +478,22 @@ public class MapsActivity extends ActionBarActivity {
 
     //broadcast receiver to receive messages sent from the JSON IntentService
     public class MyRequestReceiver4 extends BroadcastReceiver {
-
         public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.MapsActivity.MyRequestReceiver";
         public String response = null;
         private ListView listView;
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
-
             if(responseType.trim().equalsIgnoreCase("getAllCrumbs")){
-
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-
-
                 JSONArray tempJSON;
                 try {
                     tempJSON = new JSONArray(response);
-
                     String name, comment;
                     LatLng location;
                     Date date;
                     Crumb[] crumbsArr = new Crumb[tempJSON.length()];
-
                     for(int i = 0; i < tempJSON.length(); i++)
                     {
                         name = tempJSON.getJSONObject(i).getString("crumbName");
@@ -519,10 +510,8 @@ public class MapsActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "get crumbs failed", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-
-
-
             }
+
             else if(responseType.trim().equalsIgnoreCase("getProfileInit")){
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
@@ -550,6 +539,7 @@ public class MapsActivity extends ActionBarActivity {
                     e.printStackTrace();
                 }
             }
+
             else if(responseType.trim().equalsIgnoreCase("registerInit")){
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
                 JSONObject tempJSON;
@@ -572,40 +562,58 @@ public class MapsActivity extends ActionBarActivity {
                 }
                 catch(JSONException e)
                 {
-                    Toast.makeText(getApplicationContext(), "Register user failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Register user failed.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
+
             else if(responseType.trim().equalsIgnoreCase("findTags")){
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+                System.out.println(this.response);
                 JSONArray tempJSON;
                 mMap.clear();
                 try {
                     tempJSON = new JSONArray(response);
-
                     String name, comment;
                     LatLng location;
                     Date date;
-                    Crumb[] crumbsArr = new Crumb[tempJSON.length()];
-
-                    for(int i = 0; i < tempJSON.length(); i++)
-                    {
-                        name = tempJSON.getJSONObject(i).getString("crumbName");
-                        comment = tempJSON.getJSONObject(i).getString("comment");
-                        location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"),tempJSON.getJSONObject(i).getDouble("longitude"));
-                        date = Calendar.getInstance().getTime();
-                        crumbsArr[i] = new Crumb(name, comment, location, date);
-                        markCrumb(crumbsArr[i]);
+                    final Crumb[] crumbsArr = new Crumb[tempJSON.length()];
+                    if(tempJSON.length() > 0) {
+                        for (int i = 0; i < tempJSON.length(); i++) {
+                            name = tempJSON.getJSONObject(i).getString("crumbName");
+                            comment = tempJSON.getJSONObject(i).getString("comment");
+                            location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"), tempJSON.getJSONObject(i).getDouble("longitude"));
+                            date = Calendar.getInstance().getTime();
+                            crumbsArr[i] = new Crumb(name, comment, location, date);
+                            markCrumb(crumbsArr[i]);
+                        }
+                        mMap.animateCamera(CameraUpdateFactory.newLatLng(crumbsArr[tempJSON.length() - 1].getLocation()));                        //when search is determined to have a result, make button to display all results visible
+                        Button displayAll = (Button) findViewById(R.id.button_display_all);
+                        displayAll.setVisibility(View.VISIBLE);
+                        View.OnClickListener viewAllClickListener = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                EditText editTextLocation = (EditText) findViewById(R.id.edittext_location);
+                                String search = editTextLocation.getText().toString();
+                                Intent intent = new Intent(MapsActivity.this, SearchResults.class);
+                                intent.putExtra(SEARCH, search);
+                                startActivityForResult(intent, REQUEST_FIND_CRUMB);
+                                finish();
+                            }
+                        };
+                        displayAll.setOnClickListener(viewAllClickListener);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "No results found. Please try again.", Toast.LENGTH_SHORT).show();
                     }
                 }
                 catch(JSONException e)
                 {
-                    Toast.makeText(getApplicationContext(), "get crumbs failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Get crumbs failed.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
 
             }
-
         }
         public String getResponse()
         {

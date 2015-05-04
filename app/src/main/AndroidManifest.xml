@@ -98,6 +98,10 @@
             android:name=".EditCrumb"
             android:label="@string/title_activity_edit_crumb" >
         </activity>
+        <activity
+            android:name=".SearchResults"
+            android:label="@string/title_activity_search_results" >
+        </activity>
     </application>
 
 </manifest>

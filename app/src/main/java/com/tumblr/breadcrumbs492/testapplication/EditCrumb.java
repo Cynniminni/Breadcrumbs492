@@ -1,7 +1,9 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
@@ -66,19 +68,41 @@ public class EditCrumb extends ActionBarActivity {
     }
 
     public void deleteCrumb(View view){
-        Intent intent = new Intent(this, MapsActivity.class);
-        Intent intent2 = getIntent();
-        id = intent2.getStringExtra(MyCrumbsActivity.CRUMB_ID);
+        Intent intent3 = getIntent();
+        new AlertDialog.Builder(this)
+                .setTitle("Deleting Crumb")
+                .setMessage("Are you sure you want to delete " + intent3.getStringExtra(MyCrumbsActivity.CRUMB_NAME) + " ?")
+                //setting ClickListener for selection of yes in alert dialog
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        Intent intent = new Intent(EditCrumb.this.getApplicationContext(), MapsActivity.class);
+                        Intent intent2 = getIntent();
+                        id = intent2.getStringExtra(MyCrumbsActivity.CRUMB_ID);
 
-        Intent msgIntent = new Intent(this, JSONRequest.class);
-        msgIntent.putExtra(JSONRequest.IN_MSG, "deleteCrumb");
-        msgIntent.putExtra("queryID", "deleteCrumb");
+                        Intent msgIntent = new Intent(EditCrumb.this.getApplicationContext(), JSONRequest.class);
+                        msgIntent.putExtra(JSONRequest.IN_MSG, "deleteCrumb");
+                        msgIntent.putExtra("queryID", "deleteCrumb");
 
-        msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"crumbID\":\"" + id
-                + "\"}");
-        msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
-        startService(msgIntent);
-        setResult(RESULT_OK, intent);//send result code
+                        msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"crumbID\":\"" + id
+                                + "\"}");
+                        msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
+                        startService(msgIntent);
+                        setResult(RESULT_OK, intent);//send result code
+                        dialog.cancel();
+                    }
+                })
+                //setting ClickListener for selection of no in alert dialog, stays on EditCrumb activity
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(true)
+                .show();
+
+
 
     }
 
