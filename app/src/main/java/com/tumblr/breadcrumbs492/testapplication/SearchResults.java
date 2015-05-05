@@ -30,8 +30,12 @@ public class SearchResults extends ActionBarActivity {
     public final static String CRUMB_COMMENT = "crumbComment";
     public final static String CRUMB_TAGS = "crumbsTags";
     public final static String CRUMB_ID = "crumbID";
-    public final static String CRUMB_RATING = "crumbRating";
+    public final static String CRUMB_UPVOTES = "crumbUpvotes";
     public final static String CRUMB_DATE = "crumbDate";
+    public final static String SEARCH = "search";
+    public final static String USERNAME = "username";
+    public final static String CRUMB_LONGITUDE = "longitude";
+    public final static String CRUMB_LATITUDE = "latitude";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +122,6 @@ public class SearchResults extends ActionBarActivity {
         public void onReceive(Context context, Intent intent) {
 
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
-            System.out.println("oasdfasdfodnosn");
 
             if (responseType.trim().equalsIgnoreCase("findTagsResults")) {
 
@@ -136,21 +139,27 @@ public class SearchResults extends ActionBarActivity {
                 //get ListView reference from xml
                 listView = (ListView) findViewById(R.id.list);
                 //array declarations that store all of the users' crumbs' attributes
+                final String[] username = new String[tempJSON.length()];
                 final String[] names = new String[tempJSON.length()];
                 final String[] ids = new String[tempJSON.length()];
                 final String[] comments = new String[tempJSON.length()];
                 final String[] tags = new String[tempJSON.length()];
                 final Date[] dates = new Date[tempJSON.length()];
                 final Integer[] imgID = new Integer[1];
-                final Integer[] ratings = new Integer[tempJSON.length()];
+                final Integer[] upvotes = new Integer[tempJSON.length()];
+                final Double[] longitude = new Double[tempJSON.length()];
+                final Double[] latitude = new Double[tempJSON.length()];
 
                 try {
                     //populate the arrays with each crumbs' attributes
                     for (int i = 0; i < tempJSON.length(); i++) {
+                        username[i] = tempJSON.getJSONObject(i).getString("username");
                         names[i] = tempJSON.getJSONObject(i).getString("crumbName");
                         ids[i] = tempJSON.getJSONObject(i).getString("crumbID");
                         comments[i] = tempJSON.getJSONObject(i).getString("comment");
-                        ratings[i] = tempJSON.getJSONObject(i).getInt("upvotes");
+                        upvotes[i] = tempJSON.getJSONObject(i).getInt("upvotes");
+                        longitude[i] = tempJSON.getJSONObject(i).getDouble("longitude");
+                        latitude[i] = tempJSON.getJSONObject(i).getDouble("latitude");
 
                         String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -195,13 +204,17 @@ public class SearchResults extends ActionBarActivity {
                                 Toast.LENGTH_SHORT).show();
                         //position that was clicked determines array element to retrieve
                         //attributes of crumb selected and passed to EditCrumb activity
-                        Intent intent = new Intent(SearchResults.this, MapsActivity.class);
+                        Intent intent = new Intent(SearchResults.this, CrumbDetails.class);
                         intent.putExtra(CRUMB_NAME, names[itemPosition]);
                         intent.putExtra(CRUMB_ID, ids[itemPosition]);
                         intent.putExtra(CRUMB_COMMENT, comments[itemPosition]);
                         intent.putExtra(CRUMB_TAGS, tags[itemPosition]);
-                        intent.putExtra(CRUMB_RATING, ratings[itemPosition]);
+                        intent.putExtra(CRUMB_UPVOTES, upvotes[itemPosition]);
                         intent.putExtra(CRUMB_DATE, dates[itemPosition]);
+                        intent.putExtra(SEARCH, getIntent().getStringExtra(MapsActivity.SEARCH));
+                        intent.putExtra(USERNAME, username[itemPosition]);
+                        intent.putExtra(CRUMB_LONGITUDE, longitude[itemPosition]);
+                        intent.putExtra(CRUMB_LATITUDE, latitude[itemPosition]);
                         startActivity(intent);
                         finish();
                     }

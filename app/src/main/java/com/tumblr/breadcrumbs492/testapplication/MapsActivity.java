@@ -20,6 +20,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -363,6 +365,10 @@ public class MapsActivity extends ActionBarActivity {
             public void onClick(View v) {
                 //get reference to edittext
                 EditText editTextLocation = (EditText) findViewById(R.id.edittext_location);
+
+                //hide keyboard after find is pressed
+                InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                mgr.hideSoftInputFromWindow(editTextLocation.getWindowToken(),0);
 
                 //get user input for location
                 String location = editTextLocation.getText().toString();

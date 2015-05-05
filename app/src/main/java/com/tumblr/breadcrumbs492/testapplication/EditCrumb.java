@@ -34,7 +34,7 @@ public class EditCrumb extends ActionBarActivity {
     private EditText crumbComment;
     private EditText crumbTags;
     private TextView crumbDate;
-    private TextView crumbRating;
+    private TextView crumbUpvotes;
 
     public void editCrumb(View view) {
         name = crumbName.getText().toString();
@@ -121,10 +121,10 @@ public class EditCrumb extends ActionBarActivity {
 
         //get references to the EditText and TextView fields
         crumbName = (EditText) findViewById(R.id.editcrumb_name);
-        crumbComment = (EditText) findViewById(R.id.editcrumb_comment);
+        crumbComment = (EditText) findViewById(R.id.editcrumb_description);
         crumbTags = (EditText) findViewById(R.id.editcrumb_tags);
         crumbDate = (TextView) findViewById((R.id.dateTextView));
-        crumbRating = (TextView) findViewById(R.id.ratingTextView);
+        crumbUpvotes = (TextView) findViewById(R.id.upvotesTextView);
 
         //populate EditTexts and TextViews  fields with selected crumb attributes
         Intent intent3 = getIntent();
@@ -132,7 +132,7 @@ public class EditCrumb extends ActionBarActivity {
         crumbComment.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_COMMENT));
         crumbTags.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_TAGS));
         crumbDate.setText("Crumb dropped on " + intent3.getSerializableExtra(MyCrumbsActivity.CRUMB_DATE).toString());
-        crumbRating.setText("Rating: " + intent3.getIntExtra(MyCrumbsActivity.CRUMB_RATING, 0));
+        crumbUpvotes.setText("Upvotes: " + intent3.getIntExtra(MyCrumbsActivity.CRUMB_UPVOTES, 0));
     }
 
     @Override

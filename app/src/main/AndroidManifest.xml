@@ -102,6 +102,10 @@
             android:name=".SearchResults"
             android:label="@string/title_activity_search_results" >
         </activity>
+        <activity
+            android:name=".CrumbDetails"
+            android:label="@string/title_activity_crumb_details" >
+        </activity>
     </application>
 
 </manifest>

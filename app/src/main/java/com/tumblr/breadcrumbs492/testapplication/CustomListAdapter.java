@@ -41,7 +41,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
         crumbName2.setText(crumbName[position]);
         crumbDate2.setText(crumbDate[position].toString());
-        crumbIMGID2.setImageResource(R.drawable.crumbs_logo);
+        crumbIMGID2.setImageResource(R.mipmap.breadcrumb_launcher);
 
         return rowView;
     }

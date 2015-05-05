@@ -10,7 +10,16 @@
     android:orientation="vertical"
     android:background="#2A3F49"
     android:textColor="#FFFFFF"
-    tools:context="com.tumblr.breadcrumbs492.testapplication.EditCrumb">
+    tools:context="com.tumblr.breadcrumbs492.testapplication.CrumbDetails">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Crumb Dropped By"
+        android:id="@+id/userTextView"
+        android:layout_gravity="right"
+        android:textColor="#FFFFFF"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,56 +39,49 @@
         android:layout_gravity="right"
         android:textColor="#FFFFFF"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Crumb Name"
-        android:id="@+id/nameTextView"
-        android:textColor="#FFFFFF"/>
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.19"
+        android:background="#2A3F49"
+        android:textColor="#FFFFFF"
+        android:id="@+id/map"
+        tools:context="com.tumblr.breadcrumbs492.testapplication.CrumbDetails"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+    <!--<fragment
+        android:name="com.google.android.gms.maps.StreetViewPanoramaFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.19"
+        android:id="@+id/panorama"/>-->
 
-    <EditText
-        android:id="@+id/editcrumb_name"
+    <TextView
+        android:id="@+id/crumb_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
         android:maxLines="1"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Crumb Description"
-        android:id="@+id/descripTextView"
-        android:textColor="#FFFFFF"/>
-
-    <EditText
-        android:id="@+id/editcrumb_description"
+        android:id="@+id/crumb_description"
         android:layout_width="match_parent"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_height="0dp"
         android:layout_weight="1.15"
         android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:inputType="textCapSentences"/>
+        />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Crumb Tags (Separated with commas)"
-        android:id="@+id/tagsTextView"
-        android:autoText="false"
-        android:textColor="#FFFFFF"/>
-
-    <EditText
+        android:id="@+id/crumb_tags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editcrumb_tags"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.40"
         android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
         android:maxLines="1"/>
 
     <Button
@@ -87,15 +89,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_style"
         android:textColor="#FFFFFF"
-        android:text="Save Changes"
-        android:onClick="editCrumb"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_style"
-        android:textColor="#FFFFFF"
-        android:text="Delete Crumb"
-        android:onClick="deleteCrumb"/>
-
+        android:text="Back"
+        android:onClick="backToResults"/>
 </LinearLayout>

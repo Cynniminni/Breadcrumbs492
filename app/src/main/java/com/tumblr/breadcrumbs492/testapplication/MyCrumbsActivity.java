@@ -34,7 +34,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
     public final static String CRUMB_COMMENT = "crumbComment";
     public final static String CRUMB_TAGS = "crumbsTags";
     public final static String CRUMB_ID = "crumbID";
-    public final static String CRUMB_RATING = "crumbRating";
+    public final static String CRUMB_UPVOTES = "crumbUpvotes";
     public final static String CRUMB_DATE = "crumbDate";
 
     @Override
@@ -197,7 +197,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         intent.putExtra(CRUMB_ID, ids[itemPosition]);
                         intent.putExtra(CRUMB_COMMENT, comments[itemPosition]);
                         intent.putExtra(CRUMB_TAGS, tags[itemPosition]);
-                        intent.putExtra(CRUMB_RATING, upvotes[itemPosition]);
+                        intent.putExtra(CRUMB_UPVOTES, upvotes[itemPosition]);
                         intent.putExtra(CRUMB_DATE, dates[itemPosition]);
                         startActivity(intent);
                         finish();
