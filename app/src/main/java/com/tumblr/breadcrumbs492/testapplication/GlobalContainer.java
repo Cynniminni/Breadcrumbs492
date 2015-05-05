@@ -8,4 +8,5 @@ public class GlobalContainer {
     public static boolean userIsInitialized = false;
     public static boolean fbLogin = false;
     public static boolean loggedIn = false;
+    public static Crumb [] crumbSearch;
 }

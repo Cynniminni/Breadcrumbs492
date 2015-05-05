@@ -607,6 +607,7 @@ public class MapsActivity extends ActionBarActivity {
                             upvotes = tempJSON.getJSONObject(i).getInt("upvotes");
                             crumbsArr[i] = new Crumb(name, comment, location, date, upvotes);
                             markCrumb(crumbsArr[i]);
+                            GlobalContainer.crumbSearch = crumbsArr;
                         }
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(crumbsArr[tempJSON.length() - 1].getLocation()));                        //when search is determined to have a result, make button to display all results visible
                         Button displayAll = (Button) findViewById(R.id.button_display_all);

@@ -118,6 +118,7 @@ public class SearchResults extends ActionBarActivity {
         public void onReceive(Context context, Intent intent) {
 
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
+            System.out.println("oasdfasdfodnosn");
 
             if (responseType.trim().equalsIgnoreCase("findTagsResults")) {
 
@@ -149,10 +150,9 @@ public class SearchResults extends ActionBarActivity {
                         names[i] = tempJSON.getJSONObject(i).getString("crumbName");
                         ids[i] = tempJSON.getJSONObject(i).getString("crumbID");
                         comments[i] = tempJSON.getJSONObject(i).getString("comment");
-                        tags[i] = tempJSON.getJSONObject(i).getString("tags");
-                        ratings[i] = tempJSON.getJSONObject(i).getInt("rating");
+                        ratings[i] = tempJSON.getJSONObject(i).getInt("upvotes");
 
-                        String dateString = tempJSON.getJSONObject(i).getString("date");
+                        String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             Date crumbDate = sdf.parse(dateString);
