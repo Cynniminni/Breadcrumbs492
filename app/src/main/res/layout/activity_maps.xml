@@ -25,6 +25,15 @@
             android:hint="@string/edittext_hint_location"/>
 
         <Button
+            android:id="@+id/remove_text"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_remove_text"
+            />
+
+        <Button
             android:id="@+id/button_find"
             android:background="@drawable/button_style"
             android:textColor="#FFFFFF"

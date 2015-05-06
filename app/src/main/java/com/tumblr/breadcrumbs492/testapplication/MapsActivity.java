@@ -244,6 +244,16 @@ public class MapsActivity extends ActionBarActivity {
             }
         }
 
+        //Remove text from the editext_location
+        Button removeTextButton = (Button) findViewById(R.id.remove_text);
+        removeTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editTextLocation = (EditText) findViewById(R.id.edittext_location);
+                editTextLocation.setText("");
+            }
+        });
+
         //get button references
         Button profileButton = (Button) findViewById(R.id.button_1);
         Button myCrumbsButton = (Button) findViewById(R.id.button_2);
@@ -294,6 +304,34 @@ public class MapsActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        //will refresh the page by reloading the local pins on the map near the user's location
+        //If the user was searching for an item, re-search that item for the user and pull
+        //up the nearest crumbs
+        if(id == R.id.action_refresh) {
+
+            //If the user is refreshing for a search tag, find the tag again
+            EditText editTextLocation = (EditText) findViewById(R.id.edittext_location);
+            //get user input for location
+            String location = editTextLocation.getText().toString();
+            if (location != null && !location.equals(""))
+            {
+                //insert code to find tags
+                Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
+                msgIntent.putExtra(JSONRequest.IN_MSG, "findTags");
+                msgIntent.putExtra("queryID", "findTags");
+                msgIntent.putExtra("jsonObject", "{\"tag\":\"" + location.trim() + "\"}");
+                startService(msgIntent);
+            }
+
+            //If the user is refreshing the map, gather all crumbs near the user's location
+            else
+            {
+
+
+            }
+        }
+
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
