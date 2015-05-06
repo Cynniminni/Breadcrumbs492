@@ -30,16 +30,29 @@
         android:layout_gravity="right"
         android:textColor="#FFFFFF"/>
 
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.19"
+        android:background="#2A3F49"
+        android:textColor="#FFFFFF"
+        tools:context="com.tumblr.breadcrumbs492.testapplication.EditCrumb"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
     <TextView
+        android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Crumb Name"
-        android:id="@+id/nameTextView"
         android:textColor="#FFFFFF"/>
 
     <EditText
         android:id="@+id/editcrumb_name"
+        android:inputType="textCapSentences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
@@ -47,35 +60,35 @@
         android:maxLines="1"/>
 
     <TextView
+        android:id="@+id/descripTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Crumb Description"
-        android:id="@+id/descripTextView"
         android:textColor="#FFFFFF"/>
 
     <EditText
         android:id="@+id/editcrumb_description"
+        android:inputType="textCapSentences"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.15"
         android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:inputType="textCapSentences"/>
+        android:textColorHint="#FFFFFF" />
 
     <TextView
+        android:id="@+id/tagsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Crumb Tags (Separated with commas)"
-        android:id="@+id/tagsTextView"
         android:autoText="false"
         android:textColor="#FFFFFF"/>
 
     <EditText
+        android:id="@+id/editcrumb_tags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editcrumb_tags"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.40"
         android:textColor="#FFFFFF"

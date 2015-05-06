@@ -36,6 +36,8 @@ public class MyCrumbsActivity extends ActionBarActivity {
     public final static String CRUMB_ID = "crumbID";
     public final static String CRUMB_UPVOTES = "crumbUpvotes";
     public final static String CRUMB_DATE = "crumbDate";
+    public final static String CRUMB_LONGITUDE = "longitude";
+    public final static String CRUMB_LATITUDE = "latitude";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +117,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
             if(responseType.trim().equalsIgnoreCase("getCrumbs")){
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+                System.out.println(this.response);
 
                 JSONArray tempJSON = new JSONArray();
                 try {
@@ -134,9 +137,11 @@ public class MyCrumbsActivity extends ActionBarActivity {
                 final String[] ids = new String[tempJSON.length()];
                 final String[] comments = new String[tempJSON.length()];
                 final String[] tags = new String[tempJSON.length()];
-                final Date[] dates = new Date[tempJSON.length()];
+                final String[] dates = new String[tempJSON.length()];
                 final Integer[] imgID = new Integer[1];
                 final Integer[] upvotes = new Integer[tempJSON.length()];
+                final Double[] longitude = new Double[tempJSON.length()];
+                final Double[] latitude = new Double[tempJSON.length()];
 
                 try {
                     //populate the arrays with each crumbs' attributes
@@ -146,15 +151,22 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         comments[i] = tempJSON.getJSONObject(i).getString("comment");
                         tags[i] = tempJSON.getJSONObject(i).getString("tags");
                         upvotes[i] = tempJSON.getJSONObject(i).getInt("upvotes");
+                        longitude[i] = tempJSON.getJSONObject(i).getDouble("longitude");
+                        latitude[i] = tempJSON.getJSONObject(i).getDouble("latitude");
+                        dates[i] = tempJSON.getJSONObject(i).getString("crumbDate");
 
-                        String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        /*String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
+                        System.out.println("Date string for mycrumbs: " + dateString);
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
                         try {
                             Date crumbDate = sdf.parse(dateString);
+                            System.out.println("After string parse to date in mycrumbs: " + crumbDate.toString());
+                            String newDate = sdf.format(crumbDate);
+                            System.out.println("Date to format in mycrumbs: " + newDate);
                             dates[i] = crumbDate;
                         }catch(ParseException e){
                             e.printStackTrace();
-                        }
+                        }*/
                     }
                 }
                 catch(JSONException j)
@@ -199,6 +211,8 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         intent.putExtra(CRUMB_TAGS, tags[itemPosition]);
                         intent.putExtra(CRUMB_UPVOTES, upvotes[itemPosition]);
                         intent.putExtra(CRUMB_DATE, dates[itemPosition]);
+                        intent.putExtra(CRUMB_LONGITUDE, longitude[itemPosition]);
+                        intent.putExtra(CRUMB_LATITUDE, latitude[itemPosition]);
                         startActivity(intent);
                         finish();
                     }

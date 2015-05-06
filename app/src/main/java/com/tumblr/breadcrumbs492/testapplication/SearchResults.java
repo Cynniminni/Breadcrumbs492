@@ -144,7 +144,7 @@ public class SearchResults extends ActionBarActivity {
                 final String[] ids = new String[tempJSON.length()];
                 final String[] comments = new String[tempJSON.length()];
                 final String[] tags = new String[tempJSON.length()];
-                final Date[] dates = new Date[tempJSON.length()];
+                final String[] dates = new String[tempJSON.length()];
                 final Integer[] imgID = new Integer[1];
                 final Integer[] upvotes = new Integer[tempJSON.length()];
                 final Double[] longitude = new Double[tempJSON.length()];
@@ -160,15 +160,20 @@ public class SearchResults extends ActionBarActivity {
                         upvotes[i] = tempJSON.getJSONObject(i).getInt("upvotes");
                         longitude[i] = tempJSON.getJSONObject(i).getDouble("longitude");
                         latitude[i] = tempJSON.getJSONObject(i).getDouble("latitude");
+                        dates[i] = tempJSON.getJSONObject(i).getString("crumbDate");
 
-                        String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        /*String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
+                        System.out.println("Date string in search results: " + dateString);
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
                         try {
                             Date crumbDate = sdf.parse(dateString);
+                            System.out.println("After string parse to date in searchresults: " + crumbDate.toString());
+                            String newDate = sdf.format(crumbDate);
+                            System.out.println("Date to format in searchresults: " + newDate);
                             dates[i] = crumbDate;
                         } catch (ParseException e) {
                             e.printStackTrace();
-                        }
+                        }*/
                     }
                 } catch (JSONException j) {
                     j.printStackTrace();
@@ -215,6 +220,7 @@ public class SearchResults extends ActionBarActivity {
                         intent.putExtra(USERNAME, username[itemPosition]);
                         intent.putExtra(CRUMB_LONGITUDE, longitude[itemPosition]);
                         intent.putExtra(CRUMB_LATITUDE, latitude[itemPosition]);
+
                         startActivity(intent);
                         finish();
                     }

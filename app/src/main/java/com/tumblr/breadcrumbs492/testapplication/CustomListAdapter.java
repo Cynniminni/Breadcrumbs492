@@ -19,10 +19,10 @@ import java.util.Date;
 public class CustomListAdapter extends ArrayAdapter<String> {
     private final Activity context;
     private final String[] crumbName;
-    private final Date[] crumbDate;
+    private final String[] crumbDate;
     private final Integer[] crumbIMGID;
 
-    public CustomListAdapter(Activity context, String[] crumbName, Date[] crumbDate, Integer[] crumbIMGID) {
+    public CustomListAdapter(Activity context, String[] crumbName, String[] crumbDate, Integer[] crumbIMGID) {
         super(context, R.layout.crumblist, crumbName);
         this.context = context;
         this.crumbName = crumbName;

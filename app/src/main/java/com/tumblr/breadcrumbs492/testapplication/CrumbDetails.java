@@ -67,7 +67,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         description = getIntent().getStringExtra(SearchResults.CRUMB_COMMENT);
         username = getIntent().getStringExtra(SearchResults.USERNAME);
         upvotes = getIntent().getIntExtra(SearchResults.CRUMB_UPVOTES, 0);
-        date = getIntent().getSerializableExtra(SearchResults.CRUMB_DATE).toString();
+        date = getIntent().getStringExtra(SearchResults.CRUMB_DATE);
         tags = getIntent().getStringExtra(SearchResults.CRUMB_TAGS);
         longitude = getIntent().getDoubleExtra(SearchResults.CRUMB_LONGITUDE, 0.0);
         latitude = getIntent().getDoubleExtra(SearchResults.CRUMB_LATITUDE, 0.0);
@@ -84,11 +84,12 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         map = supportMapFragment.getMap();
 
         //get location of crumb, set to a LatLng object
+        System.out.println("Latitude: " + latitude + "Longitude: " + longitude);
         LatLng location = new LatLng(latitude, longitude);
 
         //mark crumb location on map
         map.setMyLocationEnabled(true);
-        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.moveCamera(CameraUpdateFactory.newLatLng(location));
         map.animateCamera(CameraUpdateFactory.zoomTo(14));
         map.addMarker(new MarkerOptions().position(location).
