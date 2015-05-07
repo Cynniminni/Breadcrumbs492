@@ -69,8 +69,11 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         intent.putExtra(CRUMB_UPVOTES, getIntent().getIntExtra(SearchResults.CRUMB_UPVOTES, 0));
         intent.putExtra(CRUMB_DATE, getIntent().getStringExtra(SearchResults.CRUMB_DATE));
         intent.putExtra(CRUMB_TAGS, getIntent().getStringExtra(SearchResults.CRUMB_TAGS));
+        intent.putExtra(CRUMB_ID, getIntent().getStringExtra(SearchResults.CRUMB_ID));
         intent.putExtra(CRUMB_LATITUDE, getIntent().getDoubleExtra(SearchResults.CRUMB_LATITUDE, 0.0));
         intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(SearchResults.CRUMB_LONGITUDE, 0.0));
+        System.out.println("Crumbdetails tags: " + getIntent().getStringExtra(SearchResults.CRUMB_TAGS));
+
         startActivity(intent);
         finish();
 
@@ -185,7 +188,8 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
             tags = getIntent().getStringExtra(UserProfile.CRUMB_TAGS);
             longitude = getIntent().getDoubleExtra(UserProfile.CRUMB_LONGITUDE, 0.0);
             latitude = getIntent().getDoubleExtra(UserProfile.CRUMB_LATITUDE, 0.0);
-            System.out.println("Tags: " + tags);
+            System.out.println("email: " + email);
+            System.out.println("crumbID: " + crumbID);
         }
         System.out.println(crumbID);
         //check to see if user has voted before

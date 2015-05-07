@@ -23,7 +23,7 @@ public class UserProfile extends ActionBarActivity {
     private MyRequestReceiver8 receiver;
     private String search, email;
     public final static String CRUMB_NAME = "crumbName";
-    public final static String CRUMB_COMMENT = "comment";
+    public final static String CRUMB_COMMENT = "crumbComment";
     public final static String CRUMB_TAGS = "crumbTags";
     public final static String CRUMB_ID = "crumbID";
     public final static String CRUMB_UPVOTES = "upvotes";
@@ -76,13 +76,15 @@ public class UserProfile extends ActionBarActivity {
         intent.putExtra(CRUMB_UPVOTES, getIntent().getIntExtra(CrumbDetails.CRUMB_UPVOTES, 0));
         intent.putExtra(CRUMB_DATE, getIntent().getStringExtra(CrumbDetails.CRUMB_DATE));
         intent.putExtra(CRUMB_TAGS, getIntent().getStringExtra(CrumbDetails.CRUMB_TAGS));
+        intent.putExtra(CRUMB_ID, getIntent().getStringExtra(CrumbDetails.CRUMB_ID));
         intent.putExtra(CRUMB_LATITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LATITUDE, 0.0));
         intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LONGITUDE, 0.0));
         intent.putExtra("activity", "UserProfile");
         setResult(RESULT_OK, intent);
         startActivity(intent);
-        finish();
+        System.out.println("tagsuserprofile: " + getIntent().getStringExtra(CrumbDetails.CRUMB_TAGS));
         super.onBackPressed();
+        finish();
     }
 
     @Override

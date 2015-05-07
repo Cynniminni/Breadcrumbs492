@@ -28,7 +28,7 @@ public class SearchResults extends ActionBarActivity {
     private String search;
     public final static String CRUMB_NAME = "crumbName";
     public final static String CRUMB_COMMENT = "crumbComment";
-    public final static String CRUMB_TAGS = "crumbsTags";
+    public final static String CRUMB_TAGS = "crumbTags";
     public final static String CRUMB_ID = "crumbID";
     public final static String CRUMB_UPVOTES = "crumbUpvotes";
     public final static String CRUMB_DATE = "crumbDate";
