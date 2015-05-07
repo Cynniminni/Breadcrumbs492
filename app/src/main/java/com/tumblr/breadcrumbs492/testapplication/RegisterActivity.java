@@ -44,7 +44,7 @@ public class RegisterActivity extends ActionBarActivity {
     }
 
     public void onCancel(View view) {
-        unregisterReceiver(receiver);
+
         //go back to parent activity, which is the login screen
         NavUtils.navigateUpFromSameTask(this);
     }

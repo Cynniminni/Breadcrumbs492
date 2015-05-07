@@ -31,7 +31,7 @@ import com.tumblr.breadcrumbs492.testapplication.RegisterActivity.MyRequestRecei
 import com.tumblr.breadcrumbs492.testapplication.EditCrumb.MyRequestReceiver6;
 import com.tumblr.breadcrumbs492.testapplication.SearchResults.MyRequestReceiver7;
 import com.tumblr.breadcrumbs492.testapplication.UserProfile.MyRequestReceiver8;
-
+import com.tumblr.breadcrumbs492.testapplication.CrumbDetails.MyRequestReceiver9;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -68,7 +68,9 @@ public class JSONRequest extends IntentService{
                 ||inMessage.trim().equals("register")||inMessage.trim().equals("registerInit")
                 ||inMessage.trim().equals("findTags")||inMessage.trim().equals("editCrumb")
                 ||inMessage.trim().equals("updateProfile")||inMessage.trim().equals("deleteCrumb")
-                ||inMessage.trim().equals("findTagsResults") ||inMessage.trim().equals("getUserCrumbs")){
+                ||inMessage.trim().equals("findTagsResults") ||inMessage.trim().equals("getUserCrumbs")
+                ||inMessage.trim().equals("upvote")||inMessage.trim().equals("unvote")
+                ||inMessage.trim().equals("hasVoted")){
 
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
@@ -121,6 +123,8 @@ public class JSONRequest extends IntentService{
                 broadcastIntent.setAction(MyRequestReceiver7.PROCESS_RESPONSE);
             else if (queryID.equals("getUserCrumbs"))
                 broadcastIntent.setAction(MyRequestReceiver8.PROCESS_RESPONSE);
+            else if (queryID.equals("upvote")||queryID.equals("unvote")||queryID.equals("hasVoted"))
+                broadcastIntent.setAction(MyRequestReceiver9.PROCESS_RESPONSE);
         }
 
         else if(inMessage.equalsIgnoreCase("registerInit"))

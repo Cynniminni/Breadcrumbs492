@@ -72,6 +72,7 @@ public class MapsActivity extends ActionBarActivity {
     public final static String SEARCH = "search";
 
     public final static String CRUMB_NAME = "crumbName";
+    public final static String CRUMB_EMAIL = "email";
     public final static String CRUMB_COMMENT = "crumbComment";
     public final static String CRUMB_TAGS = "crumbsTags";
     public final static String CRUMB_ID = "crumbID";

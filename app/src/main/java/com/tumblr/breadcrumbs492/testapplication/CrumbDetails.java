@@ -1,6 +1,9 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,6 +25,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.Date;
@@ -30,9 +36,10 @@ import java.util.Date;
 public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPanoramaReadyCallback*/{
     //private StreetViewPanoramaFragment panorama;
     private GoogleMap map;
-    private String search, name, description, username, date, tags;
+    private String search, name, description, username, date, tags, email, crumbID;
     private int upvotes;
     private double longitude, latitude;
+    private boolean hasVoted;
 
     public final static String CRUMB_NAME = "crumbName";
     public final static String CRUMB_COMMENT = "crumbComment";
@@ -49,6 +56,8 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
 
     private TextView crumbUsername, crumbDate, crumbName, crumbUpvotes, crumbTags, crumbComment;
     private String whichActivity = "";
+
+    private MyRequestReceiver9 receiver;
 
     public void userDetails(View view){
         Intent intent = new Intent(CrumbDetails.this, UserProfile.class);
@@ -78,35 +87,41 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
 
     public void voteCrumb(View view)
     {
+
         // change button text
-        Button voteButton = (Button)view;
-        if(voteButton.getText() == "Like!")
+        Button voteButton = (Button)findViewById(R.id.button);
+        if(hasVoted)
         {
-            voteButton.setText("Unlike!");
-            upvotes--;
+            Intent msgIntent = new Intent(this, JSONRequest.class);
+            msgIntent.putExtra(JSONRequest.IN_MSG, "unvote");
+            msgIntent.putExtra("queryID", "unvote");
+            msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
+                    + GlobalContainer.user.getInfo()[1] + "\",\"crumbID\":\"" + crumbID + "\"}");
+
+            startService(msgIntent);
+
         }
         else
         {
-            voteButton.setText("Like!");
-            upvotes++;
+            Intent msgIntent = new Intent(this, JSONRequest.class);
+            msgIntent.putExtra(JSONRequest.IN_MSG, "upvote");
+            msgIntent.putExtra("queryID", "upvote");
+            msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
+                    + GlobalContainer.user.getInfo()[1] + "\",\"crumbID\":\"" + crumbID + "\"}");
+
+
+            startService(msgIntent);
         }
 
         // pass crumb back into database
 
         String comment = crumbComment.toString();
-        Intent msgIntent = new Intent(this, JSONRequest.class);
         Intent intent = new Intent(this, MapsActivity.class);
         String id = getIntent().getStringExtra(MyCrumbsActivity.CRUMB_ID);
-        msgIntent.putExtra(JSONRequest.IN_MSG, "editCrumb");
-        msgIntent.putExtra("queryID", "editCrumb");
+
+
 
         // I dont see upvotes here, so maybe its not being commited back?
-        msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
-                + GlobalContainer.user.getInfo()[1] + "\",\"crumbID\":\"" + id + "\",\"crumbName\":\"" + name
-                + "\",\"comment\":\"" + comment + "\",\"tags\":\"" + tags
-                + "\"}");
-        msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
-        startService(msgIntent);
 
         //place into intent to pass back to MapsActivity
         intent.putExtra(MapsActivity.NAME, name);
@@ -121,12 +136,19 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         setContentView(R.layout.activity_crumb_details);
         whichActivity = getIntent().getStringExtra("activity");
 
+        IntentFilter filter = new IntentFilter(MyRequestReceiver9.PROCESS_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new MyRequestReceiver9();
+        registerReceiver(receiver, filter);
+
         if(whichActivity.equals("SearchResults")) {
             //retrieve extras from previous SearchResults class
             search = getIntent().getStringExtra(SearchResults.SEARCH);
             name = getIntent().getStringExtra(SearchResults.CRUMB_NAME);
+            email = getIntent().getStringExtra(SearchResults.EMAIL);
             description = getIntent().getStringExtra(SearchResults.CRUMB_COMMENT);
             username = getIntent().getStringExtra(SearchResults.USERNAME);
+            crumbID = getIntent().getStringExtra(SearchResults.CRUMB_ID);
             upvotes = getIntent().getIntExtra(SearchResults.CRUMB_UPVOTES, 0);
             date = getIntent().getStringExtra(SearchResults.CRUMB_DATE);
             tags = getIntent().getStringExtra(SearchResults.CRUMB_TAGS);
@@ -138,9 +160,11 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         else if(whichActivity.equals("MapActivity")) {
             //retrieve extras from previous SearchResults class
             search = getIntent().getStringExtra(MapsActivity.SEARCH);
+            email = getIntent().getStringExtra(MapsActivity.CRUMB_EMAIL);
             name = getIntent().getStringExtra(MapsActivity.CRUMB_NAME);
             description = getIntent().getStringExtra(MapsActivity.CRUMB_COMMENT);
             username = getIntent().getStringExtra(MapsActivity.USERNAME);
+            crumbID = getIntent().getStringExtra(MapsActivity.CRUMB_ID);
             upvotes = getIntent().getIntExtra(MapsActivity.CRUMB_UPVOTES, 0);
             date = getIntent().getStringExtra(MapsActivity.CRUMB_DATE);
             tags = getIntent().getStringExtra(MapsActivity.CRUMB_TAGS);
@@ -151,9 +175,11 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         else if(whichActivity.equals("UserProfile")) {
             //retrieve extras from previous SearchResults class
             search = getIntent().getStringExtra(UserProfile.SEARCH);
+            email = getIntent().getStringExtra(UserProfile.EMAIL);
             name = getIntent().getStringExtra(UserProfile.CRUMB_NAME);
             description = getIntent().getStringExtra(UserProfile.CRUMB_COMMENT);
             username = getIntent().getStringExtra(UserProfile.USERNAME);
+            crumbID = getIntent().getStringExtra(UserProfile.CRUMB_ID);
             upvotes = getIntent().getIntExtra(UserProfile.CRUMB_UPVOTES, 0);
             date = getIntent().getStringExtra(UserProfile.CRUMB_DATE);
             tags = getIntent().getStringExtra(UserProfile.CRUMB_TAGS);
@@ -161,6 +187,13 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
             latitude = getIntent().getDoubleExtra(UserProfile.CRUMB_LATITUDE, 0.0);
             System.out.println("Tags: " + tags);
         }
+        System.out.println(crumbID);
+        //check to see if user has voted before
+        Intent msgIntent1 = new Intent(this, JSONRequest.class);
+        msgIntent1.putExtra(JSONRequest.IN_MSG, "hasVoted");
+        msgIntent1.putExtra("queryID", "hasVoted");
+        msgIntent1.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
+                + GlobalContainer.user.getInfo()[1] + "\",\"crumbID\":\"" + crumbID + "\"}");
 
         /*StreetViewPanoramaFragment streetViewPanoramaFragment =
                 (StreetViewPanoramaFragment) getFragmentManager()
@@ -230,6 +263,12 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     }
 
     @Override
+    public void onDestroy(){
+        unregisterReceiver(receiver);
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_crumb_details, menu);
@@ -254,5 +293,98 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //broadcast receiver to receive messages sent from the JSON IntentService
+    public class MyRequestReceiver9 extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.CrumbDetails.MyRequestReceiver";
+        public String response = null;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
+
+            Button voteButton = (Button)findViewById(R.id.button);
+
+            if(responseType.trim().equalsIgnoreCase("upvote")){
+
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+
+                JSONObject tempJSON = new JSONObject();
+                try {
+                    tempJSON = new JSONObject(response);
+                    if(tempJSON.getString("upvoteResult").equals("true"))
+                    {
+                        crumbUpvotes.setText("Upvotes: " + (upvotes + 1));
+                        upvotes++;
+                        hasVoted = true;
+                        Toast.makeText(getApplicationContext(), "Vote successful", Toast.LENGTH_SHORT).show();
+                        voteButton.setText("Unlike!");
+                    }
+                }
+                catch(JSONException e)
+                {
+                    Toast.makeText(getApplicationContext(), "Voting error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+
+            }
+            else if(responseType.trim().equalsIgnoreCase("unvote")){
+
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+
+                JSONObject tempJSON = new JSONObject();
+                try {
+                    tempJSON = new JSONObject(response);
+                    if(tempJSON.getString("unvoteResult").equals("true"))
+                    {
+                        crumbUpvotes.setText("Upvotes: " + (upvotes - 1));
+                        upvotes--;
+                        hasVoted = false;
+                        Toast.makeText(getApplicationContext(), "Un-vote successful", Toast.LENGTH_SHORT).show();
+                        voteButton.setText("Like!");
+                    }
+                }
+                catch(JSONException e)
+                {
+                    Toast.makeText(getApplicationContext(), "Un-voting error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+
+            }
+            else if(responseType.trim().equalsIgnoreCase("hasVoted")){
+
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+
+                JSONObject tempJSON = new JSONObject();
+                try {
+                    tempJSON = new JSONObject(response);
+                    if(tempJSON.getString("hasVoted").equals("true"))
+                    {
+                        hasVoted = true;
+                        voteButton.setText("Unlike!");
+                    }
+                    else if(tempJSON.getString("hasVoted").equals("false"))
+                    {
+                        hasVoted = false;
+                        voteButton.setText("Like!");
+                    }
+                }
+                catch(JSONException e)
+                {
+                   e.printStackTrace();
+                }
+
+
+            }
+
+        }
+        public String getResponse()
+        {
+            return response;
+        }
     }
 }
