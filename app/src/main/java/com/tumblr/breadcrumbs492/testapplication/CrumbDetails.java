@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -24,7 +25,8 @@ import org.w3c.dom.Text;
 
 import java.util.Date;
 
-
+//TODO: We need to retrieve hasVoted from the DB to determine the button logic
+//TODO: upvotes needs to be passed back in the JSON request to the web server
 public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPanoramaReadyCallback*/{
     //private StreetViewPanoramaFragment panorama;
     private GoogleMap map;
@@ -44,7 +46,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     public final static String USERNAME = "username";
     public final static int REQUEST_FIND_CRUMB = 4;
 
-    private TextView crumbUsername, crumbDate, crumbName, crumbUpvotes, crumbTags, crumbComment;
+    private TextView crumbUsername, crumbDate, crumbName, crumbUpvotes, crumbTags, crumbComment, crumbID;
 
 
     public void backToResults(View view) {
@@ -55,6 +57,45 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         startActivityForResult(intent, REQUEST_FIND_CRUMB);
         finish();
     }
+
+    public void voteCrumb(View view)
+    {
+        // change button text
+        Button voteButton = (Button)view;
+        if(voteButton.getText() == "Like!")
+        {
+            voteButton.setText("Unlike!");
+            upvotes--;
+        }
+        else
+        {
+            voteButton.setText("Like!");
+            upvotes++;
+        }
+
+        // pass crumb back into database
+
+        String comment = crumbComment.toString();
+        Intent msgIntent = new Intent(this, JSONRequest.class);
+        Intent intent = new Intent(this, MapsActivity.class);
+        String id = getIntent().getStringExtra(MyCrumbsActivity.CRUMB_ID);
+        msgIntent.putExtra(JSONRequest.IN_MSG, "editCrumb");
+        msgIntent.putExtra("queryID", "editCrumb");
+
+        // I dont see upvotes here, so maybe its not being commited back?
+        msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
+                + GlobalContainer.user.getInfo()[1] + "\",\"crumbID\":\"" + id + "\",\"crumbName\":\"" + name
+                + "\",\"comment\":\"" + comment + "\",\"tags\":\"" + tags
+                + "\"}");
+        msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
+        startService(msgIntent);
+
+        //place into intent to pass back to MapsActivity
+        intent.putExtra(MapsActivity.NAME, name);
+        intent.putExtra(MapsActivity.COMMENT, comment);
+        setResult(RESULT_OK, intent);//send result code
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

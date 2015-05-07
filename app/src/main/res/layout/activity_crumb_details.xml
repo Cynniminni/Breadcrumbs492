@@ -65,6 +65,15 @@
         android:textColor="#FFFFFF"
         android:maxLines="1"/>
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Like!"
+        android:id="@+id/button"
+        android:layout_gravity="right"
+        android:onClick="voteCrumb"/>
+
     <TextView
         android:id="@+id/crumb_description"
         android:layout_width="match_parent"
