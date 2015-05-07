@@ -23,10 +23,10 @@ public class UserProfile extends ActionBarActivity {
     private MyRequestReceiver8 receiver;
     private String search, email;
     public final static String CRUMB_NAME = "crumbName";
-    public final static String CRUMB_COMMENT = "crumbComment";
-    public final static String CRUMB_TAGS = "crumbsTags";
+    public final static String CRUMB_COMMENT = "comment";
+    public final static String CRUMB_TAGS = "crumbTags";
     public final static String CRUMB_ID = "crumbID";
-    public final static String CRUMB_UPVOTES = "crumbUpvotes";
+    public final static String CRUMB_UPVOTES = "upvotes";
     public final static String CRUMB_DATE = "crumbDate";
     public final static String SEARCH = "search";
     public final static String USERNAME = "username";
@@ -68,16 +68,16 @@ public class UserProfile extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, CrumbDetails.class);
-        intent.putExtra(EMAIL, getIntent().getStringExtra(UserProfile.EMAIL));
-        intent.putExtra(USERNAME, getIntent().getStringExtra(UserProfile.USERNAME));
-        intent.putExtra(SEARCH, getIntent().getStringExtra(UserProfile.SEARCH));
-        intent.putExtra(CRUMB_NAME, getIntent().getStringExtra(UserProfile.CRUMB_NAME));
-        intent.putExtra(CRUMB_COMMENT, getIntent().getStringExtra(UserProfile.CRUMB_COMMENT));
-        intent.putExtra(CRUMB_UPVOTES, getIntent().getIntExtra(UserProfile.CRUMB_UPVOTES, 0));
-        intent.putExtra(CRUMB_DATE, getIntent().getStringExtra(UserProfile.CRUMB_DATE));
-        intent.putExtra(CRUMB_TAGS, getIntent().getStringExtra(UserProfile.CRUMB_TAGS));
-        intent.putExtra(CRUMB_LATITUDE, getIntent().getDoubleExtra(UserProfile.CRUMB_LATITUDE, 0.0));
-        intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(UserProfile.CRUMB_LONGITUDE, 0.0));
+        intent.putExtra(EMAIL, getIntent().getStringExtra(CrumbDetails.EMAIL));
+        intent.putExtra(USERNAME, getIntent().getStringExtra(CrumbDetails.USERNAME));
+        intent.putExtra(SEARCH, getIntent().getStringExtra(CrumbDetails.SEARCH));
+        intent.putExtra(CRUMB_NAME, getIntent().getStringExtra(CrumbDetails.CRUMB_NAME));
+        intent.putExtra(CRUMB_COMMENT, getIntent().getStringExtra(CrumbDetails.CRUMB_COMMENT));
+        intent.putExtra(CRUMB_UPVOTES, getIntent().getIntExtra(CrumbDetails.CRUMB_UPVOTES, 0));
+        intent.putExtra(CRUMB_DATE, getIntent().getStringExtra(CrumbDetails.CRUMB_DATE));
+        intent.putExtra(CRUMB_TAGS, getIntent().getStringExtra(CrumbDetails.CRUMB_TAGS));
+        intent.putExtra(CRUMB_LATITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LATITUDE, 0.0));
+        intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LONGITUDE, 0.0));
         intent.putExtra("activity", "UserProfile");
         setResult(RESULT_OK, intent);
         startActivity(intent);
@@ -128,7 +128,7 @@ public class UserProfile extends ActionBarActivity {
             if (responseType.trim().equalsIgnoreCase("getUserCrumbs")) {
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println("This is the response: " + this.response);
+                System.out.println("This is the response from userprofile: " + this.response);
 
                 JSONArray tempJSON = new JSONArray();
                 try {

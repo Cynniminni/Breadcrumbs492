@@ -38,8 +38,8 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     public final static String CRUMB_ID = "crumbID";
     public final static String CRUMB_UPVOTES = "crumbUpvotes";
     public final static String CRUMB_DATE = "crumbDate";
-    public final static String CRUMB_LONGITUDE = "crumbLongitude";
-    public final static String CRUMB_LATITUDE = "crumbLatitude";
+    public final static String CRUMB_LONGITUDE = "longitude";
+    public final static String CRUMB_LATITUDE = "latitude";
     public final static String SEARCH = "search";
     public final static String USERNAME = "username";
     public final static String EMAIL = "email";
