@@ -37,9 +37,24 @@
             android:id="@+id/button_find"
             android:background="@drawable/button_style"
             android:textColor="#FFFFFF"
-            android:layout_width="wrap_content"
+            android:layout_width="53dp"
             android:layout_height="match_parent"
             android:text="@string/button_find_text" />
+
+        <Button
+            android:id="@+id/button_display_all"
+            android:background="@drawable/button_style"
+            android:textColor="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|top"
+            android:text="View All"
+            android:padding="10dp"
+            android:paddingRight="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:clickable="false"
+            android:onClick="viewFindResults"/>
     </LinearLayout>
 
     <!-- google maps is the fragment here -->
@@ -58,20 +73,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true" />
 
-    <Button
-        android:id="@+id/button_display_all"
-        android:background="@drawable/button_style"
-        android:textColor="#FFFFFF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|top"
-        android:text="View All Results"
-        android:padding="10dp"
-        android:paddingRight="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="gone"
-        android:onClick="viewFindResults"/>
+
     </RelativeLayout>
 
 
@@ -84,24 +86,24 @@
         android:layout_weight="1"
         android:background="#00ffffff">
 
-        <Button
+        <ImageButton
             android:id="@+id/button_1"
+            android:src="@drawable/ic_perm_identity_white_48dp"
             android:background="@drawable/button_style"
             android:textColor="#FFFFFF"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="@string/button_1"
             android:onClick="viewProfile"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/button_2"
+            android:src="@drawable/ic_assignment_white_48dp"
             android:background="@drawable/button_style"
             android:textColor="#FFFFFF"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="@string/button_2"
             android:onClick="viewMyCrumbs"/>
 
         <Button

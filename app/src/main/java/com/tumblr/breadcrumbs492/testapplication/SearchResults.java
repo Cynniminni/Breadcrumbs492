@@ -36,6 +36,7 @@ public class SearchResults extends ActionBarActivity {
     public final static String USERNAME = "username";
     public final static String CRUMB_LONGITUDE = "longitude";
     public final static String CRUMB_LATITUDE = "latitude";
+    public final static String EMAIL = "email";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +146,7 @@ public class SearchResults extends ActionBarActivity {
                 final String[] comments = new String[tempJSON.length()];
                 final String[] tags = new String[tempJSON.length()];
                 final String[] dates = new String[tempJSON.length()];
+                final String[] emails = new String[tempJSON.length()];
                 final Integer[] imgID = new Integer[1];
                 final Integer[] upvotes = new Integer[tempJSON.length()];
                 final Double[] longitude = new Double[tempJSON.length()];
@@ -161,6 +163,8 @@ public class SearchResults extends ActionBarActivity {
                         longitude[i] = tempJSON.getJSONObject(i).getDouble("longitude");
                         latitude[i] = tempJSON.getJSONObject(i).getDouble("latitude");
                         dates[i] = tempJSON.getJSONObject(i).getString("crumbDate");
+                        tags[i] = tempJSON.getJSONObject(i).getString("crumbTags");
+                        emails[i] = tempJSON.getJSONObject(i).getString("email");
 
                         /*String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
                         System.out.println("Date string in search results: " + dateString);
@@ -220,6 +224,8 @@ public class SearchResults extends ActionBarActivity {
                         intent.putExtra(USERNAME, username[itemPosition]);
                         intent.putExtra(CRUMB_LONGITUDE, longitude[itemPosition]);
                         intent.putExtra(CRUMB_LATITUDE, latitude[itemPosition]);
+                        intent.putExtra(EMAIL, emails[itemPosition]);
+                        intent.putExtra("activity", "SearchResults");
 
                         startActivity(intent);
                         finish();

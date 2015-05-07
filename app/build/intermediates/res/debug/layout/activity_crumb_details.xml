@@ -92,4 +92,4 @@
         android:text="Back"
         android:onClick="backToResults"/>
 </LinearLayout>
-<!-- From: file:/C:/Users/scott/helloworld/Breadcrumbs492/app/src/main/res/layout/activity_crumb_details.xml -->
+<!-- From: file:/C:/Users/Matt/Documents/GitHub%20Repos/Breadcrumbs492/app/src/main/res/layout/activity_crumb_details.xml -->

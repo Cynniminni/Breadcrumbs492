@@ -61,16 +61,33 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crumb_details);
 
-        //retrieve extras from previous SearchResults class
-        search = getIntent().getStringExtra(SearchResults.SEARCH);
-        name = getIntent().getStringExtra(SearchResults.CRUMB_NAME);
-        description = getIntent().getStringExtra(SearchResults.CRUMB_COMMENT);
-        username = getIntent().getStringExtra(SearchResults.USERNAME);
-        upvotes = getIntent().getIntExtra(SearchResults.CRUMB_UPVOTES, 0);
-        date = getIntent().getStringExtra(SearchResults.CRUMB_DATE);
-        tags = getIntent().getStringExtra(SearchResults.CRUMB_TAGS);
-        longitude = getIntent().getDoubleExtra(SearchResults.CRUMB_LONGITUDE, 0.0);
-        latitude = getIntent().getDoubleExtra(SearchResults.CRUMB_LATITUDE, 0.0);
+        if(getIntent().getStringExtra("activity").equals("SearchResults")) {
+            //retrieve extras from previous SearchResults class
+            search = getIntent().getStringExtra(SearchResults.SEARCH);
+            name = getIntent().getStringExtra(SearchResults.CRUMB_NAME);
+            description = getIntent().getStringExtra(SearchResults.CRUMB_COMMENT);
+            username = getIntent().getStringExtra(SearchResults.USERNAME);
+            upvotes = getIntent().getIntExtra(SearchResults.CRUMB_UPVOTES, 0);
+            date = getIntent().getStringExtra(SearchResults.CRUMB_DATE);
+            tags = getIntent().getStringExtra(SearchResults.CRUMB_TAGS);
+            longitude = getIntent().getDoubleExtra(SearchResults.CRUMB_LONGITUDE, 0.0);
+            latitude = getIntent().getDoubleExtra(SearchResults.CRUMB_LATITUDE, 0.0);
+            System.out.println("Tags: " + tags);
+        }
+
+        else if(getIntent().getStringExtra("activity").equals("MapActivity")) {
+            //retrieve extras from previous SearchResults class
+            search = getIntent().getStringExtra(MapsActivity.SEARCH);
+            name = getIntent().getStringExtra(MapsActivity.CRUMB_NAME);
+            description = getIntent().getStringExtra(MapsActivity.CRUMB_COMMENT);
+            username = getIntent().getStringExtra(MapsActivity.USERNAME);
+            upvotes = getIntent().getIntExtra(MapsActivity.CRUMB_UPVOTES, 0);
+            date = getIntent().getStringExtra(MapsActivity.CRUMB_DATE);
+            tags = getIntent().getStringExtra(MapsActivity.CRUMB_TAGS);
+            longitude = getIntent().getDoubleExtra(MapsActivity.CRUMB_LONGITUDE, 0.0);
+            latitude = getIntent().getDoubleExtra(MapsActivity.CRUMB_LATITUDE, 0.0);
+            System.out.println("Tags: " + tags);
+        }
 
         /*StreetViewPanoramaFragment streetViewPanoramaFragment =
                 (StreetViewPanoramaFragment) getFragmentManager()
@@ -120,6 +137,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
             tags = "No tags found for this crumb.";
             crumbTags.setText(tags);
         }*/
+
         crumbTags.setText("Tags: " + tags);
     }
 

@@ -1918,7 +1918,7 @@ containing a value of this type.
         public static final int com_facebook_list_section_header_background=0x7f020048;
         public static final int com_facebook_loginbutton_silver=0x7f020049;
         public static final int com_facebook_logo=0x7f02004a;
-        public static final int com_facebook_picker_default_separator_color=0x7f020088;
+        public static final int com_facebook_picker_default_separator_color=0x7f02008f;
         public static final int com_facebook_picker_item_background=0x7f02004b;
         public static final int com_facebook_picker_list_focused=0x7f02004c;
         public static final int com_facebook_picker_list_longpressed=0x7f02004d;
@@ -1970,16 +1970,23 @@ containing a value of this type.
         public static final int common_signin_btn_text_pressed_dark=0x7f02007b;
         public static final int common_signin_btn_text_pressed_light=0x7f02007c;
         public static final int crumbs_logo=0x7f02007d;
-        public static final int ic_launcher=0x7f02007e;
-        public static final int ic_plusone_medium_off_client=0x7f02007f;
-        public static final int ic_plusone_small_off_client=0x7f020080;
-        public static final int ic_plusone_standard_off_client=0x7f020081;
-        public static final int ic_plusone_tall_off_client=0x7f020082;
-        public static final int ic_refresh_icon=0x7f020083;
-        public static final int ic_remove_text=0x7f020084;
-        public static final int powered_by_google_dark=0x7f020085;
-        public static final int powered_by_google_light=0x7f020086;
-        public static final int white_rectangle=0x7f020087;
+        public static final int ic_account_box_white_48dp=0x7f02007e;
+        public static final int ic_account_circle_white_48dp=0x7f02007f;
+        public static final int ic_assignment_white_48dp=0x7f020080;
+        public static final int ic_launcher=0x7f020081;
+        public static final int ic_list_white_48dp=0x7f020082;
+        public static final int ic_perm_identity_white_48dp=0x7f020083;
+        public static final int ic_plusone_medium_off_client=0x7f020084;
+        public static final int ic_plusone_small_off_client=0x7f020085;
+        public static final int ic_plusone_standard_off_client=0x7f020086;
+        public static final int ic_plusone_tall_off_client=0x7f020087;
+        public static final int ic_refresh_icon=0x7f020088;
+        public static final int ic_remove_text=0x7f020089;
+        public static final int ic_thumb_up_grey600_24dp=0x7f02008a;
+        public static final int ic_thumb_up_white_24dp=0x7f02008b;
+        public static final int powered_by_google_dark=0x7f02008c;
+        public static final int powered_by_google_light=0x7f02008d;
+        public static final int white_rectangle=0x7f02008e;
     }
     public static final class id {
         public static final int action_about=0x7f0c00bb;

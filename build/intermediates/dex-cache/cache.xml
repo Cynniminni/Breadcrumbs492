@@ -2,60 +2,60 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\exploded-aar\com.facebook.android\facebook\3.23.1\classes.jar"
+        jar="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\exploded-aar\com.facebook.android\facebook\3.23.1\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="0cc4cf316e45f957ba061ce29d21d6bf4fc89077">
-        <dex dex="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-c25229d7f64efd61ff72687d2109efad41c2a340.jar" />
+        sha1="8f5ae6a5aa214360ce588f5326a2075ae8bac9db">
+        <dex dex="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-e2f85843f8bccc79d8ef43cc0b76da1fbbe33ffe.jar" />
     </item>
     <item
-        jar="C:\Users\scott\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jar="C:\Users\Matt\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-d5dc40ad436638a9c1e22894ae7f43c7660cbf58.jar" />
+        <dex dex="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-d7af88883f8983d994a4ce3b384d34a54c51f9a2.jar" />
     </item>
     <item
-        jar="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-77af6bcf90e04ac41c1fc53373c379aa6279d71a.jar" />
-    </item>
-    <item
-        jar="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-6b898b8e59a9ff01b544c68af7602ac990559cd0.jar" />
-    </item>
-    <item
-        jar="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\classes.jar"
+        jar="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
-        <dex dex="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-2daefea0283753be379d3858f9124795169bf098.jar" />
+        <dex dex="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-0fc58ad7da23f2a370f69190d7b6acd46b8c2a76.jar" />
     </item>
     <item
-        jar="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-50bad0cf229c8170dcc6716292d5cd66ac9356d7.jar" />
-    </item>
-    <item
-        jar="C:\Users\scott\helloworld\Breadcrumbs492\app\libs\robotium-solo-5.3.2-SNAPSHOT.jar"
+        jar="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\libs\robotium-solo-5.3.2-SNAPSHOT.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="3d08cb50d83c011f27bb6dcc65a5647a88dae461">
-        <dex dex="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\robotium-solo-5.3.2-SNAPSHOT-697cf2cf24292bc5d21e03915390278f9ef05be9.jar" />
+        <dex dex="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\robotium-solo-5.3.2-SNAPSHOT-45452e5e80988b7556a7786f7a420f031658fb26.jar" />
     </item>
     <item
-        jar="C:\Users\scott\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.1.4\129874135e6081269ace2312092031558865de12\bolts-android-1.1.4.jar"
+        jar="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-ba10aaaa899b6a52971a3b7e18d5c2e5f002431d.jar" />
+    </item>
+    <item
+        jar="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-51ee13a6d0296e9c64de2d6c47273c171aa70f7e.jar" />
+    </item>
+    <item
+        jar="C:\Users\Matt\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.1.4\129874135e6081269ace2312092031558865de12\bolts-android-1.1.4.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="129874135e6081269ace2312092031558865de12">
-        <dex dex="C:\Users\scott\helloworld\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\bolts-android-1.1.4-bf342ec2ec2e514ca470c982668b92b9a163c8e9.jar" />
+        <dex dex="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\bolts-android-1.1.4-95aacc93086c45ffa5979193ffd47a9dbf46d973.jar" />
+    </item>
+    <item
+        jar="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-bdc4b7218a4aa3d277b005912d78f9b5a7279dcb.jar" />
     </item>
 
 </items>

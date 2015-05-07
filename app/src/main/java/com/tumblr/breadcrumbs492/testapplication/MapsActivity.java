@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -69,6 +70,16 @@ public class MapsActivity extends ActionBarActivity {
     public final static String LONGITUDE = "longitude";
     public final static String GUESTLOGIN = "guest login";
     public final static String SEARCH = "search";
+
+    public final static String CRUMB_NAME = "crumbName";
+    public final static String CRUMB_COMMENT = "crumbComment";
+    public final static String CRUMB_TAGS = "crumbsTags";
+    public final static String CRUMB_ID = "crumbID";
+    public final static String CRUMB_UPVOTES = "crumbUpvotes";
+    public final static String CRUMB_DATE = "crumbDate";
+    public final static String CRUMB_LONGITUDE = "crumbLongitude";
+    public final static String CRUMB_LATITUDE = "crumbLatitude";
+    public final static String USERNAME = "username";
 
     private static String email;
     private static String username;
@@ -255,8 +266,8 @@ public class MapsActivity extends ActionBarActivity {
         });
 
         //get button references
-        Button profileButton = (Button) findViewById(R.id.button_1);
-        Button myCrumbsButton = (Button) findViewById(R.id.button_2);
+        ImageButton profileButton = (ImageButton) findViewById(R.id.button_1);
+        ImageButton myCrumbsButton = (ImageButton) findViewById(R.id.button_2);
 
         if (isGuestLogin) {
             //disable buttons
@@ -358,8 +369,12 @@ public class MapsActivity extends ActionBarActivity {
                 String name = data.getStringExtra(NAME);
                 String comment = data.getStringExtra(COMMENT);
 
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date dateNoFormat = new Date();
+                String date = sdf.format(dateNoFormat);
+
                 //create a crumb object
-                Crumb crumb = new Crumb(name, comment, currentLocation, new Date(), 0);
+                Crumb crumb = new Crumb(name, comment, currentLocation, date, 0);
 
                 //add it to map
                 markCrumb(crumb);
@@ -533,30 +548,39 @@ public class MapsActivity extends ActionBarActivity {
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
             if(responseType.trim().equalsIgnoreCase("getAllCrumbs")){
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+                System.out.println("Get all crumbs: " + this.response);
                 JSONArray tempJSON;
                 try {
                     tempJSON = new JSONArray(response);
                     String name, comment;
                     LatLng location;
-                    Date date = new Date();
+                    String date;
+                    String[] usernameArr = new String[tempJSON.length()];
+                    String[] emailArr = new String[tempJSON.length()];
+                    String[] tagsArr = new String[tempJSON.length()];
+                    String[] idArr = new String[tempJSON.length()];
+                    int upvotes = 0;
                     Crumb[] crumbsArr = new Crumb[tempJSON.length()];
 
-                    int upvotes = 0;
 
                     for(int i = 0; i < tempJSON.length(); i++)
                     {
-                        String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        date = tempJSON.getJSONObject(i).getString("crumbDate");
+                        /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             date = sdf.parse(dateString);
                         }catch(ParseException e){
                             e.printStackTrace();
-                        }
+                        }*/
                         name = tempJSON.getJSONObject(i).getString("crumbName");
                         comment = tempJSON.getJSONObject(i).getString("comment");
                         location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"),tempJSON.getJSONObject(i).getDouble("longitude"));
                         upvotes = tempJSON.getJSONObject(i).getInt("upvotes");
                         crumbsArr[i] = new Crumb(name, comment, location, date, upvotes);
+                        usernameArr[i] = tempJSON.getJSONObject(i).getString("username");
+                        emailArr[i] = tempJSON.getJSONObject(i).getString("email");
+                        tagsArr[i] = tempJSON.getJSONObject(i).getString("crumbTags");
+                        idArr[i] = tempJSON.getJSONObject(i).getString("crumbID");
                         markCrumb(crumbsArr[i]);
                     }
 
@@ -625,37 +649,44 @@ public class MapsActivity extends ActionBarActivity {
 
             else if(responseType.trim().equalsIgnoreCase("findTags")){
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println(this.response);
+                System.out.println("Find tags: " + this.response);
                 JSONArray tempJSON;
                 mMap.clear();
                 try {
                     tempJSON = new JSONArray(response);
                     String name, comment;
                     LatLng location;
-                    Date date = new Date();
-                    int upvotes = 0;
-
+                    String date;
+                    String[] usernameArr = new String[tempJSON.length()];
+                    String[] emailArr = new String[tempJSON.length()];
+                    String[] tagsArr = new String[tempJSON.length()];
+                    String[] idArr = new String[tempJSON.length()];
                     Crumb[] crumbsArr = new Crumb[tempJSON.length()];
+
+                    int upvotes = 0;
                     if (tempJSON.length() > 0) {
                         for (int i = 0; i < tempJSON.length(); i++) {
-                            String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            date = tempJSON.getJSONObject(i).getString("crumbDate");
+                            /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             try {
                                 date = sdf.parse(dateString);
-                            } catch (ParseException e) {
+                            }catch(ParseException e){
                                 e.printStackTrace();
-                            }
+                            }*/
                             name = tempJSON.getJSONObject(i).getString("crumbName");
                             comment = tempJSON.getJSONObject(i).getString("comment");
-                            location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"), tempJSON.getJSONObject(i).getDouble("longitude"));
+                            location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"),tempJSON.getJSONObject(i).getDouble("longitude"));
                             upvotes = tempJSON.getJSONObject(i).getInt("upvotes");
                             crumbsArr[i] = new Crumb(name, comment, location, date, upvotes);
+                            usernameArr[i] = tempJSON.getJSONObject(i).getString("username");
+                            emailArr[i] = tempJSON.getJSONObject(i).getString("email");
+                            tagsArr[i] = tempJSON.getJSONObject(i).getString("crumbTags");
+                            idArr[i] = tempJSON.getJSONObject(i).getString("crumbID");
                             markCrumb(crumbsArr[i]);
-                            GlobalContainer.crumbSearch = crumbsArr;
                         }
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(crumbsArr[tempJSON.length() - 1].getLocation()));                        //when search is determined to have a result, make button to display all results visible
                         Button displayAll = (Button) findViewById(R.id.button_display_all);
-                        displayAll.setVisibility(View.VISIBLE);
+                        displayAll.setEnabled(true);
                         View.OnClickListener viewAllClickListener = new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

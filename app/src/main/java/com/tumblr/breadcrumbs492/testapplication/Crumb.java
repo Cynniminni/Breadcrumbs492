@@ -9,7 +9,7 @@ import java.util.Date;
 public class Crumb {
     private String name, comment;
     private LatLng location;
-    private Date date;
+    private String date;
     // rating is how many upvotes a crumb has received
     private int rating;
     // score will be some function of upvotes and downvotes but will not be shown
@@ -22,12 +22,12 @@ public class Crumb {
         name = "Default Crumb";
         comment = "Default comment";
         location = new LatLng(0, 0);
-        date = new Date();
+        date = " ";
         rating = 0;
         score = 0;
     }
 
-    public Crumb(String name, String comment, LatLng location, Date date, int rating) {
+    public Crumb(String name, String comment, LatLng location, String date, int rating) {
         this.name = name;
         this.comment = comment;
         this.location = location;
@@ -48,7 +48,7 @@ public class Crumb {
         return location;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -68,7 +68,7 @@ public class Crumb {
         this.location = location;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
