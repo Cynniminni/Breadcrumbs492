@@ -47,9 +47,6 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     public final static String EMAIL = "email";
     public final static int REQUEST_FIND_CRUMB = 4;
 
-<<<<<<< HEAD
-    private TextView crumbUsername, crumbDate, crumbName, crumbUpvotes, crumbTags, crumbComment, crumbID;
-=======
     private TextView crumbUsername, crumbDate, crumbName, crumbUpvotes, crumbTags, crumbComment;
     private String whichActivity = "";
 
@@ -67,7 +64,6 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(SearchResults.CRUMB_LONGITUDE, 0.0));
         startActivity(intent);
         finish();
->>>>>>> f0f6f30d14a3f054c48e5d7674836f8d01eadf80
 
     }
 
