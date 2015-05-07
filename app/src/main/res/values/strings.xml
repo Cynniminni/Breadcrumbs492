@@ -56,4 +56,5 @@
     <string name="title_activity_edit_crumb">EditCrumb</string>
     <string name="title_activity_search_results">SearchResults</string>
     <string name="title_activity_crumb_details">CrumbDetails</string>
+    <string name="title_activity_user_profile">UserProfile</string>
 </resources>

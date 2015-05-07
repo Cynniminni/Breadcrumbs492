@@ -19,7 +19,8 @@
         android:text="Crumb Dropped By"
         android:id="@+id/userTextView"
         android:layout_gravity="right"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#FFFFFF"
+        android:onClick="userDetails"/>
 
     <TextView
         android:layout_width="wrap_content"

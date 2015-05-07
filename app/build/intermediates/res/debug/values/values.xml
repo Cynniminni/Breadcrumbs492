@@ -397,7 +397,12 @@ https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend
     <string name="title_activity_search_results">SearchResults</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_tabbed">TabbedActivity</string>
+<<<<<<< HEAD
     <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/wallet_strings.xml -->
+=======
+    <string name="title_activity_user_profile">UserProfile</string>
+    <!-- From: file:/C:/Users/Matt/Documents/GitHub%20Repos/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/wallet_strings.xml -->
+>>>>>>> f0f6f30d14a3f054c48e5d7674836f8d01eadf80
     <eat-comment/>
     <string name="wallet_buy_button_place_holder" translation_description="Text on a button that allows a user to make a payment with Google Wallet [CHAR LIMIT=30]">Buy with Google</string>
     <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/src/main/res/values/styles.xml -->

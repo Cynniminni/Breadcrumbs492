@@ -40,14 +40,36 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     public final static String CRUMB_ID = "crumbID";
     public final static String CRUMB_UPVOTES = "crumbUpvotes";
     public final static String CRUMB_DATE = "crumbDate";
-    public final static String CRUMB_LONGITUDE = "crumbLongitude";
-    public final static String CRUMB_LATITUDE = "crumbLatitude";
+    public final static String CRUMB_LONGITUDE = "longitude";
+    public final static String CRUMB_LATITUDE = "latitude";
     public final static String SEARCH = "search";
     public final static String USERNAME = "username";
+    public final static String EMAIL = "email";
     public final static int REQUEST_FIND_CRUMB = 4;
 
+<<<<<<< HEAD
     private TextView crumbUsername, crumbDate, crumbName, crumbUpvotes, crumbTags, crumbComment, crumbID;
+=======
+    private TextView crumbUsername, crumbDate, crumbName, crumbUpvotes, crumbTags, crumbComment;
+    private String whichActivity = "";
 
+    public void userDetails(View view){
+        Intent intent = new Intent(CrumbDetails.this, UserProfile.class);
+        intent.putExtra(EMAIL, getIntent().getStringExtra(SearchResults.EMAIL));
+        intent.putExtra(USERNAME, getIntent().getStringExtra(SearchResults.USERNAME));
+        intent.putExtra(SEARCH, getIntent().getStringExtra(SearchResults.SEARCH));
+        intent.putExtra(CRUMB_NAME, getIntent().getStringExtra(SearchResults.CRUMB_NAME));
+        intent.putExtra(CRUMB_COMMENT, getIntent().getStringExtra(SearchResults.CRUMB_COMMENT));
+        intent.putExtra(CRUMB_UPVOTES, getIntent().getIntExtra(SearchResults.CRUMB_UPVOTES, 0));
+        intent.putExtra(CRUMB_DATE, getIntent().getStringExtra(SearchResults.CRUMB_DATE));
+        intent.putExtra(CRUMB_TAGS, getIntent().getStringExtra(SearchResults.CRUMB_TAGS));
+        intent.putExtra(CRUMB_LATITUDE, getIntent().getDoubleExtra(SearchResults.CRUMB_LATITUDE, 0.0));
+        intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(SearchResults.CRUMB_LONGITUDE, 0.0));
+        startActivity(intent);
+        finish();
+>>>>>>> f0f6f30d14a3f054c48e5d7674836f8d01eadf80
+
+    }
 
     public void backToResults(View view) {
         //back to searchresults, passing same search query back to searchresults activity
@@ -101,8 +123,9 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crumb_details);
+        whichActivity = getIntent().getStringExtra("activity");
 
-        if(getIntent().getStringExtra("activity").equals("SearchResults")) {
+        if(whichActivity.equals("SearchResults")) {
             //retrieve extras from previous SearchResults class
             search = getIntent().getStringExtra(SearchResults.SEARCH);
             name = getIntent().getStringExtra(SearchResults.CRUMB_NAME);
@@ -116,7 +139,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
             System.out.println("Tags: " + tags);
         }
 
-        else if(getIntent().getStringExtra("activity").equals("MapActivity")) {
+        else if(whichActivity.equals("MapActivity")) {
             //retrieve extras from previous SearchResults class
             search = getIntent().getStringExtra(MapsActivity.SEARCH);
             name = getIntent().getStringExtra(MapsActivity.CRUMB_NAME);
@@ -127,6 +150,19 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
             tags = getIntent().getStringExtra(MapsActivity.CRUMB_TAGS);
             longitude = getIntent().getDoubleExtra(MapsActivity.CRUMB_LONGITUDE, 0.0);
             latitude = getIntent().getDoubleExtra(MapsActivity.CRUMB_LATITUDE, 0.0);
+            System.out.println("Tags: " + tags);
+        }
+        else if(whichActivity.equals("UserProfile")) {
+            //retrieve extras from previous SearchResults class
+            search = getIntent().getStringExtra(UserProfile.SEARCH);
+            name = getIntent().getStringExtra(UserProfile.CRUMB_NAME);
+            description = getIntent().getStringExtra(UserProfile.CRUMB_COMMENT);
+            username = getIntent().getStringExtra(UserProfile.USERNAME);
+            upvotes = getIntent().getIntExtra(UserProfile.CRUMB_UPVOTES, 0);
+            date = getIntent().getStringExtra(UserProfile.CRUMB_DATE);
+            tags = getIntent().getStringExtra(UserProfile.CRUMB_TAGS);
+            longitude = getIntent().getDoubleExtra(UserProfile.CRUMB_LONGITUDE, 0.0);
+            latitude = getIntent().getDoubleExtra(UserProfile.CRUMB_LATITUDE, 0.0);
             System.out.println("Tags: " + tags);
         }
 

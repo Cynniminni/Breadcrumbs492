@@ -106,6 +106,10 @@
             android:name=".CrumbDetails"
             android:label="@string/title_activity_crumb_details" >
         </activity>
+        <activity
+            android:name=".UserProfile"
+            android:label="@string/title_activity_user_profile" >
+        </activity>
     </application>
 
 </manifest>

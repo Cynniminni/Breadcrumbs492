@@ -30,6 +30,7 @@ import com.tumblr.breadcrumbs492.testapplication.MapsActivity.MyRequestReceiver4
 import com.tumblr.breadcrumbs492.testapplication.RegisterActivity.MyRequestReceiver5;
 import com.tumblr.breadcrumbs492.testapplication.EditCrumb.MyRequestReceiver6;
 import com.tumblr.breadcrumbs492.testapplication.SearchResults.MyRequestReceiver7;
+import com.tumblr.breadcrumbs492.testapplication.UserProfile.MyRequestReceiver8;
 
 
 import android.app.IntentService;
@@ -67,7 +68,7 @@ public class JSONRequest extends IntentService{
                 ||inMessage.trim().equals("register")||inMessage.trim().equals("registerInit")
                 ||inMessage.trim().equals("findTags")||inMessage.trim().equals("editCrumb")
                 ||inMessage.trim().equals("updateProfile")||inMessage.trim().equals("deleteCrumb")
-                ||inMessage.trim().equals("findTagsResults")){
+                ||inMessage.trim().equals("findTagsResults") ||inMessage.trim().equals("getUserCrumbs")){
 
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
@@ -88,7 +89,7 @@ public class JSONRequest extends IntentService{
         nameValuePairs.add(new BasicNameValuePair("jsonObject",jsonObject));
         String response = sendHttpRequest(url,nameValuePairs);
 
-        //broadcast message that we have received the reponse
+        //broadcast message that we have received the response
         //from the WEB Service
         Intent broadcastIntent = new Intent();
         broadcastIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
@@ -118,6 +119,8 @@ public class JSONRequest extends IntentService{
                 broadcastIntent.setAction(MyRequestReceiver6.PROCESS_RESPONSE);
             else if (queryID.equals("findTagsResults"))
                 broadcastIntent.setAction(MyRequestReceiver7.PROCESS_RESPONSE);
+            else if (queryID.equals("getUserCrumbs"))
+                broadcastIntent.setAction(MyRequestReceiver8.PROCESS_RESPONSE);
         }
 
         else if(inMessage.equalsIgnoreCase("registerInit"))
