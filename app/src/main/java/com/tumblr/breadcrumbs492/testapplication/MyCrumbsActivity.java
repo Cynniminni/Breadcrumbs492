@@ -117,7 +117,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
             if(responseType.trim().equalsIgnoreCase("getCrumbs")){
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println(this.response);
+                System.out.println("Users crumbs: " + this.response);
 
                 JSONArray tempJSON = new JSONArray();
                 try {
