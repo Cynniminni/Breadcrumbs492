@@ -149,7 +149,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         names[i] = tempJSON.getJSONObject(i).getString("crumbName");
                         ids[i] = tempJSON.getJSONObject(i).getString("crumbID");
                         comments[i] = tempJSON.getJSONObject(i).getString("comment");
-                        tags[i] = tempJSON.getJSONObject(i).getString("tags");
+                        tags[i] = tempJSON.getJSONObject(i).getString("crumbTags");
                         upvotes[i] = tempJSON.getJSONObject(i).getInt("upvotes");
                         longitude[i] = tempJSON.getJSONObject(i).getDouble("longitude");
                         latitude[i] = tempJSON.getJSONObject(i).getDouble("latitude");

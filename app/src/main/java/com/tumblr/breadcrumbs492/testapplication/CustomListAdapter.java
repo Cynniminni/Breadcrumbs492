@@ -40,7 +40,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         //((Button) view.findViewById(R.id.deleteCrumb)).setOnClickListener(deleteButtonClickListener);
 
         crumbName2.setText(crumbName[position]);
-        crumbDate2.setText(crumbDate[position].toString());
+        crumbDate2.setText(crumbDate[position]);
         crumbIMGID2.setImageResource(R.mipmap.breadcrumb_launcher);
 
         return rowView;
