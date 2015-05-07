@@ -194,7 +194,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         msgIntent1.putExtra("queryID", "hasVoted");
         msgIntent1.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
                 + GlobalContainer.user.getInfo()[1] + "\",\"crumbID\":\"" + crumbID + "\"}");
-
+        startService(msgIntent1);
         /*StreetViewPanoramaFragment streetViewPanoramaFragment =
                 (StreetViewPanoramaFragment) getFragmentManager()
                         .findFragmentById(R.id.panorama);
@@ -358,7 +358,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
             else if(responseType.trim().equalsIgnoreCase("hasVoted")){
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-
+                System.out.println("has voted: " + response);
                 JSONObject tempJSON = new JSONObject();
                 try {
                     tempJSON = new JSONObject(response);
