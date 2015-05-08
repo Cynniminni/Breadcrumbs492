@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <array name="listentries">
         <item>sample entry 1</item>
@@ -10,7 +10,7 @@
         <item>sample value 1</item>
         <item>sample value 2</item>
     </array>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -40,7 +40,7 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.facebook.android/facebook/3.23.1/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.facebook.android/facebook/3.23.1/res/values/values.xml -->
     <eat-comment/>
     <color name="com_facebook_blue">#3B5998</color>
     <color name="com_facebook_likeboxcountview_border_color">#6a7180</color>
@@ -53,7 +53,7 @@
     <color name="com_facebook_usersettingsfragment_connected_shadow_color">#000000</color>
     <color name="com_facebook_usersettingsfragment_connected_text_color">#FFFFFF</color>
     <color name="com_facebook_usersettingsfragment_not_connected_text_color">#A6AED7</color>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/common_colors.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/common_colors.xml -->
     <eat-comment/>
     <color name="common_action_bar_splitter">#d2d2d2</color>
     <color name="common_signin_btn_dark_text_default">@android:color/white</color>
@@ -65,7 +65,7 @@
     <color name="common_signin_btn_light_text_disabled">#FFAAAAAA</color>
     <color name="common_signin_btn_light_text_focused">#FF737373</color>
     <color name="common_signin_btn_light_text_pressed">@android:color/white</color>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
@@ -98,7 +98,7 @@
     <color name="secondary_text_disabled_material_light">#24000000</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/wallet_colors.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/wallet_colors.xml -->
     <eat-comment/>
     <color name="wallet_bright_foreground_disabled_holo_light">#ffb2b2b2</color>
     <color name="wallet_bright_foreground_holo_dark">#fff3f3f3</color>
@@ -147,7 +147,7 @@
     <declare-styleable name="com_facebook_picker_fragment"><attr format="boolean" name="show_pictures"/><attr format="string" name="extra_fields"/><attr format="boolean" name="show_title_bar"/><attr format="string" name="title_text"/><attr format="string" name="done_button_text"/><attr format="reference" name="title_bar_background"/><attr format="reference" name="done_button_background"/></declare-styleable>
     <declare-styleable name="com_facebook_place_picker_fragment"><attr format="integer" name="radius_in_meters"/><attr format="integer" name="results_limit"/><attr format="string" name="search_text"/><attr format="boolean" name="show_search_box"/></declare-styleable>
     <declare-styleable name="com_facebook_profile_picture_view"><attr name="preset_size"><enum name="small" value="-2"/><enum name="normal" value="-3"/><enum name="large" value="-4"/></attr><attr format="boolean" name="is_cropped"/></declare-styleable>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
     <dimen name="abc_action_bar_default_padding_material">4dp</dimen>
@@ -186,11 +186,11 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.facebook.android/facebook/3.23.1/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.facebook.android/facebook/3.23.1/res/values/values.xml -->
     <eat-comment/>
     <dimen name="com_facebook_likeboxcountview_border_radius">3dp</dimen>
     <dimen name="com_facebook_likeboxcountview_border_width">1dp</dimen>
@@ -220,7 +220,7 @@
     <dimen name="com_facebook_tooltip_horizontal_padding">10dp</dimen>
     <dimen name="com_facebook_usersettingsfragment_profile_picture_height">64dp</dimen>
     <dimen name="com_facebook_usersettingsfragment_profile_picture_width">64dp</dimen>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
@@ -228,10 +228,10 @@
     <item name="dialog_fixed_width_minor" type="dimen">320dp</item>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.facebook.android/facebook/3.23.1/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.facebook.android/facebook/3.23.1/res/values/values.xml -->
     <eat-comment/>
     <drawable name="com_facebook_picker_default_separator_color">#33464c59</drawable>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
@@ -243,10 +243,10 @@
     <item name="split_action_bar" type="id"/>
     <item name="up" type="id"/>
     <integer name="abc_max_action_buttons">2</integer>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/version.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/version.xml -->
     <eat-comment/>
     <integer name="google_play_services_version">6587000</integer>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
@@ -264,10 +264,10 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/admob_strings.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="accept">Accept</string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_about">About</string>
     <string name="action_refresh">Refresh</string>
@@ -278,7 +278,7 @@
     <string name="button_2">My Crumbs</string>
     <string name="button_3">Add Crumb</string>
     <string name="button_find_text">Find</string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.facebook.android/facebook/3.23.1/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.facebook.android/facebook/3.23.1/res/values/values.xml -->
     <eat-comment/>
     <string name="com_facebook_choose_friends">Choose Friends</string>
     <string name="com_facebook_dialogloginactivity_ok_button">OK</string>
@@ -309,7 +309,7 @@
     <string name="com_facebook_usersettingsfragment_log_in_button">Log in…</string>
     <string name="com_facebook_usersettingsfragment_logged_in">Logged in</string>
     <string name="com_facebook_usersettingsfragment_not_logged_in">Not logged in</string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/common_strings.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/common_strings.xml -->
     <eat-comment/>
     <string name="common_android_wear_notification_needs_update_text">An application requires an update to the Android Wear app.</string>
     <string name="common_android_wear_update_text">This app won\'t run unless you update the Android Wear app.</string>
@@ -339,17 +339,17 @@
     <string name="common_open_on_phone">Open on phone</string>
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/admob_strings.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="create_calendar_message">Allow Ad to create a calendar event?</string>
     <string name="create_calendar_title">Create calendar event</string>
     <string name="decline">Decline</string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="edittext_hint_location">Enter location</string>
     <string name="enter_password">Enter password</string>
     <string name="enter_username">Enter username</string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/src/debug/res/values/google_maps_api.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/src/debug/res/values/google_maps_api.xml -->
     <eat-comment/>
     <string name="google_maps_key" templateMergeStrategy="preserve">
         AIzaSyDDVSvNH_vtESMlizav4GDjqZ8rWPQSSwk
@@ -368,7 +368,7 @@ https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     --></string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="hello_world">Hello world!</string>
     <string name="login_as_guest">Log in as guest</string>
@@ -382,11 +382,11 @@ https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend
     <string name="r_state">State</string>
     <string name="r_username">Username</string>
     <string name="signin_or_register">Sign in or register</string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/admob_strings.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="store_picture_message">"Allow Ad to store image in Picture gallery?"</string>
     <string name="store_picture_title">Save image</string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="title_activity_add_crumb">AddCrumbActivity</string>
     <string name="title_activity_crumb_details">CrumbDetails</string>
@@ -398,15 +398,15 @@ https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="title_activity_user_profile">UserProfile</string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/wallet_strings.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/wallet_strings.xml -->
     <eat-comment/>
     <string name="wallet_buy_button_place_holder" translation_description="Text on a button that allows a user to make a payment with Google Wallet [CHAR LIMIT=30]">Buy with Google</string>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance">
         <item name="android:textColor">?android:textColorPrimary</item>
@@ -1386,7 +1386,7 @@ https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/admob_iap_style.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/admob_iap_style.xml -->
     <eat-comment/>
     <style name="Theme.IAPTheme" parent="android:Theme">
     <item name="android:windowIsTranslucent">true</item>
@@ -1396,14 +1396,14 @@ https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend
     <item name="android:windowIsFloating">true</item>
     <item name="android:backgroundDimEnabled">false</item>
   </style>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="ThemeOverlay.AppCompat" parent="Base.ThemeOverlay.AppCompat"/>
     <style name="ThemeOverlay.AppCompat.ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar"/>
     <style name="ThemeOverlay.AppCompat.Dark" parent="Base.ThemeOverlay.AppCompat.Dark"/>
     <style name="ThemeOverlay.AppCompat.Dark.ActionBar" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="ThemeOverlay.AppCompat.Light" parent="Base.ThemeOverlay.AppCompat.Light"/>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/wallet_styles.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values/wallet_styles.xml -->
     <eat-comment/>
     <style name="WalletFragmentDefaultButtonTextAppearance">
         <item name="android:textColor">@color/wallet_primary_text_holo_light</item>
@@ -1437,7 +1437,7 @@ https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend
         <item name="maskedWalletDetailsLogoTextColor">@color/wallet_bright_foreground_holo_dark</item>
         <item name="maskedWalletDetailsLogoImageType">classic</item>
     </style>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Widget.AppCompat.ActionBar" parent="Base.Widget.AppCompat.ActionBar"/>
     <style name="Widget.AppCompat.ActionBar.Solid" parent="Base.Widget.AppCompat.ActionBar.Solid"/>
@@ -1492,7 +1492,7 @@ https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend
     <style name="Widget.AppCompat.Spinner.DropDown.ActionBar" parent="Base.Widget.AppCompat.Spinner.DropDown.ActionBar"/>
     <style name="Widget.AppCompat.Toolbar" parent="Base.Widget.AppCompat.Toolbar"/>
     <style name="Widget.AppCompat.Toolbar.Button.Navigation" parent="Base.Widget.AppCompat.Toolbar.Button.Navigation"/>
-    <!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/build/intermediates/exploded-aar/com.facebook.android/facebook/3.23.1/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/build/intermediates/exploded-aar/com.facebook.android/facebook/3.23.1/res/values/values.xml -->
     <eat-comment/>
     <style name="com_facebook_loginview_default_style" parent="@android:style/Widget.Button">
         <item name="android:layout_width">wrap_content</item>

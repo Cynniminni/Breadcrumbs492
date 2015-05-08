@@ -66,4 +66,4 @@
         android:text="Drop Crumb"
         android:onClick="addCrumb"/>
 
-</LinearLayout><!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/src/main/res/layout/activity_add_crumb.xml -->
+</LinearLayout><!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/src/main/res/layout/activity_add_crumb.xml -->

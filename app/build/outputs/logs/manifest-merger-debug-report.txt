@@ -1,8 +1,6 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -10,6 +8,8 @@ ADDED from AndroidManifest.xml:2:1
 	android:versionName
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 	android:versionCode
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
@@ -83,23 +83,23 @@ ADDED from AndroidManifest.xml:32:9
 		ADDED from AndroidManifest.xml:33:13
 meta-data#android.support.PARENT_ACTIVITY
 ADDED from AndroidManifest.xml:36:13
-	android:name
-		ADDED from AndroidManifest.xml:37:17
 	android:value
 		ADDED from AndroidManifest.xml:38:17
+	android:name
+		ADDED from AndroidManifest.xml:37:17
 meta-data#com.google.android.gms.version
 ADDED from AndroidManifest.xml:41:9
 MERGED from com.google.android.gms:play-services:6.5.87:21:9
-	android:name
-		ADDED from AndroidManifest.xml:42:13
 	android:value
 		ADDED from AndroidManifest.xml:43:13
+	android:name
+		ADDED from AndroidManifest.xml:42:13
 meta-data#com.google.android.maps.v2.API_KEY
 ADDED from AndroidManifest.xml:44:9
-	android:name
-		ADDED from AndroidManifest.xml:45:13
 	android:value
 		ADDED from AndroidManifest.xml:46:13
+	android:name
+		ADDED from AndroidManifest.xml:45:13
 activity#com.tumblr.breadcrumbs492.testapplication.MapsActivity
 ADDED from AndroidManifest.xml:53:9
 	android:label
@@ -146,10 +146,10 @@ ADDED from AndroidManifest.xml:88:9
 		ADDED from AndroidManifest.xml:89:13
 meta-data#com.facebook.sdk.ApplicationId
 ADDED from AndroidManifest.xml:93:9
-	android:name
-		ADDED from AndroidManifest.xml:94:13
 	android:value
 		ADDED from AndroidManifest.xml:95:13
+	android:name
+		ADDED from AndroidManifest.xml:94:13
 activity#com.tumblr.breadcrumbs492.testapplication.EditCrumb
 ADDED from AndroidManifest.xml:97:9
 	android:label

@@ -339,7 +339,13 @@ public class MapsActivity extends ActionBarActivity {
             //If the user is refreshing the map, gather all crumbs near the user's location
             else
             {
+                //user is initialized so get all crumbs
+                Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
+                msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
+                msgIntent.putExtra("queryID", "getAllCrumbs");
+                msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
 
+                startService(msgIntent);
 
             }
         }

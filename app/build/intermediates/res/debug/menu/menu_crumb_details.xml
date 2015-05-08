@@ -5,4 +5,4 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
-<!-- From: file:/C:/Users/a4r0ng/Documents/Breadcrumbs/Breadcrumbs492/app/src/main/res/menu/menu_crumb_details.xml -->
+<!-- From: file:/C:/Users/Karen/Documents/GitHub/Breadcrumbs492/app/src/main/res/menu/menu_crumb_details.xml -->
