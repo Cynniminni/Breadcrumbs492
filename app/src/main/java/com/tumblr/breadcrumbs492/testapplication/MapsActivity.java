@@ -133,7 +133,12 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     public void randomCrumb(View view){
+        Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
+        msgIntent.putExtra(JSONRequest.IN_MSG, "getRandomCrumb");
+        msgIntent.putExtra("queryID", "getRandomCrumb");
+        msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
 
+        startService(msgIntent);
     }
 
     public void crumbRankings(View view){
@@ -711,6 +716,26 @@ public class MapsActivity extends ActionBarActivity {
                 catch(JSONException e)
                 {
                     Toast.makeText(getApplicationContext(), "get crumbs failed", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+            else if(responseType.trim().equalsIgnoreCase("getRandomCrumb")){
+                this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+                System.out.println("Get random crumb: " + this.response);
+                JSONObject tempJSON;
+                try {
+                    tempJSON = new JSONObject(response);
+                    LatLng location = new LatLng(tempJSON.getDouble("latitude"), tempJSON.getDouble("longitude"));
+
+                    Crumb crumb = new Crumb(tempJSON.getString("crumbName"), tempJSON.getString("comment"), location,
+                            tempJSON.getString("crumbDate"), tempJSON.getInt("upvotes"));
+                    mMap.clear();
+                    markCrumb(crumb);
+                    mMap.animateCamera(CameraUpdateFactory.newLatLng(crumb.getLocation()));
+                }
+                catch(JSONException e)
+                {
+                    Toast.makeText(getApplicationContext(), "get random crumb failed", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }

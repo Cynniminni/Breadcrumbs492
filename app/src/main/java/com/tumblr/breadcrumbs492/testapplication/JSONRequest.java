@@ -73,7 +73,8 @@ public class JSONRequest extends IntentService{
                 ||inMessage.trim().equals("updateProfile")||inMessage.trim().equals("deleteCrumb")
                 ||inMessage.trim().equals("findTagsResults") ||inMessage.trim().equals("getUserCrumbs")
                 ||inMessage.trim().equals("upvote")||inMessage.trim().equals("unvote")
-                ||inMessage.trim().equals("hasVoted")||inMessage.trim().equals("getCrumbsRanked")){
+                ||inMessage.trim().equals("hasVoted")||inMessage.trim().equals("getCrumbsRanked")
+                ||inMessage.trim().equals("getRandomCrumb")){
 
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
@@ -115,6 +116,8 @@ public class JSONRequest extends IntentService{
             else if (queryID.equals("getProfileInit"))
                 broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
             else if (queryID.equals("findTags"))
+                broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
+            else if (queryID.equals("getRandomCrumb"))
                 broadcastIntent.setAction(MyRequestReceiver4.PROCESS_RESPONSE);
             else if (queryID.equals("register"))
                 broadcastIntent.setAction(MyRequestReceiver5.PROCESS_RESPONSE);
