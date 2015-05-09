@@ -100,19 +100,19 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
             startActivity(intent);
             finish();
         }
-
-        if(fromRankings){
+        else if(fromRankings){
             Intent intent = new Intent(CrumbDetails.this, Rankings.class);
             startActivity(intent);
             finish();
         }
-
-        //back to searchresults, passing same search query back to searchresults activity
-        search = getIntent().getStringExtra(SearchResults.SEARCH);
-        Intent intent = new Intent(CrumbDetails.this, SearchResults.class);
-        intent.putExtra(SEARCH, search);
-        startActivityForResult(intent, REQUEST_FIND_CRUMB);
-        finish();
+        else {
+            //back to searchresults, passing same search query back to searchresults activity
+            search = getIntent().getStringExtra(SearchResults.SEARCH);
+            Intent intent = new Intent(CrumbDetails.this, SearchResults.class);
+            intent.putExtra(SEARCH, search);
+            startActivityForResult(intent, REQUEST_FIND_CRUMB);
+            finish();
+        }
     }
 
     public void voteCrumb(View view)
