@@ -455,9 +455,10 @@ public class MapsActivity extends ActionBarActivity {
             {
                 //insert code to find tags
                 Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
-                msgIntent.putExtra(JSONRequest.IN_MSG, "findTags");
-                msgIntent.putExtra("queryID", "findTags");
-                msgIntent.putExtra("jsonObject", "{\"tag\":\"" + location.trim() + "\"}");
+                msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
+                msgIntent.putExtra("queryID", "getAllCrumbs");
+                msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
+
                 startService(msgIntent);
             }
 
@@ -512,6 +513,7 @@ public class MapsActivity extends ActionBarActivity {
                 //later this will add a crumb
                 Toast.makeText(getApplicationContext(),
                         "Name = " + name + "Comment = " + comment, Toast.LENGTH_SHORT).show();
+                finish();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getApplicationContext(), "Please enter a valid name for your crumb",
                         Toast.LENGTH_SHORT).show();
