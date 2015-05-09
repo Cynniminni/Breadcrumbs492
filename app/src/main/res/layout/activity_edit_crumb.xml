@@ -42,6 +42,15 @@
         tools:context="com.tumblr.breadcrumbs492.testapplication.EditCrumb"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:id="@+id/toggleButton2"
+        android:layout_gravity="right"
+        android:textOn="Private"
+        android:textOff="Public"/>
+
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
@@ -83,14 +92,14 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Crumb Tags (Separated with commas)"
         android:autoText="false"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#FFFFFF"
+        />
 
     <EditText
         android:id="@+id/editcrumb_tags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.40"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:maxLines="1"/>

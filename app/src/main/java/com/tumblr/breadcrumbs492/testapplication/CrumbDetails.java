@@ -76,8 +76,10 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         intent.putExtra(CRUMB_LONGITUDE, longitude);
         if(fromInfoWindow)
             intent.putExtra("activity", "infoWindowClick");
-        else
+        else {
             intent.putExtra(SEARCH, search);
+            intent.putExtra("activity", "SearchResults");
+        }
 
         startActivity(intent);
         finish();
@@ -150,7 +152,6 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crumb_details);
         whichActivity = getIntent().getStringExtra("activity");
-        System.out.println("WHICH FUCKING ACTIVITY IS THIS: " + whichActivity);
         IntentFilter filter = new IntentFilter(MyRequestReceiver9.PROCESS_RESPONSE);
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         receiver = new MyRequestReceiver9();

@@ -38,6 +38,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
     public final static String CRUMB_DATE = "crumbDate";
     public final static String CRUMB_LONGITUDE = "longitude";
     public final static String CRUMB_LATITUDE = "latitude";
+    public final static String CRUMB_PRIVATE = "isPrivate";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +143,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
                 final Integer[] upvotes = new Integer[tempJSON.length()];
                 final Double[] longitude = new Double[tempJSON.length()];
                 final Double[] latitude = new Double[tempJSON.length()];
+                final Boolean[] isPrivate = new Boolean[tempJSON.length()];
 
                 try {
                     //populate the arrays with each crumbs' attributes
@@ -154,6 +156,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         longitude[i] = tempJSON.getJSONObject(i).getDouble("longitude");
                         latitude[i] = tempJSON.getJSONObject(i).getDouble("latitude");
                         dates[i] = tempJSON.getJSONObject(i).getString("crumbDate");
+                        isPrivate[i] = tempJSON.getJSONObject(i).getBoolean("isPrivate");
 
                         /*String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
                         System.out.println("Date string for mycrumbs: " + dateString);
@@ -213,6 +216,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         intent.putExtra(CRUMB_DATE, dates[itemPosition]);
                         intent.putExtra(CRUMB_LONGITUDE, longitude[itemPosition]);
                         intent.putExtra(CRUMB_LATITUDE, latitude[itemPosition]);
+                        intent.putExtra(CRUMB_PRIVATE, isPrivate[itemPosition]);
                         startActivity(intent);
                         finish();
                     }

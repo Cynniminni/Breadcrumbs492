@@ -825,6 +825,7 @@ public class MapsActivity extends ActionBarActivity {
                             }
                         };
                         displayAll.setOnClickListener(viewAllClickListener);
+                        Toast.makeText(getApplicationContext(), tempJSON.length() + " result(s) found.", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "No results found. Please try again.", Toast.LENGTH_SHORT).show();
                     }

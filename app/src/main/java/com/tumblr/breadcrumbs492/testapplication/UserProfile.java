@@ -238,7 +238,6 @@ public class UserProfile extends ActionBarActivity {
 
                         System.out.println("Activity: " + getIntent().getStringExtra("activity"));
                         if(getIntent().getStringExtra("activity").equals("infoWindowClick")) {
-                            System.out.println("going form info window click");
                             intent.putExtra("activity", "infoWindowClick");
                         }
                         else {

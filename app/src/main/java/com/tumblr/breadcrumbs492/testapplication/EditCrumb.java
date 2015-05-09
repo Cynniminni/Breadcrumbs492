@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,17 +42,26 @@ public class EditCrumb extends ActionBarActivity {
     private EditText crumbName;
     private EditText crumbComment;
     private EditText crumbTags;
+    private ToggleButton toggle;
     private TextView crumbDate;
     private TextView crumbUpvotes;
     private double longitude, latitude;
+    private String visibility;
+    private boolean isPrivate;
 
     public void editCrumb(View view) {
         name = crumbName.getText().toString();
         comment = crumbComment.getText().toString();
         tags = crumbTags.getText().toString();
+        visibility = toggle.getText().toString();
         Intent intent = new Intent(this, MapsActivity.class);
         Intent intent2 = getIntent();
         id = intent2.getStringExtra(MyCrumbsActivity.CRUMB_ID);
+
+        if(visibility.equals("Private"))
+            isPrivate = true;
+        else if(visibility.equals("Public"))
+            isPrivate = false;
 
         if (name.equals("")) {
             //if user entered nothing then cancel adding a crumb
@@ -63,7 +73,7 @@ public class EditCrumb extends ActionBarActivity {
 
             msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
                     + GlobalContainer.user.getInfo()[1] + "\",\"crumbID\":\"" + id + "\",\"crumbName\":\"" + name
-                    + "\",\"comment\":\"" + comment + "\",\"tags\":\"" + tags
+                    + "\",\"isPrivate\":\"" + isPrivate + "\",\"comment\":\"" + comment + "\",\"tags\":\"" + tags
                     + "\"}");
             msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
             startService(msgIntent);
@@ -125,12 +135,19 @@ public class EditCrumb extends ActionBarActivity {
         receiver = new MyRequestReceiver6();
         registerReceiver(receiver, filter);
 
-        //get references to the EditText and TextView fields
+        //get references to the EditText, TextView and toggle fields
         crumbName = (EditText) findViewById(R.id.editcrumb_name);
         crumbComment = (EditText) findViewById(R.id.editcrumb_description);
         crumbTags = (EditText) findViewById(R.id.editcrumb_tags);
         crumbDate = (TextView) findViewById((R.id.dateTextView));
         crumbUpvotes = (TextView) findViewById(R.id.upvotesTextView);
+        toggle = (ToggleButton) findViewById(R.id.toggleButton2);
+
+        isPrivate = getIntent().getBooleanExtra(MyCrumbsActivity.CRUMB_PRIVATE, true);
+        if(isPrivate)
+            toggle.setChecked(true);
+        else
+            toggle.setChecked(false);
 
         //populate EditTexts and TextViews  fields with selected crumb attributes
         Intent intent3 = getIntent();
@@ -218,6 +235,7 @@ public class EditCrumb extends ActionBarActivity {
 
             if (responseType.trim().equalsIgnoreCase("editCrumb")) {
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+                System.out.println("Edit crumb response: " + this.response);
                 JSONObject tempJSON = new JSONObject();
                 try {
                     tempJSON = new JSONObject(response);

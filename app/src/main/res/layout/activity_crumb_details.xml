@@ -70,7 +70,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Like!"
+        android:text=""
         android:id="@+id/button"
         android:layout_gravity="right"
         android:onClick="voteCrumb"/>

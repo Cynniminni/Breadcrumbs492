@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,6 +36,7 @@ public class AddCrumbActivity extends ActionBarActivity {
     private EditText crumbName;
     private EditText crumbComment;
     private EditText crumbTags;
+    private ToggleButton toggle;
     private double latitude;
     private double longitude;
     private String uName;
@@ -43,6 +45,8 @@ public class AddCrumbActivity extends ActionBarActivity {
     private String comment;
     private String tags;
     private String addResult;
+    private String visibility;
+    private boolean isPrivate;
 
     //implement adding a crumb to the map
     public void addCrumb(View view) {
@@ -50,6 +54,13 @@ public class AddCrumbActivity extends ActionBarActivity {
         name = crumbName.getText().toString();
         comment = crumbComment.getText().toString();
         tags = crumbTags.getText().toString();
+        visibility = toggle.getText().toString();
+
+        if(visibility.equals("Private"))
+            isPrivate = true;
+        else if(visibility.equals("Public"))
+            isPrivate = false;
+
 
         //get username
         Intent intent = new Intent(this, MapsActivity.class);
@@ -72,7 +83,7 @@ public class AddCrumbActivity extends ActionBarActivity {
             msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"email\":\""
                     + GlobalContainer.user.getInfo()[1] + "\",\"name\":\"" + name
                     + "\",\"comment\":\"" + comment + "\",\"latitude\":\""
-                    + latitude + "\",\"longitude\":\"" + longitude + "\",\"crumbDate\":\"" + crumbDate
+                    + latitude + "\",\"longitude\":\"" + longitude  + "\",\"isPrivate\":\"" + isPrivate + "\",\"crumbDate\":\"" + crumbDate
                     + "\",\"tags\":\"" + tags + "\"}");
             msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
             startService(msgIntent);
@@ -99,10 +110,11 @@ public class AddCrumbActivity extends ActionBarActivity {
         receiver = new MyRequestReceiver2();
         registerReceiver(receiver, filter);
 
-        //get references to the EditText fields
+        //get references to the EditText fields and toggle button
         crumbName = (EditText) findViewById(R.id.addcrumb_name);
         crumbComment = (EditText) findViewById(R.id.addcrumb_comment);
         crumbTags = (EditText) findViewById(R.id.addcrumb_tags);
+        toggle = (ToggleButton) findViewById(R.id.toggleButton);
 
         //get reference to the map
         SupportMapFragment supportMapFragment = (SupportMapFragment)
@@ -176,6 +188,7 @@ public class AddCrumbActivity extends ActionBarActivity {
 
 
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
+            System.out.println(responseType);
             Intent addCrumbIntent = new Intent(AddCrumbActivity.this, MapsActivity.class);
             if(responseType.trim().equalsIgnoreCase("addCrumb")){
 
@@ -189,12 +202,12 @@ public class AddCrumbActivity extends ActionBarActivity {
                     tempJSON = new JSONObject(response);
                     if(tempJSON.getString("addCrumbResult").trim().equals("true"))
                     {
-                        Toast.makeText(getApplicationContext(), "successfully added crumb", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Successfully added crumb.", Toast.LENGTH_SHORT).show();
                     }
                 }
                 catch(JSONException e)
                 {
-                    Toast.makeText(getApplicationContext(), "add crumb failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Add crumb failed. Please try again.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
 

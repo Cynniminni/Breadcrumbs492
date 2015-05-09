@@ -2,6 +2,8 @@ package com.tumblr.breadcrumbs492.testapplication.test;
 
 import com.tumblr.breadcrumbs492.testapplication.LoginActivity;
 import com.robotium.solo.*;
+import com.tumblr.breadcrumbs492.testapplication.R;
+
 import android.test.ActivityInstrumentationTestCase2;
 
 
@@ -58,7 +60,7 @@ public class MyCrumbsTest extends ActivityInstrumentationTestCase2<LoginActivity
         //Wait for activity: 'com.tumblr.breadcrumbs492.testapplication.EditCrumb'
 		assertTrue("com.tumblr.breadcrumbs492.testapplication.EditCrumb is not found!", solo.waitForActivity(com.tumblr.breadcrumbs492.testapplication.EditCrumb.class));
         //Click on hi
-		solo.clickOnView(solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.editcrumb_comment));
+		solo.clickOnView(solo.getView(R.id.editcrumb_description));
         //Press menu back key
 		solo.goBack();
         //Wait for activity: 'com.tumblr.breadcrumbs492.testapplication.MyCrumbsActivity'
