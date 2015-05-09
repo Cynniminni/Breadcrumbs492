@@ -233,6 +233,8 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
 
         System.out.println(crumbID);
         //check to see if user has voted before
+        ImageButton temp_voteButton = (ImageButton) findViewById(R.id.buttonVote);
+        temp_voteButton.setEnabled(false);
         Intent msgIntent1 = new Intent(this, JSONRequest.class);
         msgIntent1.putExtra(JSONRequest.IN_MSG, "hasVoted");
         msgIntent1.putExtra("queryID", "hasVoted");
@@ -435,17 +437,19 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
                 JSONObject tempJSON = new JSONObject();
                 try {
                     tempJSON = new JSONObject(response);
+                    ImageButton temp_voteButton = (ImageButton) findViewById(R.id.buttonVote);
+                    Resources res = getResources(); /** from an Activity */
                     if(tempJSON.getString("hasVoted").equals("true"))
                     {
                         hasVoted = true;
-/*                        voteButton.setText("Unlike!");*/
-
+                        temp_voteButton.setImageDrawable(res.getDrawable(R.drawable.newthumbdown));
                     }
                     else if(tempJSON.getString("hasVoted").equals("false"))
                     {
                         hasVoted = false;
-/*                        voteButton.setText("Like!");*/
+                        temp_voteButton.setImageDrawable(res.getDrawable(R.drawable.newthumbup));
                     }
+                    temp_voteButton.setEnabled(true);
                 }
                 catch(JSONException e)
                 {
