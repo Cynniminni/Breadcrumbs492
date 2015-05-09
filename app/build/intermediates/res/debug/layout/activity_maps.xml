@@ -2,7 +2,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2A3F49"
+    android:background="#607D8B"
 
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -35,16 +35,17 @@
 
         <Button
             android:id="@+id/button_find"
-            android:background="@drawable/button_style"
-            android:textColor="#FFFFFF"
-            android:layout_width="53dp"
+            android:background="#FFFFFF"
+            android:textColor="#607D8B"
+            android:layout_width="52dp"
             android:layout_height="match_parent"
-            android:text="@string/button_find_text" />
+            android:text="@string/button_find_text"
+            android:layout_marginRight="1dp" />
 
         <Button
             android:id="@+id/button_display_all"
-            android:background="@drawable/button_style"
-            android:textColor="#FFFFFF"
+            android:background="#FFFFFF"
+            android:textColor="#607D8B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|top"
@@ -88,34 +89,53 @@
 
         <ImageButton
             android:id="@+id/button_1"
-            android:src="@drawable/ic_perm_identity_white_48dp"
-            android:background="@drawable/button_style"
+            android:src="@drawable/profile"
+            android:background="#FFFFFF"
             android:textColor="#FFFFFF"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="71dp"
             android:layout_height="match_parent"
             android:onClick="viewProfile"/>
 
         <ImageButton
             android:id="@+id/button_2"
-            android:src="@drawable/ic_assignment_white_48dp"
-            android:background="@drawable/button_style"
+            android:src="@drawable/mycrumbs"
+            android:background="#FFFFFF"
             android:textColor="#FFFFFF"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="71dp"
             android:layout_height="match_parent"
-            android:onClick="viewMyCrumbs"/>
+            android:onClick="viewMyCrumbs"
+            android:layout_marginLeft="2dp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button_3"
-            android:background="@drawable/button_style"
+            android:background="#FFFFFF"
             android:textColor="#FFFFFF"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:src="@drawable/addcrumb"
+            android:layout_width="71dp"
             android:layout_height="match_parent"
             android:text="@string/button_3"
-            android:onClick="addCrumbs"/>
+            android:onClick="addCrumbs"
+            android:layout_marginLeft="2dp" />
+
+        <ImageButton
+            android:layout_width="71dp"
+            android:layout_height="match_parent"
+            android:text="New Button"
+            android:src="@drawable/random"
+            android:id="@+id/button2"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="2dp" />
+
+        <ImageButton
+            android:layout_width="71dp"
+            android:layout_height="match_parent"
+
+            android:src="@drawable/medal"
+            android:text="New Button"
+            android:id="@+id/button3"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="2dp" />
 
     </LinearLayout>
     <!-- -->
-</LinearLayout><!-- From: file:/C:/Users/Matt/Documents/GitHub%20Repos/Breadcrumbs492/app/src/main/res/layout/activity_maps.xml -->
+</LinearLayout><!-- From: file:/C:/Users/Victor/Documents/GitHub/Breadcrumbs492/app/src/main/res/layout/activity_maps.xml -->

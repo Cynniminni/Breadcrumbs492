@@ -4,13 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -105,7 +108,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     {
 
         // change button text
-        Button voteButton = (Button)findViewById(R.id.button);
+        ImageButton voteButton = (ImageButton)findViewById(R.id.buttonVote);
         voteButton.setEnabled(false);
         if(hasVoted)
         {
@@ -116,10 +119,17 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
                     + GlobalContainer.user.getInfo()[1] + "\",\"crumbID\":\"" + crumbID + "\"}");
 
             startService(msgIntent);
+            ImageButton temp_voteButton = (ImageButton) findViewById(R.id.buttonVote);
+            Resources res = getResources(); /** from an Activity */
+            temp_voteButton.setImageDrawable(res.getDrawable(R.drawable.newthumbup));
 
         }
         else
         {
+            ImageButton temp_voteButton = (ImageButton) findViewById(R.id.buttonVote);
+            Resources res = getResources(); /** from an Activity */
+            temp_voteButton.setImageDrawable(res.getDrawable(R.drawable.newthumbdown));
+
             Intent msgIntent = new Intent(this, JSONRequest.class);
             msgIntent.putExtra(JSONRequest.IN_MSG, "upvote");
             msgIntent.putExtra("queryID", "upvote");
@@ -366,7 +376,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
 
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
 
-            Button voteButton = (Button)findViewById(R.id.button);
+            ImageButton voteButton = (ImageButton)findViewById(R.id.buttonVote);
 
             if(responseType.trim().equalsIgnoreCase("upvote")){
 
@@ -381,7 +391,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
                         upvotes++;
                         hasVoted = true;
                         Toast.makeText(getApplicationContext(), "Vote successful", Toast.LENGTH_SHORT).show();
-                        voteButton.setText("Unlike!");
+               //         voteButton.setText("Unlike!");
                         voteButton.setEnabled(true);
                     }
                 }
@@ -406,7 +416,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
                         upvotes--;
                         hasVoted = false;
                         Toast.makeText(getApplicationContext(), "Un-vote successful", Toast.LENGTH_SHORT).show();
-                        voteButton.setText("Like!");
+             //           voteButton.setText("Like!");
                         voteButton.setEnabled(true);
                     }
                 }
@@ -428,12 +438,13 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
                     if(tempJSON.getString("hasVoted").equals("true"))
                     {
                         hasVoted = true;
-                        voteButton.setText("Unlike!");
+/*                        voteButton.setText("Unlike!");*/
+
                     }
                     else if(tempJSON.getString("hasVoted").equals("false"))
                     {
                         hasVoted = false;
-                        voteButton.setText("Like!");
+/*                        voteButton.setText("Like!");*/
                     }
                 }
                 catch(JSONException e)

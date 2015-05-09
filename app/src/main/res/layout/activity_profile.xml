@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    android:background="#2A3F49"
+    android:background="#607D8B"
     tools:context="com.tumblr.breadcrumbs492.testapplication.RegisterActivity">
 
     <ImageView
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:textColor="#000000"
+        android:textColor="#607D8B"
         android:text="Username:"
         android:layout_marginLeft="18dp"
         android:layout_marginStart="18dp"
@@ -54,7 +54,7 @@
         android:layout_weight="1"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:textColor="#000000"
+        android:textColor="#607D8B"
         android:text="Password:"
         android:layout_below="@+id/profile_username"
         android:layout_alignLeft="@+id/tv_username"
@@ -81,7 +81,7 @@
         android:textStyle="bold"
         android:text="E-mail:"
         android:layout_weight="1"
-        android:textColor="#000000"
+        android:textColor="#607D8B"
         android:layout_below="@+id/profile_password"
         android:layout_alignLeft="@+id/tv_password"
         android:layout_alignStart="@+id/tv_password" />
@@ -107,7 +107,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         android:text="First Name:"
-        android:textColor="#000000"
+        android:textColor="#607D8B"
         android:layout_below="@+id/profile_email"
         android:layout_alignLeft="@+id/tv_email"
         android:layout_alignStart="@+id/tv_email" />
@@ -135,7 +135,7 @@
         android:textStyle="bold"
         android:text="Last Name:"
         android:layout_weight="1"
-        android:textColor="#000000"
+        android:textColor="#607D8B"
         android:layout_below="@+id/profile_firstname"
         android:layout_alignLeft="@+id/tv_first_name"
         android:layout_alignStart="@+id/tv_first_name" />
@@ -163,7 +163,7 @@
         android:textStyle="bold"
         android:text="Gender:"
         android:layout_weight="1"
-        android:textColor="#000000"
+        android:textColor="#607D8B"
         android:layout_below="@+id/profile_lastname"
         android:layout_alignLeft="@+id/tv_last_name"
         android:layout_alignStart="@+id/tv_last_name" />
@@ -190,7 +190,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         android:text="City:"
-        android:textColor="#000000"
+        android:textColor="#607D8B"
         android:layout_below="@+id/profile_gender"
         android:layout_alignLeft="@+id/tv_gender"
         android:layout_alignStart="@+id/tv_gender" />
@@ -216,7 +216,7 @@
         android:layout_weight="1"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:textColor="#000000"
+        android:textColor="#607D8B"
         android:text="State:"
         android:layout_below="@+id/profile_city"
         android:layout_alignLeft="@+id/tv_city"
@@ -241,8 +241,8 @@
         android:layout_height="wrap_content"
         android:text="Edit Profile"
         android:onClick="editProfile"
-        android:background="@drawable/button_style"
-        android:textColor="#FFFFFF"
+        android:background="#FFFFFF"
+        android:textColor="#607D8B"
         android:layout_marginTop="420dp"
         />
 
