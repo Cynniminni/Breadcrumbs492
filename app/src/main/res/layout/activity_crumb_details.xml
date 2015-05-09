@@ -100,5 +100,6 @@
         android:background="@drawable/button_style"
         android:textColor="#FFFFFF"
         android:text="Back"
-        android:onClick="backToResults"/>
+        android:onClick="backToResults"
+        android:id="@+id/go_back" />
 </LinearLayout>

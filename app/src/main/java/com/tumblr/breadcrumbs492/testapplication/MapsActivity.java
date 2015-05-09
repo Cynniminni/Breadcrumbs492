@@ -42,6 +42,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+
+
+import com.google.android.gms.maps.model.Marker;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,6 +93,12 @@ public class MapsActivity extends ActionBarActivity {
     private MarkerOptions markerOptions;
     private LatLng currentLocation;//store user's current location
     private boolean isGuestLogin;
+    private static String[] tagsArr;
+    private String[] usernameArr;
+
+    public Crumb[] crumbsArr;
+    public String[] idArr;
+    public String[] emailArr;
 
     private MyRequestReceiver4 receiver;
 
@@ -256,6 +267,8 @@ public class MapsActivity extends ActionBarActivity {
             }
         }
 
+
+
         //Remove text from the editext_location
         Button removeTextButton = (Button) findViewById(R.id.remove_text);
         removeTextButton.setOnClickListener(new View.OnClickListener() {
@@ -293,6 +306,111 @@ public class MapsActivity extends ActionBarActivity {
 //                startService(msgIntent);
 //            }
         }
+
+        // Setting a custom info window adapter for the google map
+        mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
+
+            // Use default InfoWindow frame
+            @Override
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
+
+            // Defines the contents of the InfoWindow
+            @Override
+            public View getInfoContents(Marker arg0) {
+
+                // Getting view from the layout file info_window_layout
+                View v = getLayoutInflater().inflate(R.layout.info_window_layout, null);
+
+                // Getting the position from the marker
+                LatLng latLng = arg0.getPosition();
+                Crumb tempCrumb = new Crumb();
+                String tempName = "";
+                String tempComment = "";
+                String tempUser = "";
+                int tempRating = 0;
+                for (int i = 0; i < crumbsArr.length; i++) {
+                    if (latLng.toString().equals(crumbsArr[i].getLocation().toString())) {
+
+                        tempName = crumbsArr[i].getName();
+                        tempComment = crumbsArr[i].getComment();
+                        tempRating = crumbsArr[i].getRating();
+                        tempUser = usernameArr[i];
+                    }
+
+                }
+                // Getting reference to the TextView to set latitude
+                TextView tvLat = (TextView) v.findViewById(R.id.tv_crumbName);
+
+
+                TextView tvRating = (TextView) v.findViewById(R.id.tv_crumbRating);
+
+                // Getting reference to the TextView to set longitude
+                TextView tvLng = (TextView) v.findViewById(R.id.tv_crumbComment);
+
+                // Setting the latitude
+                tvLat.setText(tempName);
+                tvRating.setText("Dropped by: " + tempUser + " \nRating: " + tempRating);
+                // Setting the longitude
+                if (tempComment.equals(""))
+                    tvLng.setText("No comment found.");
+                else
+                    tvLng.setText(tempComment);
+
+
+                // Returning the view containing InfoWindow contents
+                return v;
+
+            }
+        });
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                // Getting the position from the marker
+                LatLng latLng = marker.getPosition();
+                //        Crumb tempCrumb = new Crumb();
+                String tempUser ="";
+                String tempName = "";
+                String tempComment = "";
+                String tempDate = "";
+                String tempTags = "";
+                String tempSearch = "";
+                String tempID = "";
+                String tempEmail = "";
+                int tempRating = 0;
+
+                for (int i = 0; i < crumbsArr.length; i++) {
+                    if (latLng.toString().equals(crumbsArr[i].getLocation().toString())) {
+                        tempName = crumbsArr[i].getName();
+                        tempComment = crumbsArr[i].getComment();
+                        tempRating = crumbsArr[i].getRating();
+                        tempUser = usernameArr[i];
+                        tempDate = crumbsArr[i].getDate();
+                        tempTags = tagsArr[i];
+                        tempID = idArr[i];
+                        tempEmail = emailArr[i];
+                    }
+                }
+
+                Intent goToDetails = new Intent(MapsActivity.this, CrumbDetails.class);
+                goToDetails.putExtra("activity", "infoWindowClick");
+                goToDetails.putExtra("CRUMB_NAME",tempName);
+                goToDetails.putExtra("CRUMB_COMMENT",tempComment);
+                goToDetails.putExtra("RATING",tempRating);
+                goToDetails.putExtra("USERNAME",tempUser);
+                goToDetails.putExtra("CRUMB_DATE", tempDate);
+                goToDetails.putExtra("CRUMB_LONGITUDE", latLng.longitude);
+                goToDetails.putExtra("CRUMB_LATITUDE", latLng.latitude);
+                goToDetails.putExtra("CRUMB_TAGS", tempTags);
+                goToDetails.putExtra("SEARCH", tempSearch);
+                goToDetails.putExtra("CRUMB_ID", tempID);
+                goToDetails.putExtra("EMAIL", tempEmail);
+                startActivity(goToDetails);
+            }
+        });
+
     }//end onCreate
 
     @Override
@@ -562,12 +680,12 @@ public class MapsActivity extends ActionBarActivity {
                     String name, comment;
                     LatLng location;
                     String date;
-                    String[] usernameArr = new String[tempJSON.length()];
-                    String[] emailArr = new String[tempJSON.length()];
-                    String[] tagsArr = new String[tempJSON.length()];
-                    String[] idArr = new String[tempJSON.length()];
+                    usernameArr = new String[tempJSON.length()];
+                    emailArr = new String[tempJSON.length()];
+                    tagsArr = new String[tempJSON.length()];
+                    idArr = new String[tempJSON.length()];
                     int upvotes = 0;
-                    Crumb[] crumbsArr = new Crumb[tempJSON.length()];
+                    crumbsArr = new Crumb[tempJSON.length()];
 
 
                     for(int i = 0; i < tempJSON.length(); i++)
@@ -664,11 +782,11 @@ public class MapsActivity extends ActionBarActivity {
                     String name, comment;
                     LatLng location;
                     String date;
-                    String[] usernameArr = new String[tempJSON.length()];
-                    String[] emailArr = new String[tempJSON.length()];
-                    String[] tagsArr = new String[tempJSON.length()];
-                    String[] idArr = new String[tempJSON.length()];
-                    Crumb[] crumbsArr = new Crumb[tempJSON.length()];
+                    usernameArr = new String[tempJSON.length()];
+                    emailArr = new String[tempJSON.length()];
+                    tagsArr = new String[tempJSON.length()];
+                    idArr = new String[tempJSON.length()];
+                    crumbsArr = new Crumb[tempJSON.length()];
 
                     int upvotes = 0;
                     if (tempJSON.length() > 0) {
