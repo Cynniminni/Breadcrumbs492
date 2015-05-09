@@ -1997,7 +1997,7 @@ containing a value of this type.
         public static final int white_rectangle=0x7f020096;
     }
     public static final class id {
-        public static final int action_about=0x7f0c00c6;
+        public static final int action_about=0x7f0c00c9;
         public static final int action_bar=0x7f0c0050;
         public static final int action_bar_activity_content=0x7f0c0000;
         public static final int action_bar_container=0x7f0c004f;
@@ -2011,8 +2011,8 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0c004d;
         public static final int action_mode_bar_stub=0x7f0c004c;
         public static final int action_mode_close_button=0x7f0c003f;
-        public static final int action_refresh=0x7f0c00c5;
-        public static final int action_settings=0x7f0c00c4;
+        public static final int action_refresh=0x7f0c00c8;
+        public static final int action_settings=0x7f0c00c7;
         public static final int activity_chooser_view_content=0x7f0c0040;
         public static final int activity_login=0x7f0c0072;
         public static final int addcrumb_comment=0x7f0c0061;
@@ -2072,6 +2072,9 @@ containing a value of this type.
         public static final int crumbDate=0x7f0c00be;
         public static final int crumbImage=0x7f0c00bc;
         public static final int crumbName=0x7f0c00bd;
+        public static final int crumbRank=0x7f0c00bf;
+        public static final int crumbUpvotes=0x7f0c00c1;
+        public static final int crumbUser=0x7f0c00c0;
         public static final int crumb_description=0x7f0c0068;
         public static final int crumb_logo=0x7f0c007a;
         public static final int crumb_name=0x7f0c0063;
@@ -2177,16 +2180,16 @@ containing a value of this type.
         public static final int toggleButton2=0x7f0c006b;
         public static final int top=0x7f0c0037;
         public static final int tv_city=0x7f0c0093;
-        public static final int tv_crumbComment=0x7f0c00c2;
-        public static final int tv_crumbName=0x7f0c00bf;
-        public static final int tv_crumbRating=0x7f0c00c0;
+        public static final int tv_crumbComment=0x7f0c00c5;
+        public static final int tv_crumbName=0x7f0c00c2;
+        public static final int tv_crumbRating=0x7f0c00c3;
         public static final int tv_email=0x7f0c008b;
         public static final int tv_first_name=0x7f0c008d;
         public static final int tv_gender=0x7f0c0091;
         public static final int tv_last_name=0x7f0c008f;
-        public static final int tv_link=0x7f0c00c3;
+        public static final int tv_link=0x7f0c00c6;
         public static final int tv_password=0x7f0c0089;
-        public static final int tv_placeholder=0x7f0c00c1;
+        public static final int tv_placeholder=0x7f0c00c4;
         public static final int tv_state=0x7f0c0095;
         public static final int tv_username=0x7f0c0087;
         public static final int up=0x7f0c0008;
@@ -2253,8 +2256,9 @@ containing a value of this type.
         public static final int com_facebook_tooltip_bubble=0x7f040030;
         public static final int com_facebook_usersettingsfragment=0x7f040031;
         public static final int crumblist=0x7f040032;
-        public static final int info_window_layout=0x7f040033;
-        public static final int support_simple_spinner_dropdown_item=0x7f040034;
+        public static final int crumblist2=0x7f040033;
+        public static final int info_window_layout=0x7f040034;
+        public static final int support_simple_spinner_dropdown_item=0x7f040035;
     }
     public static final class menu {
         public static final int menu_add_crumb=0x7f100000;

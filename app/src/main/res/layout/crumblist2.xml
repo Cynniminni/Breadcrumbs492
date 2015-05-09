@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Rank"
+        android:textSize="30sp"
+        android:id="@+id/crumbRank"
+        android:padding="10dp"
+        android:focusable="false"/>
+
+
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/crumbName"
+            android:text="Crumb Name Here"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:textSize="20sp"
+            android:paddingTop="5dp"
+            android:focusable="false"/>
+
+        <TextView
+            android:id="@+id/crumbDate"
+            android:text="Crumb Date Here"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:inputType="date"
+            android:textSize="10sp"
+            android:paddingTop="5dp"
+            android:focusable="false"/>
+        <TextView
+            android:id="@+id/crumbUser"
+            android:text="Crumb User Here"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="10sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:focusable="false"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingTop="13dp">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:src="@drawable/newthumbup"
+            android:focusable="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/crumbUpvotes"
+            android:textColor="#ffffff"/>
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="Upvotes"
+            android:textSize="20sp"
+            android:id="@+id/crumbUpvotes"
+            android:focusable="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:padding="14dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="13dp"
+            android:textColor="#ffffff"/>
+
+    </RelativeLayout>
+
+    <!--<Button
+        style="?android:attr/buttonStyleSmall"
+        android:id="@+id/deleteCrumb"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Delete"
+        android:onClick="onDelete"
+        android:focusable="false"/>-->
+
+
+</LinearLayout>

@@ -147,7 +147,7 @@ public class SearchResults extends ActionBarActivity {
                 final String[] tags = new String[tempJSON.length()];
                 final String[] dates = new String[tempJSON.length()];
                 final String[] emails = new String[tempJSON.length()];
-                final Integer[] imgID = new Integer[1];
+                final Integer[] rank = new Integer[tempJSON.length()];
                 final Integer[] upvotes = new Integer[tempJSON.length()];
                 final Double[] longitude = new Double[tempJSON.length()];
                 final Double[] latitude = new Double[tempJSON.length()];
@@ -165,6 +165,7 @@ public class SearchResults extends ActionBarActivity {
                         dates[i] = tempJSON.getJSONObject(i).getString("crumbDate");
                         tags[i] = tempJSON.getJSONObject(i).getString("crumbTags");
                         emails[i] = tempJSON.getJSONObject(i).getString("email");
+                        rank[i] = i + 1;
 
                         /*String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
                         System.out.println("Date string in search results: " + dateString);
@@ -185,7 +186,7 @@ public class SearchResults extends ActionBarActivity {
 
                 //define adapter to populate each row in ListView
 
-                CustomListAdapter adapter = new CustomListAdapter(SearchResults.this, names, dates, imgID);
+                CustomListAdapter2 adapter = new CustomListAdapter2(SearchResults.this, names, dates, rank, upvotes, username);
                 listView.setAdapter(adapter);
 
 
