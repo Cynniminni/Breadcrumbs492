@@ -446,30 +446,14 @@ public class MapsActivity extends ActionBarActivity {
         //If the user was searching for an item, re-search that item for the user and pull
         //up the nearest crumbs
         if(id == R.id.action_refresh) {
+            //insert code to find tags
+            Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
+            msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
+            msgIntent.putExtra("queryID", "getAllCrumbs");
+            msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
+            startService(msgIntent);
 
-            //If the user is refreshing for a search tag, find the tag again
-            EditText editTextLocation = (EditText) findViewById(R.id.edittext_location);
-            //get user input for location
-            String location = editTextLocation.getText().toString();
-            if (location != null && !location.equals(""))
-            {
-                //insert code to find tags
-                Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
-                msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
-                msgIntent.putExtra("queryID", "getAllCrumbs");
-                msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
-
-                startService(msgIntent);
-            }
-
-            //If the user is refreshing the map, gather all crumbs near the user's location
-            else
-            {
-
-
-            }
         }
-
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
