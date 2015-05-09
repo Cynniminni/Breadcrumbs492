@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,17 +23,18 @@ import org.json.JSONArray;
 public class UserProfile extends ActionBarActivity {
     private MyRequestReceiver8 receiver;
     private String search, email;
+
     public final static String CRUMB_NAME = "crumbName";
+    public final static String CRUMB_EMAIL = "email";
     public final static String CRUMB_COMMENT = "crumbComment";
-    public final static String CRUMB_TAGS = "crumbTags";
+    public final static String CRUMBS_TAGS = "crumbsTags";
     public final static String CRUMB_ID = "crumbID";
-    public final static String CRUMB_UPVOTES = "upvotes";
+    public final static String CRUMB_UPVOTES = "crumbUpvotes";
     public final static String CRUMB_DATE = "crumbDate";
-    public final static String SEARCH = "search";
+    public final static String CRUMB_LONGITUDE = "crumbLongitude";
+    public final static String CRUMB_LATITUDE = "crumbLatitude";
     public final static String USERNAME = "username";
-    public final static String CRUMB_LONGITUDE = "longitude";
-    public final static String CRUMB_LATITUDE = "latitude";
-    public final static String EMAIL = "email";
+    public final static String SEARCH = "search";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +48,11 @@ public class UserProfile extends ActionBarActivity {
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         receiver = new MyRequestReceiver8();
         registerReceiver(receiver, filter);
+        Log.d(getIntent().getStringExtra(CrumbDetails.EMAIL),"");
 
-        search = getIntent().getStringExtra(CrumbDetails.SEARCH);
+        if(!(getIntent().getStringExtra(CrumbDetails.SEARCH) == null))
+            search = getIntent().getStringExtra(CrumbDetails.SEARCH);
+
         email = getIntent().getStringExtra(CrumbDetails.EMAIL);
         System.out.println("Email: " + email);
 
@@ -68,14 +73,14 @@ public class UserProfile extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, CrumbDetails.class);
-        intent.putExtra(EMAIL, getIntent().getStringExtra(CrumbDetails.EMAIL));
+        intent.putExtra(CRUMB_EMAIL, getIntent().getStringExtra(CrumbDetails.EMAIL));
         intent.putExtra(USERNAME, getIntent().getStringExtra(CrumbDetails.USERNAME));
         intent.putExtra(SEARCH, getIntent().getStringExtra(CrumbDetails.SEARCH));
         intent.putExtra(CRUMB_NAME, getIntent().getStringExtra(CrumbDetails.CRUMB_NAME));
         intent.putExtra(CRUMB_COMMENT, getIntent().getStringExtra(CrumbDetails.CRUMB_COMMENT));
         intent.putExtra(CRUMB_UPVOTES, getIntent().getIntExtra(CrumbDetails.CRUMB_UPVOTES, 0));
         intent.putExtra(CRUMB_DATE, getIntent().getStringExtra(CrumbDetails.CRUMB_DATE));
-        intent.putExtra(CRUMB_TAGS, getIntent().getStringExtra(CrumbDetails.CRUMB_TAGS));
+        intent.putExtra(CRUMBS_TAGS, getIntent().getStringExtra(CrumbDetails.CRUMB_TAGS));
         intent.putExtra(CRUMB_ID, getIntent().getStringExtra(CrumbDetails.CRUMB_ID));
         intent.putExtra(CRUMB_LATITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LATITUDE, 0.0));
         intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LONGITUDE, 0.0));
@@ -220,15 +225,25 @@ public class UserProfile extends ActionBarActivity {
                         intent.putExtra(CRUMB_NAME, names[itemPosition]);
                         intent.putExtra(CRUMB_ID, ids[itemPosition]);
                         intent.putExtra(CRUMB_COMMENT, comments[itemPosition]);
-                        intent.putExtra(CRUMB_TAGS, tags[itemPosition]);
+                        System.out.println("TAGS: " + tags[itemPosition]);
+                        intent.putExtra(CRUMBS_TAGS, tags[itemPosition]);
                         intent.putExtra(CRUMB_UPVOTES, upvotes[itemPosition]);
                         intent.putExtra(CRUMB_DATE, dates[itemPosition]);
-                        intent.putExtra(SEARCH, getIntent().getStringExtra(MapsActivity.SEARCH));
+                        intent.putExtra(SEARCH, getIntent().getStringExtra(CrumbDetails.SEARCH));
                         intent.putExtra(USERNAME, username[itemPosition]);
                         intent.putExtra(CRUMB_LONGITUDE, longitude[itemPosition]);
                         intent.putExtra(CRUMB_LATITUDE, latitude[itemPosition]);
-                        intent.putExtra(EMAIL, emails[itemPosition]);
-                        intent.putExtra("activity", "UserProfile");
+                        System.out.println("EMAIL: " + emails[itemPosition]);
+                        intent.putExtra(CRUMB_EMAIL, emails[itemPosition]);
+
+                        System.out.println("Activity: " + getIntent().getStringExtra("activity"));
+                        if(getIntent().getStringExtra("activity").equals("infoWindowClick")) {
+                            System.out.println("going form info window click");
+                            intent.putExtra("activity", "infoWindowClick");
+                        }
+                        else {
+                            intent.putExtra("activity", "UserProfile");
+                        }
 
                         startActivity(intent);
                         finish();

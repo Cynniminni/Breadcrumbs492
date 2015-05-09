@@ -100,6 +100,7 @@
         android:background="@drawable/button_style"
         android:textColor="#FFFFFF"
         android:text="Back"
-        android:onClick="backToResults"/>
+        android:onClick="backToResults"
+        android:id="@+id/go_back" />
 </LinearLayout>
-<!-- From: file:/C:/Users/Victor/Documents/GitHub/Breadcrumbs492/app/src/main/res/layout/activity_crumb_details.xml -->
+<!-- From: file:/C:/Users/Matt/Documents/GitHub%20Repos/Breadcrumbs492/app/src/main/res/layout/activity_crumb_details.xml -->

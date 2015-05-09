@@ -43,10 +43,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
-
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import com.google.android.gms.maps.model.Marker;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,7 +79,7 @@ public class MapsActivity extends ActionBarActivity {
     public final static String CRUMB_NAME = "crumbName";
     public final static String CRUMB_EMAIL = "email";
     public final static String CRUMB_COMMENT = "crumbComment";
-    public final static String CRUMB_TAGS = "crumbsTags";
+    public final static String CRUMBS_TAGS = "crumbsTags";
     public final static String CRUMB_ID = "crumbID";
     public final static String CRUMB_UPVOTES = "crumbUpvotes";
     public final static String CRUMB_DATE = "crumbDate";
@@ -203,38 +203,38 @@ public class MapsActivity extends ActionBarActivity {
 
             Request.newMeRequest(Session.getActiveSession(),new Request.GraphUserCallback() {
 
-                   @Override
-                    public void onCompleted(GraphUser user, Response response) {
-                        if (response != null) {
-                            try {
-                                    GlobalContainer.user = new User(user.getName(),
-                                            (String) user.getProperty("email"),
-                                            (String) user.getProperty("first_name"),
-                                            (String) user.getProperty("last_name"),
-                                            (String) user.getProperty("gender"),
+                @Override
+                public void onCompleted(GraphUser user, Response response) {
+                    if (response != null) {
+                        try {
+                            GlobalContainer.user = new User(user.getName(),
+                                    (String) user.getProperty("email"),
+                                    (String) user.getProperty("first_name"),
+                                    (String) user.getProperty("last_name"),
+                                    (String) user.getProperty("gender"),
                                     "city", "state");
 
-                                GlobalContainer.userIsInitialized = true;
-                                username = user.getName();
-                                email = (String) user.getProperty("email");
+                            GlobalContainer.userIsInitialized = true;
+                            username = user.getName();
+                            email = (String) user.getProperty("email");
 
-                                Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
-                                msgIntent.putExtra(JSONRequest.IN_MSG, "registerInit");
-                                msgIntent.putExtra("queryID", "register");
-                                msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"password\":\""
-                                        + user.getId() + "\",\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\",\"firstName\":\""
-                                        + GlobalContainer.user.getInfo()[2] +  "\",\"lastName\":\"" + GlobalContainer.user.getInfo()[3] + "\",\"gender\":\""
-                                        + GlobalContainer.user.getInfo()[4] +  "\",\"city\":\"" + GlobalContainer.user.getInfo()[5] + "\",\"state\":\""
-                                        + GlobalContainer.user.getInfo()[6] + "\"}");
+                            Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
+                            msgIntent.putExtra(JSONRequest.IN_MSG, "registerInit");
+                            msgIntent.putExtra("queryID", "register");
+                            msgIntent.putExtra("jsonObject", "{\"username\":\"" + GlobalContainer.user.getInfo()[0] + "\",\"password\":\""
+                                    + user.getId() + "\",\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\",\"firstName\":\""
+                                    + GlobalContainer.user.getInfo()[2] +  "\",\"lastName\":\"" + GlobalContainer.user.getInfo()[3] + "\",\"gender\":\""
+                                    + GlobalContainer.user.getInfo()[4] +  "\",\"city\":\"" + GlobalContainer.user.getInfo()[5] + "\",\"state\":\""
+                                    + GlobalContainer.user.getInfo()[6] + "\"}");
 
-                                startService(msgIntent);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
+                            startService(msgIntent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+
                     }
-                }).executeAsync();
+                }
+            }).executeAsync();
         }
         else{
             //non-facebook login
@@ -266,8 +266,6 @@ public class MapsActivity extends ActionBarActivity {
                 startService(msgIntent);
             }
         }
-
-
 
         //Remove text from the editext_location
         Button removeTextButton = (Button) findViewById(R.id.remove_text);
@@ -381,6 +379,8 @@ public class MapsActivity extends ActionBarActivity {
                 String tempEmail = "";
                 int tempRating = 0;
 
+
+
                 for (int i = 0; i < crumbsArr.length; i++) {
                     if (latLng.toString().equals(crumbsArr[i].getLocation().toString())) {
                         tempName = crumbsArr[i].getName();
@@ -392,24 +392,31 @@ public class MapsActivity extends ActionBarActivity {
                         tempID = idArr[i];
                         tempEmail = emailArr[i];
                     }
+
                 }
+
+
+                Toast.makeText(getApplicationContext(), tempComment, Toast.LENGTH_LONG).show();
 
                 Intent goToDetails = new Intent(MapsActivity.this, CrumbDetails.class);
                 goToDetails.putExtra("activity", "infoWindowClick");
-                goToDetails.putExtra("CRUMB_NAME",tempName);
-                goToDetails.putExtra("CRUMB_COMMENT",tempComment);
-                goToDetails.putExtra("RATING",tempRating);
-                goToDetails.putExtra("USERNAME",tempUser);
-                goToDetails.putExtra("CRUMB_DATE", tempDate);
-                goToDetails.putExtra("CRUMB_LONGITUDE", latLng.longitude);
-                goToDetails.putExtra("CRUMB_LATITUDE", latLng.latitude);
-                goToDetails.putExtra("CRUMB_TAGS", tempTags);
-                goToDetails.putExtra("SEARCH", tempSearch);
-                goToDetails.putExtra("CRUMB_ID", tempID);
-                goToDetails.putExtra("EMAIL", tempEmail);
+                goToDetails.putExtra(CRUMB_NAME,tempName);
+                goToDetails.putExtra(CRUMB_COMMENT,tempComment);
+                goToDetails.putExtra(CRUMB_UPVOTES,tempRating);
+                goToDetails.putExtra(USERNAME,tempUser);
+                goToDetails.putExtra(CRUMB_DATE, tempDate);
+                goToDetails.putExtra(CRUMB_LONGITUDE, latLng.longitude);
+                goToDetails.putExtra(CRUMB_LATITUDE, latLng.latitude);
+                goToDetails.putExtra(CRUMBS_TAGS, tempTags);
+                goToDetails.putExtra(SEARCH, tempSearch);
+                goToDetails.putExtra(CRUMB_ID, tempID);
+                goToDetails.putExtra(CRUMB_EMAIL, tempEmail);
                 startActivity(goToDetails);
             }
         });
+
+
+
 
     }//end onCreate
 
@@ -457,13 +464,7 @@ public class MapsActivity extends ActionBarActivity {
             //If the user is refreshing the map, gather all crumbs near the user's location
             else
             {
-                //user is initialized so get all crumbs
-                Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
-                msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
-                msgIntent.putExtra("queryID", "getAllCrumbs");
-                msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
 
-                startService(msgIntent);
 
             }
         }
