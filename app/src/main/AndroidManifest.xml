@@ -110,6 +110,10 @@
             android:name=".UserProfile"
             android:label="@string/title_activity_user_profile" >
         </activity>
+        <activity
+            android:name=".Rankings"
+            android:label="@string/title_activity_rankings" >
+        </activity>
     </application>
 
 </manifest>

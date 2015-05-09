@@ -61,6 +61,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     private TextView crumbUsername, crumbDate, crumbName, crumbUpvotes, crumbTags, crumbComment;
     private String whichActivity = "";
     private boolean fromInfoWindow = false;
+    private boolean fromRankings = false;
 
 
     private MyRequestReceiver9 receiver;
@@ -79,6 +80,8 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         intent.putExtra(CRUMB_LONGITUDE, longitude);
         if(fromInfoWindow)
             intent.putExtra("activity", "infoWindowClick");
+        else if(fromRankings)
+            intent.putExtra("activity", "Rankings");
         else {
             intent.putExtra(SEARCH, search);
             intent.putExtra("activity", "SearchResults");
@@ -90,13 +93,21 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     }
 
     public void backToResults(View view) {
-        //back to searchresults, passing same search query back to searchresults activity
+        System.out.println("From rankings in crumbdetails: " + fromRankings );
         System.out.println("From info window: " + fromInfoWindow);
         if(fromInfoWindow){
             Intent intent = new Intent(CrumbDetails.this, MapsActivity.class);
             startActivity(intent);
             finish();
         }
+
+        if(fromRankings){
+            Intent intent = new Intent(CrumbDetails.this, Rankings.class);
+            startActivity(intent);
+            finish();
+        }
+
+        //back to searchresults, passing same search query back to searchresults activity
         search = getIntent().getStringExtra(SearchResults.SEARCH);
         Intent intent = new Intent(CrumbDetails.this, SearchResults.class);
         intent.putExtra(SEARCH, search);
@@ -162,6 +173,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crumb_details);
         whichActivity = getIntent().getStringExtra("activity");
+        System.out.println("WHICH ACTIVITY IS IT COMING FORM IN CRUMBDETAILS? " + whichActivity);
         IntentFilter filter = new IntentFilter(MyRequestReceiver9.PROCESS_RESPONSE);
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         receiver = new MyRequestReceiver9();
@@ -183,23 +195,24 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
             System.out.println("Tags: " + tags);
         }
 
-        else if(whichActivity.equals("MapActivity")) {
-            //retrieve extras from previous SearchResults class
-            search = getIntent().getStringExtra(MapsActivity.SEARCH);
-            email = getIntent().getStringExtra(MapsActivity.CRUMB_EMAIL);
-            name = getIntent().getStringExtra(MapsActivity.CRUMB_NAME);
-            description = getIntent().getStringExtra(MapsActivity.CRUMB_COMMENT);
-            username = getIntent().getStringExtra(MapsActivity.USERNAME);
-            crumbID = getIntent().getStringExtra(MapsActivity.CRUMB_ID);
-            upvotes = getIntent().getIntExtra(MapsActivity.CRUMB_UPVOTES, 0);
-            date = getIntent().getStringExtra(MapsActivity.CRUMB_DATE);
-            tags = getIntent().getStringExtra(MapsActivity.CRUMBS_TAGS);
-            longitude = getIntent().getDoubleExtra(MapsActivity.CRUMB_LONGITUDE, 0.0);
-            latitude = getIntent().getDoubleExtra(MapsActivity.CRUMB_LATITUDE, 0.0);
+        else if(whichActivity.equals("Rankings")) {
+            //retrieve extras from previous Rankings class
+            System.out.println("DOES IT EVEN REACH RANKINGS IN CRUMBDETAILS?!?!?!");
+            fromRankings = true;
+            email = getIntent().getStringExtra(Rankings.CRUMB_EMAIL);
+            name = getIntent().getStringExtra(Rankings.CRUMB_NAME);
+            description = getIntent().getStringExtra(Rankings.CRUMB_COMMENT);
+            username = getIntent().getStringExtra(Rankings.USERNAME);
+            crumbID = getIntent().getStringExtra(Rankings.CRUMB_ID);
+            upvotes = getIntent().getIntExtra(Rankings.CRUMB_UPVOTES, 0);
+            date = getIntent().getStringExtra(Rankings.CRUMB_DATE);
+            tags = getIntent().getStringExtra(Rankings.CRUMBS_TAGS);
+            longitude = getIntent().getDoubleExtra(Rankings.CRUMB_LONGITUDE, 0.0);
+            latitude = getIntent().getDoubleExtra(Rankings.CRUMB_LATITUDE, 0.0);
             System.out.println("Tags: " + tags);
         }
         else if(whichActivity.equals("UserProfile")) {
-            //retrieve extras from previous SearchResults class
+            //retrieve extras from previous UserProfile class
             search = getIntent().getStringExtra(UserProfile.SEARCH);
             email = getIntent().getStringExtra(UserProfile.CRUMB_EMAIL);
             name = getIntent().getStringExtra(UserProfile.CRUMB_NAME);
@@ -216,6 +229,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
         }
 
         else if(whichActivity.equals("infoWindowClick")){
+            //retrieve extras from previous MapActivity class in info window
             fromInfoWindow = true;
             name = getIntent().getStringExtra(MapsActivity.CRUMB_NAME);
             description = getIntent().getStringExtra(MapsActivity.CRUMB_COMMENT);

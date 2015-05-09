@@ -120,21 +120,20 @@
         <ImageButton
             android:layout_width="71dp"
             android:layout_height="match_parent"
-            android:text="New Button"
             android:src="@drawable/random"
             android:id="@+id/button2"
             android:background="#FFFFFF"
-            android:layout_marginLeft="2dp" />
+            android:layout_marginLeft="2dp"
+            android:onClick="randomCrumb"/>
 
         <ImageButton
             android:layout_width="71dp"
             android:layout_height="match_parent"
-
             android:src="@drawable/medal"
-            android:text="New Button"
             android:id="@+id/button3"
             android:background="#FFFFFF"
-            android:layout_marginLeft="2dp" />
+            android:layout_marginLeft="2dp"
+            android:onClick="crumbRankings"/>
 
     </LinearLayout>
     <!-- -->

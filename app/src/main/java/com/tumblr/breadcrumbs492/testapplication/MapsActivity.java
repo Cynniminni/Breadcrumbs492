@@ -132,6 +132,17 @@ public class MapsActivity extends ActionBarActivity {
         startActivityForResult(intent, REQUEST_ADD_CRUMB);
     }
 
+    public void randomCrumb(View view){
+
+    }
+
+    public void crumbRankings(View view){
+        Intent intent = new Intent(this, Rankings.class);
+        startActivity(intent);
+        finish();
+
+    }
+
     //add a crumb marker on the map
     public void markCrumb(Crumb crumb) {
         //add marker with location, name, and comment

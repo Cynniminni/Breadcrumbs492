@@ -394,6 +394,7 @@ https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_my_crumbs">My Crumbs</string>
     <string name="title_activity_profile">My Profile</string>
+    <string name="title_activity_rankings">Rankings</string>
     <string name="title_activity_search_results">Search Results</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_tabbed">TabbedActivity</string>

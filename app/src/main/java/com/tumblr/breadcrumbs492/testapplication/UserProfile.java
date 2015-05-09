@@ -240,6 +240,9 @@ public class UserProfile extends ActionBarActivity {
                         if(getIntent().getStringExtra("activity").equals("infoWindowClick")) {
                             intent.putExtra("activity", "infoWindowClick");
                         }
+                        else if(getIntent().getStringExtra("activity").equals("Rankings")) {
+                            intent.putExtra("activity", "Rankings");
+                        }
                         else {
                             intent.putExtra("activity", "UserProfile");
                         }

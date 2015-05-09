@@ -32,6 +32,9 @@ import com.tumblr.breadcrumbs492.testapplication.EditCrumb.MyRequestReceiver6;
 import com.tumblr.breadcrumbs492.testapplication.SearchResults.MyRequestReceiver7;
 import com.tumblr.breadcrumbs492.testapplication.UserProfile.MyRequestReceiver8;
 import com.tumblr.breadcrumbs492.testapplication.CrumbDetails.MyRequestReceiver9;
+import com.tumblr.breadcrumbs492.testapplication.Rankings.MyRequestReceiver10;
+
+
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -70,7 +73,7 @@ public class JSONRequest extends IntentService{
                 ||inMessage.trim().equals("updateProfile")||inMessage.trim().equals("deleteCrumb")
                 ||inMessage.trim().equals("findTagsResults") ||inMessage.trim().equals("getUserCrumbs")
                 ||inMessage.trim().equals("upvote")||inMessage.trim().equals("unvote")
-                ||inMessage.trim().equals("hasVoted")){
+                ||inMessage.trim().equals("hasVoted")||inMessage.trim().equals("getCrumbsRanked")){
 
             String queryID = intent.getStringExtra("queryID");
             String jsonObject = intent.getStringExtra("jsonObject");
@@ -125,6 +128,9 @@ public class JSONRequest extends IntentService{
                 broadcastIntent.setAction(MyRequestReceiver8.PROCESS_RESPONSE);
             else if (queryID.equals("upvote")||queryID.equals("unvote")||queryID.equals("hasVoted"))
                 broadcastIntent.setAction(MyRequestReceiver9.PROCESS_RESPONSE);
+            else if (queryID.equals("getCrumbsRanked"))
+                broadcastIntent.setAction(MyRequestReceiver10.PROCESS_RESPONSE);
+
         }
 
         else if(inMessage.equalsIgnoreCase("registerInit"))

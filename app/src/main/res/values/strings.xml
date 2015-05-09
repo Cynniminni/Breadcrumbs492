@@ -57,4 +57,5 @@
     <string name="title_activity_search_results">Search Results</string>
     <string name="title_activity_crumb_details">Crumb Details</string>
     <string name="title_activity_user_profile">User Profile</string>
+    <string name="title_activity_rankings">Rankings</string>
 </resources>
