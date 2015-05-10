@@ -145,8 +145,9 @@ public class AddCrumbActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
+        Intent intent = new Intent(this, MapsActivity.class);
         setResult(RESULT_OK, intent);
+        startActivity(intent);
         finish();
         super.onBackPressed();
     }
