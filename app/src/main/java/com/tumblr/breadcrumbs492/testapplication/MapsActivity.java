@@ -1,9 +1,7 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
-import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Address;
@@ -12,23 +10,16 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.os.Parcelable;
-import android.provider.Settings;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,20 +34,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.maps.SupportMapFragment;
-
 import com.google.android.gms.maps.model.Marker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -384,7 +369,6 @@ public class MapsActivity extends ActionBarActivity {
             public void onInfoWindowClick(Marker marker) {
                 // Getting the position from the marker
                 LatLng latLng = marker.getPosition();
-                //        Crumb tempCrumb = new Crumb();
                 String tempUser ="";
                 String tempName = "";
                 String tempComment = "";
@@ -394,8 +378,6 @@ public class MapsActivity extends ActionBarActivity {
                 String tempID = "";
                 String tempEmail = "";
                 int tempRating = 0;
-
-
 
                 for (int i = 0; i < crumbsArr.length; i++) {
                     if (latLng.toString().equals(crumbsArr[i].getLocation().toString())) {
@@ -408,11 +390,7 @@ public class MapsActivity extends ActionBarActivity {
                         tempID = idArr[i];
                         tempEmail = emailArr[i];
                     }
-
                 }
-
-
-                Toast.makeText(getApplicationContext(), tempComment, Toast.LENGTH_LONG).show();
 
                 Intent goToDetails = new Intent(MapsActivity.this, CrumbDetails.class);
                 goToDetails.putExtra("activity", "infoWindowClick");
@@ -430,10 +408,6 @@ public class MapsActivity extends ActionBarActivity {
                 startActivity(goToDetails);
             }
         });
-
-
-
-
     }//end onCreate
 
     @Override
@@ -458,9 +432,7 @@ public class MapsActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //will refresh the page by reloading the local pins on the map near the user's location
-        //If the user was searching for an item, re-search that item for the user and pull
-        //up the nearest crumbs
+        //will refresh the page by reloading all pins
         if(id == R.id.action_refresh) {
             //insert code to find tags
             Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
@@ -479,6 +451,11 @@ public class MapsActivity extends ActionBarActivity {
             intent.setClass(MapsActivity.this, SettingsActivity.class);
             startActivityForResult(intent, REQUEST_SETTINGS);
             return true;
+        }
+
+        if(id == R.id.action_logout){
+            Intent logoutIntent = new Intent(MapsActivity.this, LoginActivity.class);
+            startActivity(logoutIntent);
         }
 
         return super.onOptionsItemSelected(item);

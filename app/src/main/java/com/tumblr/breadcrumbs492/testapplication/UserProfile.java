@@ -11,8 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,6 +33,7 @@ public class UserProfile extends ActionBarActivity {
     public final static String CRUMB_LATITUDE = "crumbLatitude";
     public final static String USERNAME = "username";
     public final static String SEARCH = "search";
+    public final static int REQUEST_SETTINGS = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,15 +107,19 @@ public class UserProfile extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // launch SettingsActivity with the request code. This will be referenced in
+            // onActivityResult
             Intent intent = new Intent();
-            intent.setClass(this, SettingsActivity.class);
-            startActivity(intent);
+            intent.setClass(UserProfile.this, SettingsActivity.class);
+            startActivityForResult(intent, REQUEST_SETTINGS);
             return true;
         }
-        else if(id == android.R.id.home) {
-            onBackPressed();
-            return true;
+
+        if(id == R.id.action_logout){
+            Intent logoutIntent = new Intent(UserProfile.this, LoginActivity.class);
+            startActivity(logoutIntent);
         }
+
         return super.onOptionsItemSelected(item);
     }
 

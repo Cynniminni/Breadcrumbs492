@@ -45,6 +45,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     private double longitude, latitude;
     private boolean hasVoted;
 
+    public final static int REQUEST_SETTINGS = 0;
     public final static String CRUMB_NAME = "crumbName";
     public final static String CRUMB_COMMENT = "crumbComment";
     public final static String CRUMB_TAGS = "crumbsTags";
@@ -93,7 +94,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     }
 
     public void backToResults(View view) {
-        System.out.println("From rankings in crumbdetails: " + fromRankings );
+        System.out.println("From rankings in crumbdetails: " + fromRankings);
         System.out.println("From info window: " + fromInfoWindow);
         if(fromInfoWindow){
             Intent intent = new Intent(CrumbDetails.this, MapsActivity.class);
@@ -356,13 +357,6 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_crumb_details, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -371,16 +365,22 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // launch SettingsActivity with the request code. This will be referenced in
+            // onActivityResult
             Intent intent = new Intent();
-            intent.setClass(this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == android.R.id.home) {
-            onBackPressed();
+            intent.setClass(CrumbDetails.this, SettingsActivity.class);
+            startActivityForResult(intent, REQUEST_SETTINGS);
             return true;
         }
+
+        if(id == R.id.action_logout){
+            Intent logoutIntent = new Intent(CrumbDetails.this, LoginActivity.class);
+            startActivity(logoutIntent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
+
 
     //broadcast receiver to receive messages sent from the JSON IntentService
     public class MyRequestReceiver9 extends BroadcastReceiver {

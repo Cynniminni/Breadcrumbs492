@@ -563,7 +563,7 @@ int drawable profile 0x7f020093
 int drawable random 0x7f020094
 int drawable thumbup 0x7f020095
 int drawable white_rectangle 0x7f020096
-int id action_about 0x7f0c00c9
+int id action_about 0x7f0c00ca
 int id action_bar 0x7f0c0050
 int id action_bar_activity_content 0x7f0c0000
 int id action_bar_container 0x7f0c004f
@@ -572,12 +572,13 @@ int id action_bar_spinner 0x7f0c0001
 int id action_bar_subtitle 0x7f0c003e
 int id action_bar_title 0x7f0c003d
 int id action_context_bar 0x7f0c0051
+int id action_logout 0x7f0c00c8
 int id action_menu_divider 0x7f0c0002
 int id action_menu_presenter 0x7f0c0003
 int id action_mode_bar 0x7f0c004d
 int id action_mode_bar_stub 0x7f0c004c
 int id action_mode_close_button 0x7f0c003f
-int id action_refresh 0x7f0c00c8
+int id action_refresh 0x7f0c00c9
 int id action_settings 0x7f0c00c7
 int id activity_chooser_view_content 0x7f0c0040
 int id activity_login 0x7f0c0072

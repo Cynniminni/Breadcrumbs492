@@ -6,5 +6,9 @@
 
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>
 <!-- From: file:/C:/Users/Matt/Documents/GitHub%20Repos/Breadcrumbs492/app/src/main/res/menu/menu_add_crumb.xml -->

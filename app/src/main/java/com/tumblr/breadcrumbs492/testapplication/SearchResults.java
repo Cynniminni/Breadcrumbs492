@@ -37,6 +37,7 @@ public class SearchResults extends ActionBarActivity {
     public final static String CRUMB_LONGITUDE = "longitude";
     public final static String CRUMB_LATITUDE = "latitude";
     public final static String EMAIL = "email";
+    public final static int REQUEST_SETTINGS = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -39,6 +39,7 @@ public class MyCrumbsActivity extends ActionBarActivity {
     public final static String CRUMB_LONGITUDE = "longitude";
     public final static String CRUMB_LATITUDE = "latitude";
     public final static String CRUMB_PRIVATE = "isPrivate";
+    public final static int REQUEST_SETTINGS = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,17 +93,22 @@ public class MyCrumbsActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // launch SettingsActivity with the request code. This will be referenced in
+            // onActivityResult
             Intent intent = new Intent();
-            intent.setClass(this, SettingsActivity.class);
-            startActivity(intent);
+            intent.setClass(MyCrumbsActivity.this, SettingsActivity.class);
+            startActivityForResult(intent, REQUEST_SETTINGS);
             return true;
         }
-        else if(id == android.R.id.home) {
-            onBackPressed();
-            return true;
+
+        if(id == R.id.action_logout){
+            Intent logoutIntent = new Intent(MyCrumbsActivity.this, LoginActivity.class);
+            startActivity(logoutIntent);
         }
-            return super.onOptionsItemSelected(item);
+
+        return super.onOptionsItemSelected(item);
     }
+
     //broadcast receiver to receive messages sent from the JSON IntentService
     public class MyRequestReceiver3 extends BroadcastReceiver {
 

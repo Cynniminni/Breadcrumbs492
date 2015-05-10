@@ -48,6 +48,7 @@ public class EditCrumb extends ActionBarActivity {
     private double longitude, latitude;
     private String visibility;
     private boolean isPrivate;
+    public final static int REQUEST_SETTINGS = 0;
 
     public void editCrumb(View view) {
         name = crumbName.getText().toString();
@@ -212,15 +213,19 @@ public class EditCrumb extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // launch SettingsActivity with the request code. This will be referenced in
+            // onActivityResult
             Intent intent = new Intent();
-            intent.setClass(this, SettingsActivity.class);
-            startActivity(intent);
+            intent.setClass(EditCrumb.this, SettingsActivity.class);
+            startActivityForResult(intent, REQUEST_SETTINGS);
             return true;
         }
-        else if(id == android.R.id.home) {
-            onBackPressed();
-            return true;
+
+        if(id == R.id.action_logout){
+            Intent logoutIntent = new Intent(EditCrumb.this, LoginActivity.class);
+            startActivity(logoutIntent);
         }
+
         return super.onOptionsItemSelected(item);
     }
 

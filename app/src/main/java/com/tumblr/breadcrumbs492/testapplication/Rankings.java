@@ -112,14 +112,19 @@ public class Rankings extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // launch SettingsActivity with the request code. This will be referenced in
+            // onActivityResult
             Intent intent = new Intent();
-            intent.setClass(this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == android.R.id.home) {
-            onBackPressed();
+            intent.setClass(Rankings.this, SettingsActivity.class);
+            startActivityForResult(intent, REQUEST_SETTINGS);
             return true;
         }
+
+        if(id == R.id.action_logout){
+            Intent logoutIntent = new Intent(Rankings.this, LoginActivity.class);
+            startActivity(logoutIntent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
