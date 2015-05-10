@@ -3,6 +3,31 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="android:popupMenuStyle">@style/MyApp.PopupMenu</item>
+
+
     </style>
 
+    <style name="MyApp.PopupMenu" parent="@style/Widget.AppCompat.Light.PopupMenu">
+        <item name="android:popupBackground">@color/bluegrey</item>
+    </style>
+
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
+
+        <item name="background">@color/bluegrey</item>
+        <item name="titleTextStyle">@style/MyTitleTextStyle</item>
+
+    </style>
+
+    <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
+
+
 </resources>
+
