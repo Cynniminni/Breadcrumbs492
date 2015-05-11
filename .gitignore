@@ -5,3 +5,5 @@
 .DS_Store
 /build
 /facebook/build
+.idea/encodings.xml
+.idea/scopes/scope_settings.xml
