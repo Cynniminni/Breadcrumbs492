@@ -6,11 +6,11 @@
         android:layout_width="50dp"
         android:layout_height="60dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
         android:text="Rank"
-        android:textSize="27sp"
+        android:textSize="30sp"
         android:id="@+id/crumbRank"
         android:padding="10dp"
         android:focusable="false"/>
@@ -80,8 +80,7 @@
             android:layout_alignParentStart="true"
             android:padding="14dp"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="13dp"
             android:textColor="#ffffff"/>
 
     </RelativeLayout>
