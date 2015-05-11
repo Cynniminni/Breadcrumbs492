@@ -2,11 +2,60 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\exploded-aar\com.facebook.android\facebook\3.23.1\classes.jar"
+        jar="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\exploded-aar\com.facebook.android\facebook\3.23.1\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="354ea6c3d5288c8b0b24c2e137c0c1fd0fb05118">
-        <dex dex="C:\Users\Matt\Documents\GitHub Repos\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-e2f85843f8bccc79d8ef43cc0b76da1fbbe33ffe.jar" />
+        sha1="ea0b25d53bdc0cabaea7fe82a32526004a767019">
+        <dex dex="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-315f044ab00047688107ed0285f15aa693e19288.jar" />
+    </item>
+    <item
+        jar="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-ea48a65eabf8d3c1f990c16f9cf4176ec99d89f3.jar" />
+    </item>
+    <item
+        jar="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-2ee502d18ecf6bd40f40e153c7cb99f40af8d1ca.jar" />
+    </item>
+    <item
+        jar="C:\Users\Victo_000\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.1.4\129874135e6081269ace2312092031558865de12\bolts-android-1.1.4.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\bolts-android-1.1.4-f89781f388124e9def78cff543b18a4687692136.jar" />
+    </item>
+    <item
+        jar="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-dc4ed9d57b0251e7815d86d16d0555bbc750ada6.jar" />
+    </item>
+    <item
+        jar="C:\Users\Victo_000\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-85a773660979cbaee06a978e04d10b977e438d27.jar" />
+    </item>
+    <item
+        jar="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\libs\robotium-solo-5.3.2-SNAPSHOT.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="3d08cb50d83c011f27bb6dcc65a5647a88dae461">
+        <dex dex="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\robotium-solo-5.3.2-SNAPSHOT-cc3bc54962977f8ccacd893afd400c6b8a8c9205.jar" />
+    </item>
+    <item
+        jar="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Users\Victo_000\Documents\GitHub\Breadcrumbs492\app\build\intermediates\pre-dexed\debug\classes-722be1d38aa91dc2cedda9dc7d7ed37683d80fa7.jar" />
     </item>
 
 </items>

@@ -101,4 +101,4 @@
         android:onClick="backToResults"
         android:id="@+id/go_back" />
 </LinearLayout>
-<!-- From: file:/C:/Users/Victor/Documents/GitHub/Breadcrumbs492/app/src/main/res/layout/activity_crumb_details.xml -->
+<!-- From: file:/C:/Users/Victo_000/Documents/GitHub/Breadcrumbs492/app/src/main/res/layout/activity_crumb_details.xml -->

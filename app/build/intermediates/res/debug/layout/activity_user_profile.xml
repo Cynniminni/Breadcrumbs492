@@ -11,16 +11,101 @@
 
     <ImageView
         android:layout_width="400dp"
-        android:layout_height="520dp"
+        android:layout_height="250dp"
         android:background="@drawable/white_rectangle"
-        android:id="@+id/imageView" />
+        android:id="@+id/imageView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
     <ListView
-        android:id="@+id/list"
+        android:id="@+id/listView"
         android:textColor="#FFFFFF"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"></ListView>
+        android:layout_height="250dp"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_alignParentStart="true" />
 
-</RelativeLayout><!-- From: file:/C:/Users/Victor/Documents/GitHub/Breadcrumbs492/app/src/main/res/layout/activity_user_profile.xml -->
+    <ToggleButton
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:text="ToggleButton"
+        android:id="@+id/toggleDisplay"
+        android:background="#FFFFFF"
+        android:textColor="#607D8B"
+        android:textOff="VIEW LIKED CRUMBS"
+        android:textOn="VIEW USER CRUMBS"
+        android:layout_above="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_marginBottom="3dp" />
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/toggleDisplay"
+        android:layout_alignStart="@+id/imageView">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Username"
+        android:id="@+id/tv_username"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/toggleDisplay"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/tv_fname"
+        android:layout_marginTop="30dp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/tv_username"
+        android:layout_alignStart="@+id/tv_gender"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/tv_gender"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/tv_fname"
+        android:layout_alignRight="@+id/tv_username"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/tv_cityAndState"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/tv_gender"
+        android:layout_alignRight="@+id/tv_username"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/tv_numOfCrumbs"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/tv_cityAndState"
+        android:layout_alignRight="@+id/tv_username"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>
+
+</RelativeLayout><!-- From: file:/C:/Users/Victo_000/Documents/GitHub/Breadcrumbs492/app/src/main/res/layout/activity_user_profile.xml -->

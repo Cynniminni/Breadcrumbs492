@@ -216,6 +216,7 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
             //retrieve extras from previous UserProfile class
             search = getIntent().getStringExtra(UserProfile.SEARCH);
             email = getIntent().getStringExtra(UserProfile.CRUMB_EMAIL);
+            System.out.println(email);
             name = getIntent().getStringExtra(UserProfile.CRUMB_NAME);
             description = getIntent().getStringExtra(UserProfile.CRUMB_COMMENT);
             username = getIntent().getStringExtra(UserProfile.USERNAME);
@@ -329,8 +330,17 @@ public class CrumbDetails extends ActionBarActivity /*implements OnStreetViewPan
                     //     super.onBackPressed();
                 }
             });
+
         }
 
+        TextView clickUserName = (TextView) findViewById(R.id.userTextView);
+        clickUserName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userDetails(v);
+
+            }
+        });
 
 
     }

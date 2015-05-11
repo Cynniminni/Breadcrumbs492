@@ -157,7 +157,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/tv_gender"
+        android:id="@+id/tv_fname"
         android:textSize="20dp"
         android:textStyle="bold"
         android:text="Gender:"
@@ -184,15 +184,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/tv_city"
+        android:id="@+id/tv_cityAndState"
         android:layout_weight="1"
         android:textSize="20dp"
         android:textStyle="bold"
         android:text="City:"
         android:textColor="#607D8B"
         android:layout_below="@+id/et_gender"
-        android:layout_alignLeft="@+id/tv_gender"
-        android:layout_alignStart="@+id/tv_gender" />
+        android:layout_alignLeft="@+id/tv_fname"
+        android:layout_alignStart="@+id/tv_fname" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -200,7 +200,7 @@
         android:id="@+id/et_city"
         android:layout_weight="2"
         android:hint="City"
-        android:layout_alignTop="@+id/tv_city"
+        android:layout_alignTop="@+id/tv_cityAndState"
         android:layout_alignLeft="@+id/et_gender"
         android:layout_alignStart="@+id/et_gender"
         android:layout_alignRight="@+id/et_gender"
@@ -218,8 +218,8 @@
         android:textColor="#607D8B"
         android:text="State:"
         android:layout_below="@+id/et_city"
-        android:layout_alignLeft="@+id/tv_city"
-        android:layout_alignStart="@+id/tv_city" />
+        android:layout_alignLeft="@+id/tv_cityAndState"
+        android:layout_alignStart="@+id/tv_cityAndState" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -244,8 +244,8 @@
         android:onClick="onCancel"
         android:background="#FFFFFF"
         android:layout_alignTop="@+id/b_register"
-        android:layout_toRightOf="@+id/tv_city"
-        android:layout_toEndOf="@+id/tv_city" />
+        android:layout_toRightOf="@+id/tv_cityAndState"
+        android:layout_toEndOf="@+id/tv_cityAndState" />
 
     <Button
         android:id="@+id/b_register"
