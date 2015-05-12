@@ -90,6 +90,8 @@ public class UserProfile extends ActionBarActivity {
             search = getIntent().getStringExtra(CrumbDetails.SEARCH);
 
         email = getIntent().getStringExtra(CrumbDetails.EMAIL);
+        if(GlobalContainer.trackEmail == null)
+            GlobalContainer.trackEmail = email;
         Log.d(email, "is username");
         Intent msgIntent = new Intent(this, JSONRequest.class);
         msgIntent.putExtra(JSONRequest.IN_MSG, "getUserCrumbs");
@@ -198,6 +200,9 @@ public class UserProfile extends ActionBarActivity {
                             else if(getIntent().getStringExtra("activity").equals("Rankings")) {
                                 intent.putExtra("activity", "Rankings");
                             }
+                            else if(getIntent().getStringExtra("activity").equals("SearchResults")) {
+                                intent.putExtra("activity", "SearchResults");
+                            }
                             else {
                                 intent.putExtra("activity", "UserProfile");
                             }
@@ -222,20 +227,33 @@ public class UserProfile extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, CrumbDetails.class);
-        intent.putExtra(CRUMB_EMAIL, getIntent().getStringExtra(CrumbDetails.EMAIL));
-        intent.putExtra(USERNAME, getIntent().getStringExtra(CrumbDetails.USERNAME));
-        intent.putExtra(SEARCH, getIntent().getStringExtra(CrumbDetails.SEARCH));
-        intent.putExtra(CRUMB_NAME, getIntent().getStringExtra(CrumbDetails.CRUMB_NAME));
-        intent.putExtra(CRUMB_COMMENT, getIntent().getStringExtra(CrumbDetails.CRUMB_COMMENT));
-        intent.putExtra(CRUMB_UPVOTES, getIntent().getIntExtra(CrumbDetails.CRUMB_UPVOTES, 0));
-        intent.putExtra(CRUMB_DATE, getIntent().getStringExtra(CrumbDetails.CRUMB_DATE));
-        intent.putExtra(CRUMBS_TAGS, getIntent().getStringExtra(CrumbDetails.CRUMB_TAGS));
-        intent.putExtra(CRUMB_ID, getIntent().getStringExtra(CrumbDetails.CRUMB_ID));
-        intent.putExtra(CRUMB_LATITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LATITUDE, 0.0));
-        intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LONGITUDE, 0.0));
-        intent.putExtra("activity", "UserProfile");
-        setResult(RESULT_OK, intent);
+        Intent intent;
+        if(getIntent().getStringExtra("activity") != null) {
+
+            if (getIntent().getStringExtra("activity").equals("Rankings")) {
+                intent = new Intent(this, Rankings.class);
+            } else if (getIntent().getStringExtra("activity").equals("SearchResults")) {
+                intent = new Intent(this, SearchResults.class);
+                intent.putExtra(SEARCH, search);
+            }
+            else intent = new Intent(this, MapsActivity.class);
+        }
+        else
+            intent = new Intent(this, MapsActivity.class);
+
+//        intent.putExtra(CRUMB_EMAIL, getIntent().getStringExtra(CrumbDetails.EMAIL));
+//        intent.putExtra(USERNAME, getIntent().getStringExtra(CrumbDetails.USERNAME));
+//        intent.putExtra(SEARCH, getIntent().getStringExtra(CrumbDetails.SEARCH));
+//        intent.putExtra(CRUMB_NAME, getIntent().getStringExtra(CrumbDetails.CRUMB_NAME));
+//        intent.putExtra(CRUMB_COMMENT, getIntent().getStringExtra(CrumbDetails.CRUMB_COMMENT));
+//        intent.putExtra(CRUMB_UPVOTES, getIntent().getIntExtra(CrumbDetails.CRUMB_UPVOTES, 0));
+//        intent.putExtra(CRUMB_DATE, getIntent().getStringExtra(CrumbDetails.CRUMB_DATE));
+//        intent.putExtra(CRUMBS_TAGS, getIntent().getStringExtra(CrumbDetails.CRUMB_TAGS));
+//        intent.putExtra(CRUMB_ID, getIntent().getStringExtra(CrumbDetails.CRUMB_ID));
+//        intent.putExtra(CRUMB_LATITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LATITUDE, 0.0));
+//        intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LONGITUDE, 0.0));
+//        intent.putExtra("activity", "UserProfile");
+//        setResult(RESULT_OK, intent);
         startActivity(intent);
         super.onBackPressed();
         finish();

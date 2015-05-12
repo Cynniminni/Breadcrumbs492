@@ -7,5 +7,6 @@ public class GlobalContainer {
     public static User user;
     public static boolean userIsInitialized = false;
     public static boolean loggedIn = false;
+    public static String trackEmail;
 
 }

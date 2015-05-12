@@ -193,6 +193,7 @@ public class MapsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
 
+        GlobalContainer.trackEmail = null;
         //Register your receiver so that the Activity can be notified
         //when the JSON response came back
         IntentFilter filter = new IntentFilter(MyRequestReceiver4.PROCESS_RESPONSE);
