@@ -2,6 +2,8 @@ package com.tumblr.breadcrumbs492.testapplication.test;
 
 import com.tumblr.breadcrumbs492.testapplication.LoginActivity;
 import com.robotium.solo.*;
+import com.tumblr.breadcrumbs492.testapplication.R;
+
 import android.test.ActivityInstrumentationTestCase2;
 
 
@@ -40,16 +42,16 @@ public class AddEditSearchCrumb extends ActivityInstrumentationTestCase2<LoginAc
         //Press next button
 		solo.pressSoftKeyboardNextButton();
         //Click on SIGN IN
-		solo.clickOnView(solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.signin_or_register));
+		solo.clickOnView(solo.getView(R.id.signin));
         //Click on SIGN IN
-		solo.clickOnView(solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.signin_or_register));
+		solo.clickOnView(solo.getView(R.id.signin));
         //Click on scotttack
 		solo.clickOnView(solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.enter_username));
         //Enter the text: 'scotttak'
 		solo.clearEditText((android.widget.EditText) solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.enter_username));
 		solo.enterText((android.widget.EditText) solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.enter_username), "scotttak");
         //Click on SIGN IN
-		solo.clickOnView(solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.signin_or_register));
+		solo.clickOnView(solo.getView(R.id.signin));
         //Wait for activity: 'com.tumblr.breadcrumbs492.testapplication.MapsActivity'
 		assertTrue("com.tumblr.breadcrumbs492.testapplication.MapsActivity is not found!", solo.waitForActivity(com.tumblr.breadcrumbs492.testapplication.MapsActivity.class));
         //Click on android.view.TextureView

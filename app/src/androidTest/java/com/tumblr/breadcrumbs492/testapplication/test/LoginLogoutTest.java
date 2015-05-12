@@ -50,7 +50,7 @@ public class LoginLogoutTest extends ActivityInstrumentationTestCase2<LoginActiv
         //Press next button
         solo.pressSoftKeyboardNextButton();
         //Click on Sign in or register
-        solo.clickOnView(solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.signin_or_register));
+        solo.clickOnView(solo.getView(R.id.signin));
         //Wait for activity: 'com.tumblr.breadcrumbs492.testapplication.MapsActivity'
         assertTrue("com.tumblr.breadcrumbs492.testapplication.MapsActivity is not found!", solo.waitForActivity(com.tumblr.breadcrumbs492.testapplication.MapsActivity.class, 2000));
         // Log out
@@ -65,16 +65,16 @@ public class LoginLogoutTest extends ActivityInstrumentationTestCase2<LoginActiv
         solo.clickOnView(solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.enter_username));
         //Enter the text: 'daniel'
         solo.clearEditText((android.widget.EditText) solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.enter_username));
-        solo.enterText((android.widget.EditText) solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.enter_username), "fun");
+        solo.enterText((android.widget.EditText) solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.enter_username), "scotttak");
         //Click on Empty Text View
         solo.clickOnView(solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.enter_password));
         //Enter the text: 'password1'
         solo.clearEditText((android.widget.EditText) solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.enter_password));
-        solo.enterText((android.widget.EditText) solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.enter_password), "yay");
+        solo.enterText((android.widget.EditText) solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.enter_password), "password1");
         //Press next button
         solo.pressSoftKeyboardNextButton();
         //Click on Sign in or register
-        solo.clickOnView(solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.signin_or_register));
+        solo.clickOnView(solo.getView(R.id.signin));
         //Wait for activity: 'com.tumblr.breadcrumbs492.testapplication.MapsActivity'
         assertTrue("com.tumblr.breadcrumbs492.testapplication.MapsActivity is not found!", solo.waitForActivity(com.tumblr.breadcrumbs492.testapplication.MapsActivity.class, 2000));
 

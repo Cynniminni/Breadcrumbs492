@@ -7,3 +7,13 @@
 /facebook/build
 .idea/encodings.xml
 .idea/scopes/scope_settings.xml
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+AddCrumbActivityTest/AddCrumbActivityTest.iml
+Breadcrumbs492.iml
+app/app.iml
+facebook/facebook.iml
+testingcrumb/testingcrumb.iml
