@@ -12,24 +12,6 @@
     android:textColor="#FFFFFF"
     tools:context="com.tumblr.breadcrumbs492.testapplication.EditCrumb">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Date Created"
-        android:id="@+id/dateTextView"
-        android:layout_gravity="right"
-        android:textColor="#FFFFFF"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Crumb Upvotes"
-        android:id="@+id/upvotesTextView"
-        android:layout_gravity="right"
-        android:textColor="#FFFFFF"/>
-
     <fragment
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -107,21 +89,29 @@
         android:textColorHint="#FFFFFF"
         android:maxLines="1"/>
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:textColor="#607D8B"
-        android:text="Save Changes"
-        android:onClick="editCrumb"/>
+        android:layout_height="60dp">
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:textColor="#607D8B"
+            android:text="Save Changes"
+            android:onClick="editCrumb"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:textColor="#607D8B"
-        android:text="Delete Crumb"
-        android:onClick="deleteCrumb"
-        android:layout_marginTop="2dp" />
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:textColor="#607D8B"
+            android:text="Delete Crumb"
+            android:onClick="deleteCrumb"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
 
 </LinearLayout>

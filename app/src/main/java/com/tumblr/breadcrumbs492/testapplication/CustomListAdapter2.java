@@ -38,11 +38,11 @@ public class CustomListAdapter2 extends ArrayAdapter<String> {
         TextView crumbRank2 = (TextView) rowView.findViewById(R.id.crumbRank);
         TextView crumbUser2 = (TextView) rowView.findViewById(R.id.crumbUser);
         TextView crumbUpvotes2 = (TextView) rowView.findViewById(R.id.crumbUpvotes);
-
+        String tempCrumbDate = crumbDate[position].substring(0,10);
         crumbName2.setText(crumbName[position]);
-        crumbDate2.setText(crumbDate[position]);
+        crumbDate2.setText("\t" + "Dropped on: " + tempCrumbDate);
         crumbRank2.setText(String.valueOf(crumbRank[position]));
-        crumbUser2.setText("Dropped by: " + crumbUser[position]);
+        crumbUser2.setText("\t" + "Dropped by: " + crumbUser[position]);
         crumbUpvotes2.setText(String.valueOf(crumbUpvotes[position]));
         return rowView;
     }

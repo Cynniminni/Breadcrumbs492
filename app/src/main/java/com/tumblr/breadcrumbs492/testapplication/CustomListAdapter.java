@@ -32,8 +32,9 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         TextView crumbDate2 = (TextView) rowView.findViewById(R.id.crumbDate);
         ImageView crumbIMGID2 = (ImageView) rowView.findViewById(R.id.crumbImage);
 
+        String tempDate = crumbDate[position].substring(0,10);
         crumbName2.setText(crumbName[position]);
-        crumbDate2.setText(crumbDate[position]);
+        crumbDate2.setText("\t\t" + tempDate);
         crumbIMGID2.setImageResource(R.mipmap.breadcrumb_launcher);
 
         return rowView;

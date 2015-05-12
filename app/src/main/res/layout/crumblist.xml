@@ -27,7 +27,8 @@
             android:padding="2dp"
             android:textSize="20sp"
             android:paddingTop="5dp"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:textColor="#607D8B" />
 
         <TextView
             android:id="@+id/crumbDate"

@@ -16,6 +16,7 @@
         android:id="@+id/crumb_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF"
         android:maxLines="1"/>

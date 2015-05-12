@@ -257,15 +257,17 @@ public class CrumbDetails extends ActionBarActivity{
 
         //get reference to TextViews and populate them with extras from variables above
         crumbDate = (TextView) findViewById(R.id.dateTextView);
-        crumbDate.setText("Crumb dropped on: " + date);
+        String trimmedDate = date.substring(0,10);
+        crumbDate.setText("Dropped on: " + trimmedDate);
         crumbUpvotes = (TextView) findViewById(R.id.upvotesTextView);
         crumbUpvotes.setText("Upvotes: " + upvotes);
         crumbUsername = (TextView) findViewById(R.id.userTextView);
-        crumbUsername.setText("Crumb dropped by: " + username);
+        crumbUsername.setText("Dropped by: " + username);
         crumbName = (TextView) findViewById(R.id.crumb_name);
-        crumbName.setText("Name: " + name);
+        crumbName.setText(name);
+
         crumbComment = (TextView) findViewById(R.id.crumb_description);
-        crumbComment.setText("Description: " + description);
+        crumbComment.setText("Comment: " + description);
         crumbTags = (TextView) findViewById(R.id.crumb_tags);
         crumbTags.setText("Tags: " + tags);
 
@@ -411,13 +413,13 @@ public class CrumbDetails extends ActionBarActivity{
                         crumbUpvotes.setText("Upvotes: " + (upvotes - 1));
                         upvotes--;
                         hasVoted = false;
-                        Toast.makeText(getApplicationContext(), "Un-vote successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Unvote successful", Toast.LENGTH_SHORT).show();
                         voteButton.setEnabled(true);
                     }
                 }
                 catch(JSONException e)
                 {
-                    Toast.makeText(getApplicationContext(), "Un-voting error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Unvoting error", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }

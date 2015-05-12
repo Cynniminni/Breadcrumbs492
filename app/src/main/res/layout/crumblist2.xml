@@ -10,7 +10,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
         android:text="Rank"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:id="@+id/crumbRank"
         android:padding="10dp"
         android:focusable="false"/>
@@ -30,7 +30,8 @@
             android:padding="2dp"
             android:textSize="20sp"
             android:paddingTop="5dp"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:textColor="#607D8B" />
 
         <TextView
             android:id="@+id/crumbDate"
@@ -73,7 +74,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="Upvotes"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:id="@+id/crumbUpvotes"
             android:focusable="false"
             android:layout_alignParentTop="true"

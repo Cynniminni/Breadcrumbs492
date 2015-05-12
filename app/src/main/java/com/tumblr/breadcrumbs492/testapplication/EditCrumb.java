@@ -132,8 +132,8 @@ public class EditCrumb extends ActionBarActivity {
         crumbName = (EditText) findViewById(R.id.editcrumb_name);
         crumbComment = (EditText) findViewById(R.id.editcrumb_description);
         crumbTags = (EditText) findViewById(R.id.editcrumb_tags);
-        crumbDate = (TextView) findViewById((R.id.dateTextView));
-        crumbUpvotes = (TextView) findViewById(R.id.upvotesTextView);
+       /* crumbDate = (TextView) findViewById((R.id.dateTextView));
+        crumbUpvotes = (TextView) findViewById(R.id.upvotesTextView);*/
         toggle = (ToggleButton) findViewById(R.id.toggleButton2);
 
         isPrivate = getIntent().getBooleanExtra(MyCrumbsActivity.CRUMB_PRIVATE, true);
@@ -147,8 +147,8 @@ public class EditCrumb extends ActionBarActivity {
         crumbName.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_NAME));
         crumbComment.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_COMMENT));
         crumbTags.setText(intent3.getStringExtra(MyCrumbsActivity.CRUMB_TAGS));
-        crumbDate.setText("Crumb dropped on: " + intent3.getStringExtra(MyCrumbsActivity.CRUMB_DATE));
-        crumbUpvotes.setText("Upvotes: " + intent3.getIntExtra(MyCrumbsActivity.CRUMB_UPVOTES, 0));
+    /*    crumbDate.setText("Crumb dropped on: " + intent3.getStringExtra(MyCrumbsActivity.CRUMB_DATE));
+        crumbUpvotes.setText("Upvotes: " + intent3.getIntExtra(MyCrumbsActivity.CRUMB_UPVOTES, 0));*/
 
         //get longitude and latitude of crumb to edit to mark on map fragment
         longitude = intent3.getDoubleExtra(MyCrumbsActivity.CRUMB_LONGITUDE, 0.0);

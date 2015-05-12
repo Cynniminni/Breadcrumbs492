@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -64,6 +65,7 @@ public class UserProfile extends ActionBarActivity {
     Integer[] upvotesForLikes;
     Double[] longitudeForLikes;
     Double[] latitudeForLikes;
+    public int numOfCrumbsDropped;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +80,17 @@ public class UserProfile extends ActionBarActivity {
         receiver = new MyRequestReceiver8();
         registerReceiver(receiver, filter);
 
+        String userFromIntent = getIntent().getStringExtra(CrumbDetails.USERNAME);
+        TextView tempUserName = (TextView) findViewById(R.id.tv_username);
+        tempUserName.setText(userFromIntent);
+
+
+
         if(!(getIntent().getStringExtra(CrumbDetails.SEARCH) == null))
             search = getIntent().getStringExtra(CrumbDetails.SEARCH);
 
         email = getIntent().getStringExtra(CrumbDetails.EMAIL);
-
+        Log.d(email, "is username");
         Intent msgIntent = new Intent(this, JSONRequest.class);
         msgIntent.putExtra(JSONRequest.IN_MSG, "getUserCrumbs");
         msgIntent.putExtra("queryID", "getUserCrumbs");
@@ -201,6 +209,9 @@ public class UserProfile extends ActionBarActivity {
                 }
             }
         });
+
+        TextView numDropped = (TextView) findViewById(R.id.tv_numOfCrumbs);
+        numDropped.setText("Number of crumbs dropped: " + numOfCrumbsDropped);
     }
 
     @Override
@@ -286,6 +297,7 @@ public class UserProfile extends ActionBarActivity {
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
 
                 JSONArray tempJSON = new JSONArray();
+                numOfCrumbsDropped = tempJSON.length();
                 try {
                     tempJSON = new JSONArray(response);
                 } catch (JSONException e) {

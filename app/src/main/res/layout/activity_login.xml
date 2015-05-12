@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:text="@string/signin_or_register"
         android:textColor="#607D8B"
+        android:textSize="15sp"
         android:onClick="signIn"
         android:layout_gravity="center"
         android:layout_below="@+id/whiteRec"
@@ -31,13 +32,14 @@
         android:layout_width="138dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:text="Create Account"
+        android:text="REGISTER"
         android:textColor="#607D8B"
         android:onClick="createAccount"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_below="@+id/whiteRec"
         android:layout_alignEnd="@+id/whiteRec"
-        android:layout_marginRight="5dp" />
+        android:layout_marginRight="5dp"
+        android:textSize="15sp" />
     <ImageView
         android:id="@+id/whiteRec"
         android:layout_width="290dp"
@@ -55,7 +57,8 @@
         android:gravity="center"
         android:layout_below="@+id/enter_username"
         android:layout_centerHorizontal="true"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:textColor="#607D8B" />
     <EditText
         android:id="@+id/enter_username"
         android:layout_width="280dp"
@@ -66,7 +69,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignEnd="@+id/whiteRec"
         android:maxLines="1"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:textColor="#607D8B" />
 
     <com.facebook.widget.LoginButton
         android:id="@+id/authButton"
