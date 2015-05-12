@@ -31,12 +31,6 @@
         android:id="@+id/map"
         tools:context="com.tumblr.breadcrumbs492.testapplication.CrumbDetails"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
-    <!--<fragment
-        android:name="com.google.android.gms.maps.StreetViewPanoramaFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.19"
-        android:id="@+id/panorama"/>-->
 
     <TextView
         android:layout_width="wrap_content"

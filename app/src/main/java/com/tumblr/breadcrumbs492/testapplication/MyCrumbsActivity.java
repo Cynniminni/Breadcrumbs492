@@ -102,6 +102,8 @@ public class MyCrumbsActivity extends ActionBarActivity {
         }
 
         if(id == R.id.action_logout){
+            GlobalContainer.user = new User();
+            GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(MyCrumbsActivity.this, LoginActivity.class);
             startActivity(logoutIntent);
         }

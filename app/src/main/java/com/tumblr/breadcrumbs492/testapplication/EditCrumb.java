@@ -11,28 +11,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import org.json.JSONException;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-
 public class EditCrumb extends ActionBarActivity {
-
     private MyRequestReceiver6 receiver;
     private GoogleMap map;
     private String name;
@@ -169,7 +161,6 @@ public class EditCrumb extends ActionBarActivity {
 
         //get location of crumb, set to a LatLng object
         LatLng location = new LatLng(latitude, longitude);
-        System.out.println("Latitude: " + latitude + "Longitude: " + longitude);
 
         //mark crumb location on map
         map.setMyLocationEnabled(true);
@@ -192,7 +183,6 @@ public class EditCrumb extends ActionBarActivity {
     public void onBackPressed() {
         Intent intent = new Intent(EditCrumb.this, MyCrumbsActivity.class);
         startActivity(intent);
-        //setResult(RESULT_OK, intent);
         finish();
         super.onBackPressed();
     }
@@ -222,10 +212,11 @@ public class EditCrumb extends ActionBarActivity {
         }
 
         if(id == R.id.action_logout){
+            GlobalContainer.user = new User();
+            GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(EditCrumb.this, LoginActivity.class);
             startActivity(logoutIntent);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -240,7 +231,6 @@ public class EditCrumb extends ActionBarActivity {
 
             if (responseType.trim().equalsIgnoreCase("editCrumb")) {
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println("Edit crumb response: " + this.response);
                 JSONObject tempJSON = new JSONObject();
                 try {
                     tempJSON = new JSONObject(response);

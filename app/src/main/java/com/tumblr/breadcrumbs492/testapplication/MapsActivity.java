@@ -454,6 +454,8 @@ public class MapsActivity extends ActionBarActivity {
         }
 
         if(id == R.id.action_logout){
+            GlobalContainer.user = new User();
+            GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(MapsActivity.this, LoginActivity.class);
             startActivity(logoutIntent);
         }
@@ -671,12 +673,6 @@ public class MapsActivity extends ActionBarActivity {
                     for(int i = 0; i < tempJSON.length(); i++)
                     {
                         date = tempJSON.getJSONObject(i).getString("crumbDate");
-                        /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        try {
-                            date = sdf.parse(dateString);
-                        }catch(ParseException e){
-                            e.printStackTrace();
-                        }*/
                         name = tempJSON.getJSONObject(i).getString("crumbName");
                         comment = tempJSON.getJSONObject(i).getString("comment");
                         location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"),tempJSON.getJSONObject(i).getDouble("longitude"));

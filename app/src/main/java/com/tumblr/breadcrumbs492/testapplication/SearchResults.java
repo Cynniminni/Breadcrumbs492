@@ -10,17 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class SearchResults extends ActionBarActivity {
@@ -68,7 +61,6 @@ public class SearchResults extends ActionBarActivity {
             msgIntent.putExtra("jsonObject", "{\"tag\":\"" + search.trim() + "\"}");
             startService(msgIntent);
         }
-
     }
 
     @Override
@@ -106,9 +98,15 @@ public class SearchResults extends ActionBarActivity {
             startActivity(intent);
             return true;
         }
-        else if(id == android.R.id.home) {
+        if(id == android.R.id.home) {
             onBackPressed();
             return true;
+        }
+        if(id == R.id.action_logout){
+            GlobalContainer.user = new User();
+            GlobalContainer.userIsInitialized = false;
+            Intent logoutIntent = new Intent(SearchResults.this, LoginActivity.class);
+            startActivity(logoutIntent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -128,7 +126,6 @@ public class SearchResults extends ActionBarActivity {
             if (responseType.trim().equalsIgnoreCase("findTagsResults")) {
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println("This is the response: " + this.response);
 
                 JSONArray tempJSON = new JSONArray();
                 try {
@@ -167,37 +164,14 @@ public class SearchResults extends ActionBarActivity {
                         tags[i] = tempJSON.getJSONObject(i).getString("crumbTags");
                         emails[i] = tempJSON.getJSONObject(i).getString("email");
                         rank[i] = i + 1;
-
-                        /*String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
-                        System.out.println("Date string in search results: " + dateString);
-                        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-                        try {
-                            Date crumbDate = sdf.parse(dateString);
-                            System.out.println("After string parse to date in searchresults: " + crumbDate.toString());
-                            String newDate = sdf.format(crumbDate);
-                            System.out.println("Date to format in searchresults: " + newDate);
-                            dates[i] = crumbDate;
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }*/
                     }
                 } catch (JSONException j) {
                     j.printStackTrace();
                 }
 
                 //define adapter to populate each row in ListView
-
                 CustomListAdapter2 adapter = new CustomListAdapter2(SearchResults.this, names, dates, rank, upvotes, username);
                 listView.setAdapter(adapter);
-
-
-        /*
-            simple_list_item_1 is a built-in Android template that shows only one line of text
-            for each row. I want to show both crumb name and date created
-         */
-               /* ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                        (MyCrumbsActivity.this, android.R.layout.simple_list_item_1, names);
-                listView.setAdapter(adapter);*/
 
                 //add ListView item click listener to interact with each item
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -209,10 +183,6 @@ public class SearchResults extends ActionBarActivity {
                         //get value of item clicked
                         String itemValue = (String) listView.getItemAtPosition(position);
 
-                        //output item
-                        Toast.makeText(getApplicationContext(),
-                                "Position :" + itemPosition + "  ListItem : " + itemValue,
-                                Toast.LENGTH_SHORT).show();
                         //position that was clicked determines array element to retrieve
                         //attributes of crumb selected and passed to EditCrumb activity
                         Intent intent = new Intent(SearchResults.this, CrumbDetails.class);
@@ -236,7 +206,6 @@ public class SearchResults extends ActionBarActivity {
             } else {
                 //you can choose to implement another transaction here
             }
-
         }
     }
 }

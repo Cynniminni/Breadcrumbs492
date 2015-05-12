@@ -6,7 +6,6 @@ package com.tumblr.breadcrumbs492.testapplication;
 public class GlobalContainer {
     public static User user;
     public static boolean userIsInitialized = false;
-    public static boolean fbLogin = false;
     public static boolean loggedIn = false;
-    public static Crumb [] crumbSearch;
+
 }

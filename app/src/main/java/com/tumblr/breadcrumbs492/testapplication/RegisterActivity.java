@@ -4,23 +4,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends ActionBarActivity {
-
     private EditText[] userInfo;
     private String[] userInfoStrings;
     private MyRequestReceiver5 receiver;
@@ -35,8 +30,8 @@ public class RegisterActivity extends ActionBarActivity {
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         receiver = new MyRequestReceiver5();
         registerReceiver(receiver, filter);
-
     }
+
     @Override
     protected void onDestroy() {
         unregisterReceiver(receiver);
@@ -44,7 +39,6 @@ public class RegisterActivity extends ActionBarActivity {
     }
 
     public void onCancel(View view) {
-
         //go back to parent activity, which is the login screen
         NavUtils.navigateUpFromSameTask(this);
     }
@@ -91,10 +85,6 @@ public class RegisterActivity extends ActionBarActivity {
 
             startService(msgIntent);
 
-
-            //launch MapsActivity as new user
-
-
         } else {
             //notify user
             Toast.makeText(getApplicationContext(), "Please fill in all fields to continue.",
@@ -140,13 +130,10 @@ public class RegisterActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "register error", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-
-
             }
             else{
                 //you can choose to implement another transaction here
             }
-
         }
         public String getResponse()
         {

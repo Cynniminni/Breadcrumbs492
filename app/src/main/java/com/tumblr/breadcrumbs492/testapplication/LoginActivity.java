@@ -188,7 +188,7 @@ public class LoginActivity extends ActionBarActivity {
                    if(tempJSON.get("loginResult").equals("true"))
                    {
                        loggedIn = true;
-                       Toast.makeText(getApplicationContext(), "login success", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(getApplicationContext(), "Login Successful!", Toast.LENGTH_SHORT).show();
                        mapsIntent.putExtra("email", tempJSON.getString("email"));
                        mapsIntent.putExtra("username", tempJSON.getString("username"));
                        startActivity(mapsIntent);
@@ -196,12 +196,12 @@ public class LoginActivity extends ActionBarActivity {
                    }
                    else
                    {
-                       Toast.makeText(getApplicationContext(), "login fail", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(getApplicationContext(), "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
                    }
                }
                catch(JSONException e)
                {
-                   Toast.makeText(getApplicationContext(), "login fail", Toast.LENGTH_SHORT).show();
+                   Toast.makeText(getApplicationContext(), "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
                    e.printStackTrace();
                }
 

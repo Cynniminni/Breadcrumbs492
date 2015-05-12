@@ -64,7 +64,6 @@ public class UserProfile extends ActionBarActivity {
     Double[] longitudeForLikes;
     Double[] latitudeForLikes;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,14 +76,11 @@ public class UserProfile extends ActionBarActivity {
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         receiver = new MyRequestReceiver8();
         registerReceiver(receiver, filter);
-        Log.d(getIntent().getStringExtra(CrumbDetails.EMAIL), "");
 
         if(!(getIntent().getStringExtra(CrumbDetails.SEARCH) == null))
             search = getIntent().getStringExtra(CrumbDetails.SEARCH);
 
         email = getIntent().getStringExtra(CrumbDetails.EMAIL);
-        System.out.println("Email: " + email);
-
 
         Intent msgIntent = new Intent(this, JSONRequest.class);
         msgIntent.putExtra(JSONRequest.IN_MSG, "getUserCrumbs");
@@ -92,11 +88,6 @@ public class UserProfile extends ActionBarActivity {
         msgIntent.putExtra("jsonObject", "{\"email\":\"" + email + "\"}");
 
         startService(msgIntent);
-
-
-
-
-
 
         //get ListView reference from xml
         listView = (ListView) findViewById(R.id.listView);
@@ -131,7 +122,6 @@ public class UserProfile extends ActionBarActivity {
                             intent.putExtra(CRUMB_NAME, names[itemPosition]);
                             intent.putExtra(CRUMB_ID, ids[itemPosition]);
                             intent.putExtra(CRUMB_COMMENT, comments[itemPosition]);
-                            System.out.println("TAGS: " + tags[itemPosition]);
                             intent.putExtra(CRUMBS_TAGS, tags[itemPosition]);
                             intent.putExtra(CRUMB_UPVOTES, upvotes[itemPosition]);
                             intent.putExtra(CRUMB_DATE, dates[itemPosition]);
@@ -139,10 +129,8 @@ public class UserProfile extends ActionBarActivity {
                             intent.putExtra(USERNAME, username[itemPosition]);
                             intent.putExtra(CRUMB_LONGITUDE, longitude[itemPosition]);
                             intent.putExtra(CRUMB_LATITUDE, latitude[itemPosition]);
-                            System.out.println("EMAIL: " + emails[itemPosition]);
                             intent.putExtra(CRUMB_EMAIL, emails[itemPosition]);
 
-                            System.out.println("Activity: " + getIntent().getStringExtra("activity"));
                             if(getIntent().getStringExtra("activity").equals("infoWindowClick")) {
                                 intent.putExtra("activity", "infoWindowClick");
                             }
@@ -184,7 +172,6 @@ public class UserProfile extends ActionBarActivity {
                             intent.putExtra(CRUMB_NAME, namesForLikes[itemPosition]);
                             intent.putExtra(CRUMB_ID, idsForLikes[itemPosition]);
                             intent.putExtra(CRUMB_COMMENT, commentsForLikes[itemPosition]);
-                            System.out.println("TAGS: " + tagsForLikes[itemPosition]);
                             intent.putExtra(CRUMBS_TAGS, tagsForLikes[itemPosition]);
                             intent.putExtra(CRUMB_UPVOTES, upvotesForLikes[itemPosition]);
                             intent.putExtra(CRUMB_DATE, datesForLikes[itemPosition]);
@@ -192,10 +179,8 @@ public class UserProfile extends ActionBarActivity {
                             intent.putExtra(USERNAME, usernameForLikes[itemPosition]);
                             intent.putExtra(CRUMB_LONGITUDE, longitudeForLikes[itemPosition]);
                             intent.putExtra(CRUMB_LATITUDE, latitudeForLikes[itemPosition]);
-                            System.out.println("EMAIL: " + emailsForLikes[itemPosition]);
                             intent.putExtra(CRUMB_EMAIL, emailsForLikes[itemPosition]);
 
-                            System.out.println("Activity: " + getIntent().getStringExtra("activity"));
                             if(getIntent().getStringExtra("activity").equals("infoWindowClick")) {
                                 intent.putExtra("activity", "infoWindowClick");
                             }
@@ -211,10 +196,8 @@ public class UserProfile extends ActionBarActivity {
                         }
                     });
                 }
-
             }
         });
-
     }
 
     @Override
@@ -222,6 +205,7 @@ public class UserProfile extends ActionBarActivity {
         unregisterReceiver(receiver);
         super.onDestroy();
     }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, CrumbDetails.class);
@@ -239,7 +223,6 @@ public class UserProfile extends ActionBarActivity {
         intent.putExtra("activity", "UserProfile");
         setResult(RESULT_OK, intent);
         startActivity(intent);
-        System.out.println("tagsuserprofile: " + getIntent().getStringExtra(CrumbDetails.CRUMB_TAGS));
         super.onBackPressed();
         finish();
     }
@@ -269,6 +252,8 @@ public class UserProfile extends ActionBarActivity {
         }
 
         if(id == R.id.action_logout){
+            GlobalContainer.user = new User();
+            GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(UserProfile.this, LoginActivity.class);
             startActivity(logoutIntent);
         }
@@ -291,7 +276,6 @@ public class UserProfile extends ActionBarActivity {
             if (responseType.trim().equalsIgnoreCase("getUserCrumbs")) {
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println("This is the response from userprofile: " + this.response);
 
                 JSONArray tempJSON = new JSONArray();
                 try {
@@ -330,19 +314,6 @@ public class UserProfile extends ActionBarActivity {
                         emails[i] = tempJSON.getJSONObject(i).getString("email");
                         rank[i] = i + 1;
 
-
-                        /*String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
-                        System.out.println("Date string in search results: " + dateString);
-                        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-                        try {
-                            Date crumbDate = sdf.parse(dateString);
-                            System.out.println("After string parse to date in searchresults: " + crumbDate.toString());
-                            String newDate = sdf.format(crumbDate);
-                            System.out.println("Date to format in searchresults: " + newDate);
-                            dates[i] = crumbDate;
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }*/
                     }
                     Intent likeCrumbsIntent = new Intent(UserProfile.this, JSONRequest.class);
                     likeCrumbsIntent.putExtra(JSONRequest.IN_MSG, "getLikedCrumbs");
@@ -358,7 +329,6 @@ public class UserProfile extends ActionBarActivity {
             }else if (responseType.trim().equalsIgnoreCase("getLikedCrumbs")) {
 
                     this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                    System.out.println("This is the response from userprofile: " + this.response);
 
                     JSONArray tempJSONForLikes = new JSONArray();
                     try {
@@ -367,7 +337,6 @@ public class UserProfile extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(), "Get crumbs for this user failed.", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
-
 
                     //array declarations that store all of the users' crumbs' attributes
                     usernameForLikes = new String[tempJSONForLikes.length()];
@@ -396,32 +365,10 @@ public class UserProfile extends ActionBarActivity {
                             tagsForLikes[i] = tempJSONForLikes.getJSONObject(i).getString("crumbTags");
                             emailsForLikes[i] = tempJSONForLikes.getJSONObject(i).getString("email");
                             rankForLikes[i] = i+1;
-                        /*String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
-                        System.out.println("Date string in search results: " + dateString);
-                        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-                        try {
-                            Date crumbDate = sdf.parse(dateString);
-                            System.out.println("After string parse to date in searchresults: " + crumbDate.toString());
-                            String newDate = sdf.format(crumbDate);
-                            System.out.println("Date to format in searchresults: " + newDate);
-                            dates[i] = crumbDate;
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }*/
                         }
                     } catch (JSONException j) {
                         j.printStackTrace();
                     }
-
-
-        /*
-            simple_list_item_1 is a built-in Android template that shows only one line of text
-            for each row. I want to show both crumb name and date created
-         */
-               /* ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                        (MyCrumbsActivity.this, android.R.layout.simple_list_item_1, names);
-                listView.setAdapter(adapter);*/
-
             }
         }
 

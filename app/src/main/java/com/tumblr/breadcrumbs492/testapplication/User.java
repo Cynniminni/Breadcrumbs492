@@ -12,7 +12,15 @@ public class User {
     private static String city;
     private static String state;
 
-    public User(){};
+    public User(){
+        username = "";
+        firstName = "";
+        lastName = "";
+        email = "";
+        gender = "";
+        city = "";
+        state = "";
+    };
 
     public User(String _username, String _email, String _firstName, String _lastName, String _gender, String _city, String _state){
         username = _username;

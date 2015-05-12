@@ -1,6 +1,5 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,14 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URISyntaxException;
-
 public class ProfileActivity extends ActionBarActivity {
-
     private final int USER_FIELDS = 8;
     private final String SAVE_CHANGES = "Saving Changes";
     private final String EDIT_PROFILE = "Edit Profile";
@@ -62,8 +57,6 @@ public class ProfileActivity extends ActionBarActivity {
 
             startService(msgIntent);
 
-            //possibly need to send back to intent for ProfileActivity?
-
             //change button text and boolean
             editProfileButton.setText(SAVE_CHANGES);
             isEditingProfile = false;
@@ -74,8 +67,6 @@ public class ProfileActivity extends ActionBarActivity {
                 userInfo[i].setFocusable(false);
                 userInfo[i].setClickable(false);
             }
-
-            //save user info in database
 
             //change button text and boolean
             editProfileButton.setText(EDIT_PROFILE);
@@ -136,9 +127,8 @@ public class ProfileActivity extends ActionBarActivity {
         }
         //get Button reference
         editProfileButton = (Button) findViewById(R.id.profile_editprofile);
-
-
     }
+
     @Override
     protected void onDestroy() {
         unregisterReceiver(receiver);
@@ -151,7 +141,6 @@ public class ProfileActivity extends ActionBarActivity {
         startActivity(intent);
         finish();
         super.onBackPressed();
-
     }
 
     @Override
@@ -181,6 +170,7 @@ public class ProfileActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     //broadcast receiver to receive messages sent from the JSON IntentService
     public class MyRequestReceiver1 extends BroadcastReceiver {
 
@@ -204,17 +194,14 @@ public class ProfileActivity extends ActionBarActivity {
                 }
                 catch(JSONException e)
                 {
-                    Toast.makeText(getApplicationContext(), "profile retrieval failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Profile retrieval failed. Please try again.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-
-
             }
             else if(responseType.trim().equalsIgnoreCase("updateProfile"))
             {
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
                 JSONObject tempJSON = new JSONObject();
-
 
                 try {
                     tempJSON = new JSONObject(response);
@@ -228,7 +215,7 @@ public class ProfileActivity extends ActionBarActivity {
                         finish();
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), "profile edit failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Edit profile failed. Please try again.", Toast.LENGTH_SHORT).show();
                         Intent intent2 = new Intent(ProfileActivity.this, MapsActivity.class);
                         startActivity(intent2);
                         finish();
@@ -236,14 +223,13 @@ public class ProfileActivity extends ActionBarActivity {
                 }
                 catch(JSONException e)
                 {
-                    Toast.makeText(getApplicationContext(), "profile edit failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Edit profile failed. Please try again.", Toast.LENGTH_SHORT).show();
                     Intent intent2 = new Intent(ProfileActivity.this, MapsActivity.class);
                     startActivity(intent2);
                     finish();
                     e.printStackTrace();
                 }
             }
-
         }
         public String getResponse()
         {

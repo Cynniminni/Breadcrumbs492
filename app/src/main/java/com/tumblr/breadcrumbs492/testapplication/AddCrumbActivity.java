@@ -173,6 +173,8 @@ public class AddCrumbActivity extends ActionBarActivity {
             return true;
         }
         if(id == R.id.action_logout){
+            GlobalContainer.user = new User();
+            GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(AddCrumbActivity.this, LoginActivity.class);
             startActivity(logoutIntent);
         }

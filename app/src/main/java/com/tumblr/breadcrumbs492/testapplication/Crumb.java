@@ -1,7 +1,6 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
 import com.google.android.gms.maps.model.LatLng;
-import java.util.Date;
 
 /**
  * Created by Aphrodite on 3/15/2015.

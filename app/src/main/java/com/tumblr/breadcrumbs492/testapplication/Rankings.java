@@ -13,30 +13,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
 
 public class Rankings extends ActionBarActivity {
 
     private MyRequestReceiver10 receiver;
-
     public final static int REQUEST_SETTINGS = 0;
-    public final static int REQUEST_ADD_CRUMB = 1;
-    public final static int REQUEST_PROFILE = 2;
-    public final static int REQUEST_MYCRUMBS = 3;
-    public final static int REQUEST_FIND_CRUMB = 4;
-    public final static String NAME = "name";
-    public final static String COMMENT = "comment";
-    public final static String LATITUDE = "latitude";
-    public final static String LONGITUDE = "longitude";
-    public final static String GUESTLOGIN = "guest login";
     public final static String SEARCH = "search";
-
     public final static String CRUMB_NAME = "crumbName";
     public final static String CRUMB_EMAIL = "email";
     public final static String CRUMB_COMMENT = "crumbComment";
@@ -48,18 +32,6 @@ public class Rankings extends ActionBarActivity {
     public final static String CRUMB_LATITUDE = "crumbLatitude";
     public final static String USERNAME = "username";
 
-    private static String email;
-    private static String username;
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private MarkerOptions markerOptions;
-    private LatLng currentLocation;//store user's current location
-    private boolean isGuestLogin;
-    private static String[] tagsArr;
-    private String[] usernameArr;
-
-    public Crumb[] crumbsArr;
-    public String[] idArr;
-    public String[] emailArr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +50,6 @@ public class Rankings extends ActionBarActivity {
         msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
 
         startService(msgIntent);
-
     }
 
     @Override
@@ -121,10 +92,11 @@ public class Rankings extends ActionBarActivity {
         }
 
         if(id == R.id.action_logout){
+            GlobalContainer.user = new User();
+            GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(Rankings.this, LoginActivity.class);
             startActivity(logoutIntent);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -139,8 +111,6 @@ public class Rankings extends ActionBarActivity {
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
             if (responseType.trim().equalsIgnoreCase("getCrumbsRanked")) {
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println("This is the response in rankings: " + this.response);
-
                 JSONArray tempJSON = new JSONArray();
                 try {
                     tempJSON = new JSONArray(response);
@@ -178,38 +148,14 @@ public class Rankings extends ActionBarActivity {
                         tags[i] = tempJSON.getJSONObject(i).getString("crumbTags");
                         emails[i] = tempJSON.getJSONObject(i).getString("email");
                         rank[i] = (i + 1);
-                        System.out.println(rank[i]);
-
-                        /*String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
-                        System.out.println("Date string in search results: " + dateString);
-                        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-                        try {
-                            Date crumbDate = sdf.parse(dateString);
-                            System.out.println("After string parse to date in searchresults: " + crumbDate.toString());
-                            String newDate = sdf.format(crumbDate);
-                            System.out.println("Date to format in searchresults: " + newDate);
-                            dates[i] = crumbDate;
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }*/
                     }
                 } catch (JSONException j) {
                     j.printStackTrace();
                 }
 
                 //define adapter to populate each row in ListView
-
                 CustomListAdapter2 adapter = new CustomListAdapter2(Rankings.this, names, dates, rank, upvotes, username);
                 listView.setAdapter(adapter);
-
-
-        /*
-            simple_list_item_1 is a built-in Android template that shows only one line of text
-            for each row. I want to show both crumb name and date created
-         */
-               /* ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                        (MyCrumbsActivity.this, android.R.layout.simple_list_item_1, names);
-                listView.setAdapter(adapter);*/
 
                 //add ListView item click listener to interact with each item
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -221,12 +167,8 @@ public class Rankings extends ActionBarActivity {
                         //get value of item clicked
                         String itemValue = (String) listView.getItemAtPosition(position);
 
-                        //output item
-                        Toast.makeText(getApplicationContext(),
-                                "Position :" + itemPosition + "  ListItem : " + itemValue,
-                                Toast.LENGTH_SHORT).show();
                         //position that was clicked determines array element to retrieve
-                        //attributes of crumb selected and passed to EditCrumb activity
+                        //attributes of crumb selected and passed to CrumbDetails activity
                         Intent intent = new Intent(Rankings.this, CrumbDetails.class);
                         intent.putExtra(CRUMB_NAME, names[itemPosition]);
                         intent.putExtra(CRUMB_ID, ids[itemPosition]);

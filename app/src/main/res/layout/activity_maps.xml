@@ -3,9 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#607D8B"
-
     xmlns:android="http://schemas.android.com/apk/res/android">
-
 
     <LinearLayout
         android:orientation="horizontal"
@@ -30,8 +28,7 @@
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/ic_remove_text"
-            />
+            android:background="@drawable/ic_remove_text" />
 
         <Button
             android:id="@+id/button_find"
@@ -73,11 +70,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true" />
-
-
     </RelativeLayout>
-
-
 
     <!-- putting row of buttons on top of the map -->
     <LinearLayout
