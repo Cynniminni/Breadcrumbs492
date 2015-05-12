@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -79,142 +80,144 @@ public class LoginActivity extends ActionBarActivity {
         GlobalContainer.userIsInitialized = false;
         GlobalContainer.loggedIn = false;
         EditText username = (EditText) findViewById(R.id.enter_username);
-        username.requestFocus();
-        if(Session.getActiveSession() != null)
-            Session.getActiveSession().closeAndClearTokenInformation();
+        TextView text = (TextView) findViewById(R.id.textView2);
+        text.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                username.requestFocus();
+                if (Session.getActiveSession() != null)
+                    Session.getActiveSession().closeAndClearTokenInformation();
 
-        //retrieve the hash key to log in with facebook
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.tumblr.breadcrumbs492.testapplication",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
+                //retrieve the hash key to log in with facebook
+                try {
+                    PackageInfo info = getPackageManager().getPackageInfo(
+                            "com.tumblr.breadcrumbs492.testapplication",
+                            PackageManager.GET_SIGNATURES);
+                    for (Signature signature : info.signatures) {
+                        MessageDigest md = MessageDigest.getInstance("SHA");
+                        md.update(signature.toByteArray());
+                        Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
 
-        } catch (NoSuchAlgorithmException e) {
+                } catch (NoSuchAlgorithmException e) {
 
-        }
+                }
 
-        if (savedInstanceState == null) {
-            // Add the fragment on initial activity setup
-            fbFragment = new FacebookFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(android.R.id.content, fbFragment)
-                    .commit();
-        } else {
-            // Or set the fragment from restored state info
-            fbFragment = (FacebookFragment) getSupportFragmentManager()
-                    .findFragmentById(android.R.id.content);
-        }
+                if (savedInstanceState == null) {
+                    // Add the fragment on initial activity setup
+                    fbFragment = new FacebookFragment();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(android.R.id.content, fbFragment)
+                            .commit();
+                } else {
+                    // Or set the fragment from restored state info
+                    fbFragment = (FacebookFragment) getSupportFragmentManager()
+                            .findFragmentById(android.R.id.content);
+                }
 
-        //Register your receiver so that the Activity can be notified
-        //when the JSON response came back
-        IntentFilter filter = new IntentFilter(MyRequestReceiver.PROCESS_RESPONSE);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        receiver = new MyRequestReceiver();
-        registerReceiver(receiver, filter);
-    }
-
-    @Override
-    protected void onDestroy() {
-        unregisterReceiver(receiver);
-        super.onDestroy();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    public void login(String queryID, String username, String passEntered) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        intent.putExtra(MapsActivity.GUESTLOGIN, false);
-
-        //pass the request to your service so that it can
-        //run outside the scope of the main UI thread
-        Intent msgIntent = new Intent(this, JSONRequest.class);
-        msgIntent.putExtra(JSONRequest.IN_MSG, queryID.trim());
-        msgIntent.putExtra("queryID", queryID.trim());
-        msgIntent.putExtra("jsonObject", "{\"username\":\"" + username.trim() + "\",\"passEntered\":\"" + passEntered + "\"}");
-        msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
-        startService(msgIntent);
-    }
-
-    //broadcast receiver to receive messages sent from the JSON IntentService
-    public class MyRequestReceiver extends BroadcastReceiver{
-
-        public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.LoginActivity.MyRequestReceiver";
-        public String response = null;
-        @Override
-        public void onReceive(Context context, Intent intent) {
-           Intent mapsIntent = new Intent();
-           String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
-
-           if(responseType.trim().equalsIgnoreCase("login")){
-
-               this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-
-               try {
-                   mapsIntent = Intent.parseUri(intent.getStringExtra("intent"), Intent.URI_INTENT_SCHEME);
-               }
-               catch(URISyntaxException e)
-               {
-                   e.printStackTrace();
-               }
-               JSONObject tempJSON = new JSONObject();
-               try {
-                   tempJSON = new JSONObject(response);
-                   if(tempJSON.get("loginResult").equals("true"))
-                   {
-                       loggedIn = true;
-                       Toast.makeText(getApplicationContext(), "Login Successful!", Toast.LENGTH_SHORT).show();
-                       mapsIntent.putExtra("email", tempJSON.getString("email"));
-                       mapsIntent.putExtra("username", tempJSON.getString("username"));
-                       startActivity(mapsIntent);
-                       finish();
-                   }
-                   else
-                   {
-                       Toast.makeText(getApplicationContext(), "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
-                   }
-               }
-               catch(JSONException e)
-               {
-                   Toast.makeText(getApplicationContext(), "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
-                   e.printStackTrace();
-               }
-
-
-            }
-            else{
-                //you can choose to implement another transaction here
+                //Register your receiver so that the Activity can be notified
+                //when the JSON response came back
+                IntentFilter filter = new IntentFilter(MyRequestReceiver.PROCESS_RESPONSE);
+                filter.addCategory(Intent.CATEGORY_DEFAULT);
+                receiver = new MyRequestReceiver();
+                registerReceiver(receiver, filter);
             }
 
+            @Override
+            protected void onDestroy() {
+                unregisterReceiver(receiver);
+                super.onDestroy();
+            }
+
+            @Override
+            public boolean onCreateOptionsMenu(Menu menu) {
+                // Inflate the menu; this adds items to the action bar if it is present.
+                getMenuInflater().inflate(R.menu.menu_login, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onOptionsItemSelected(MenuItem item) {
+                // Handle action bar item clicks here. The action bar will
+                // automatically handle clicks on the Home/Up button, so long
+                // as you specify a parent activity in AndroidManifest.xml.
+                int id = item.getItemId();
+
+                //noinspection SimplifiableIfStatement
+                if (id == R.id.action_settings) {
+                    return true;
+                }
+
+                return super.onOptionsItemSelected(item);
+            }
+
+            public void login(String queryID, String username, String passEntered) {
+                Intent intent = new Intent(this, MapsActivity.class);
+                intent.putExtra(MapsActivity.GUESTLOGIN, false);
+
+                //pass the request to your service so that it can
+                //run outside the scope of the main UI thread
+                Intent msgIntent = new Intent(this, JSONRequest.class);
+                msgIntent.putExtra(JSONRequest.IN_MSG, queryID.trim());
+                msgIntent.putExtra("queryID", queryID.trim());
+                msgIntent.putExtra("jsonObject", "{\"username\":\"" + username.trim() + "\",\"passEntered\":\"" + passEntered + "\"}");
+                msgIntent.putExtra("intent", intent.toUri(Intent.URI_INTENT_SCHEME));
+                startService(msgIntent);
+            }
+
+            //broadcast receiver to receive messages sent from the JSON IntentService
+            public class MyRequestReceiver extends BroadcastReceiver {
+
+                public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.LoginActivity.MyRequestReceiver";
+                public String response = null;
+
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    Intent mapsIntent = new Intent();
+                    String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
+
+                    if (responseType.trim().equalsIgnoreCase("login")) {
+
+                        this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
+
+                        try {
+                            mapsIntent = Intent.parseUri(intent.getStringExtra("intent"), Intent.URI_INTENT_SCHEME);
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        JSONObject tempJSON = new JSONObject();
+                        try {
+                            tempJSON = new JSONObject(response);
+                            if (tempJSON.get("loginResult").equals("true")) {
+                                loggedIn = true;
+                                Toast.makeText(getApplicationContext(), "Login Successful!", Toast.LENGTH_SHORT).show();
+                                mapsIntent.putExtra("email", tempJSON.getString("email"));
+                                mapsIntent.putExtra("username", tempJSON.getString("username"));
+                                startActivity(mapsIntent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(getApplicationContext(), "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+
+
+                    } else {
+                        //you can choose to implement another transaction here
+                    }
+
+                }
+
+                public String getResponse() {
+                    return response;
+                }
+            }
         }
-        public String getResponse()
-        {
-            return response;
-        }
-    }
-}

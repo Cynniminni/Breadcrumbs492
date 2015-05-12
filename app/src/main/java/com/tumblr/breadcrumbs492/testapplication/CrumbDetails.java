@@ -49,7 +49,7 @@ public class CrumbDetails extends ActionBarActivity{
     private String whichActivity = "";
     private boolean fromInfoWindow = false;
     private boolean fromRankings = false;
-
+    private boolean fromUserProfile = false;
 
     private MyRequestReceiver9 receiver;
 
@@ -69,6 +69,8 @@ public class CrumbDetails extends ActionBarActivity{
             intent.putExtra("activity", "infoWindowClick");
         else if(fromRankings)
             intent.putExtra("activity", "Rankings");
+        else if(fromUserProfile)
+            intent.putExtra("activity", "UserProfile");
         else {
             intent.putExtra(SEARCH, search);
             intent.putExtra("activity", "SearchResults");
@@ -87,6 +89,11 @@ public class CrumbDetails extends ActionBarActivity{
         }
         else if(fromRankings){
             Intent intent = new Intent(CrumbDetails.this, Rankings.class);
+            startActivity(intent);
+            finish();
+        }
+        else if(fromUserProfile){
+            Intent intent = new Intent(CrumbDetails.this, UserProfile.class);
             startActivity(intent);
             finish();
         }
@@ -192,6 +199,7 @@ public class CrumbDetails extends ActionBarActivity{
         }
         else if(whichActivity.equals("UserProfile")) {
             //retrieve extras from previous UserProfile class
+            fromUserProfile = true;
             search = getIntent().getStringExtra(UserProfile.SEARCH);
             email = getIntent().getStringExtra(UserProfile.CRUMB_EMAIL);
             name = getIntent().getStringExtra(UserProfile.CRUMB_NAME);
@@ -299,7 +307,18 @@ public class CrumbDetails extends ActionBarActivity{
         }
         else if(whichActivity.equals("UserProfile")) {
             intent = new Intent(this, UserProfile.class);
-            intent.putExtra(EMAIL, email);
+            intent.putExtra(EMAIL, getIntent().getStringExtra(UserProfile.ORIGINAL_EMAIL));
+            intent.putExtra(USERNAME, getIntent().getStringExtra(CrumbDetails.USERNAME));
+            intent.putExtra(SEARCH, getIntent().getStringExtra(CrumbDetails.SEARCH));
+            intent.putExtra(CRUMB_NAME, getIntent().getStringExtra(CrumbDetails.CRUMB_NAME));
+            intent.putExtra(CRUMB_COMMENT, getIntent().getStringExtra(CrumbDetails.CRUMB_COMMENT));
+            intent.putExtra(CRUMB_UPVOTES, getIntent().getIntExtra(CrumbDetails.CRUMB_UPVOTES, 0));
+            intent.putExtra(CRUMB_DATE, getIntent().getStringExtra(CrumbDetails.CRUMB_DATE));
+            intent.putExtra(CRUMB_TAGS, getIntent().getStringExtra(CrumbDetails.CRUMB_TAGS));
+            intent.putExtra(CRUMB_ID, getIntent().getStringExtra(CrumbDetails.CRUMB_ID));
+            intent.putExtra(CRUMB_LATITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LATITUDE, 0.0));
+            intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LONGITUDE, 0.0));
+            intent.putExtra(UserProfile.ORIGINAL_EMAIL, getIntent().getStringExtra(UserProfile.ORIGINAL_EMAIL));
         }
         else{
             intent = new Intent(this, MapsActivity.class);
@@ -321,6 +340,11 @@ public class CrumbDetails extends ActionBarActivity{
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {

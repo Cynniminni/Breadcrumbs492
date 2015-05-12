@@ -406,6 +406,7 @@ public class MapsActivity extends ActionBarActivity {
                 goToDetails.putExtra(CRUMB_ID, tempID);
                 goToDetails.putExtra(CRUMB_EMAIL, tempEmail);
                 startActivity(goToDetails);
+                finish();
             }
         });
     }//end onCreate
@@ -431,6 +432,11 @@ public class MapsActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
 
         //will refresh the page by reloading all pins
         if(id == R.id.action_refresh) {

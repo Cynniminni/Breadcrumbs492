@@ -63,7 +63,7 @@ public class AddCrumbActivity extends ActionBarActivity {
 
 
         //get username
-        Intent intent = new Intent(this, MapsActivity.class);
+        Intent intent = getIntent();
         uName = GlobalContainer.user.getInfo()[0];
 
 
@@ -92,7 +92,7 @@ public class AddCrumbActivity extends ActionBarActivity {
             intent.putExtra(MapsActivity.NAME, name);
             intent.putExtra(MapsActivity.COMMENT, comment);
             setResult(RESULT_OK, intent);//send result code
-            finish();
+
         }
 
     }

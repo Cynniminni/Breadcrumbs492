@@ -33,6 +33,7 @@ public class UserProfile extends ActionBarActivity {
     public final static String CRUMB_LONGITUDE = "crumbLongitude";
     public final static String CRUMB_LATITUDE = "crumbLatitude";
     public final static String USERNAME = "username";
+    public final static String ORIGINAL_EMAIL = "originalEmail";
     public final static String SEARCH = "search";
     public final static int REQUEST_SETTINGS = 0;
 
@@ -130,6 +131,7 @@ public class UserProfile extends ActionBarActivity {
                             intent.putExtra(CRUMB_LONGITUDE, longitude[itemPosition]);
                             intent.putExtra(CRUMB_LATITUDE, latitude[itemPosition]);
                             intent.putExtra(CRUMB_EMAIL, emails[itemPosition]);
+                            intent.putExtra(ORIGINAL_EMAIL, email);
 
                             if(getIntent().getStringExtra("activity").equals("infoWindowClick")) {
                                 intent.putExtra("activity", "infoWindowClick");
@@ -180,6 +182,7 @@ public class UserProfile extends ActionBarActivity {
                             intent.putExtra(CRUMB_LONGITUDE, longitudeForLikes[itemPosition]);
                             intent.putExtra(CRUMB_LATITUDE, latitudeForLikes[itemPosition]);
                             intent.putExtra(CRUMB_EMAIL, emailsForLikes[itemPosition]);
+                            intent.putExtra(ORIGINAL_EMAIL, email);
 
                             if(getIntent().getStringExtra("activity").equals("infoWindowClick")) {
                                 intent.putExtra("activity", "infoWindowClick");
@@ -240,6 +243,11 @@ public class UserProfile extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
