@@ -496,6 +496,7 @@ public class MapsActivity extends ActionBarActivity {
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getApplicationContext(), "Please enter a valid name for your crumb",
                         Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
         else if (requestCode == REQUEST_PROFILE || requestCode == REQUEST_MYCRUMBS)

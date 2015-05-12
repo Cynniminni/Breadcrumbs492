@@ -36,6 +36,7 @@ public class Rankings extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rankings);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Register your receiver so that the Activity can be notified
         //when the JSON response came back

@@ -151,6 +151,8 @@ public class CrumbDetails extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crumb_details);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         whichActivity = getIntent().getStringExtra("activity");
         System.out.println("WHICH ACTIVITY IS IT COMING FORM IN CRUMBDETAILS? " + whichActivity);
         IntentFilter filter = new IntentFilter(MyRequestReceiver9.PROCESS_RESPONSE);
@@ -287,8 +289,21 @@ public class CrumbDetails extends ActionBarActivity{
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, MapsActivity.class);
-        setResult(RESULT_OK, intent);
+        Intent intent;
+        if(whichActivity.equals("SearchResults")) {
+            intent = new Intent(this, SearchResults.class);
+            intent.putExtra(MapsActivity.SEARCH, search);
+        }
+        else if(whichActivity.equals("Rankings")) {
+            intent = new Intent(this, Rankings.class);
+        }
+        else if(whichActivity.equals("UserProfile")) {
+            intent = new Intent(this, UserProfile.class);
+            intent.putExtra(EMAIL, email);
+        }
+        else{
+            intent = new Intent(this, MapsActivity.class);
+        }
         startActivity(intent);
         finish();
         super.onBackPressed();
