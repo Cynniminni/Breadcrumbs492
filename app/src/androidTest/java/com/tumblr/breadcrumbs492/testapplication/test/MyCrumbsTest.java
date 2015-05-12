@@ -42,7 +42,7 @@ public class MyCrumbsTest extends ActivityInstrumentationTestCase2<LoginActivity
         //Press next button
 		solo.pressSoftKeyboardNextButton();
         //Click on Sign in or register
-		solo.clickOnView(solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.signin_or_register));
+		solo.clickOnView(solo.getView(com.tumblr.breadcrumbs492.testapplication.R.id.signin));
         //Wait for activity: 'com.tumblr.breadcrumbs492.testapplication.MapsActivity'
 		assertTrue("com.tumblr.breadcrumbs492.testapplication.MapsActivity is not found!", solo.waitForActivity(com.tumblr.breadcrumbs492.testapplication.MapsActivity.class));
         //Set default small timeout to 10137 milliseconds

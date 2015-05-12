@@ -4,7 +4,7 @@ import com.tumblr.breadcrumbs492.testapplication.LoginActivity;
 import com.robotium.solo.*;
 import android.test.ActivityInstrumentationTestCase2;
 
-
+/** We can no longer login as guest, this test is deprecated.
 public class GuestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
   	private Solo solo;
   	
@@ -87,3 +87,4 @@ public class GuestLogin extends ActivityInstrumentationTestCase2<LoginActivity> 
 		assertTrue("com.tumblr.breadcrumbs492.testapplication.LoginActivity is not found!", solo.waitForActivity(com.tumblr.breadcrumbs492.testapplication.LoginActivity.class));
 	}
 }
+**/
