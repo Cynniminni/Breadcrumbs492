@@ -1,7 +1,6 @@
 package com.tumblr.breadcrumbs492.testapplication;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;

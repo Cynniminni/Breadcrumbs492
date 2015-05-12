@@ -106,22 +106,29 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:maxLines="1"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:textColor="#607D8B"
         android:text="Save Changes"
-        android:onClick="editCrumb"/>
+        android:onClick="editCrumb"
+        android:layout_marginRight="1dp"/>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:textColor="#607D8B"
         android:text="Delete Crumb"
         android:onClick="deleteCrumb"
-        android:layout_marginTop="2dp" />
+        android:layout_marginLeft="1dp"/>
+    </LinearLayout>
 
 </LinearLayout><!-- From: file:/C:/Users/Matt/Documents/GitHub%20Repos/Breadcrumbs492/app/src/main/res/layout/activity_edit_crumb.xml -->

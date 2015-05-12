@@ -497,7 +497,7 @@ public class MapsActivity extends ActionBarActivity {
                 //show output
                 //later this will add a crumb
                 Toast.makeText(getApplicationContext(),
-                        "Name = " + name + "Comment = " + comment, Toast.LENGTH_SHORT).show();
+                        "Name = " + name + " Comment = " + comment, Toast.LENGTH_SHORT).show();
                 finish();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getApplicationContext(), "Please enter a valid name for your crumb",
@@ -582,11 +582,8 @@ public class MapsActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(List<Address> addresses) {
             if (addresses == null || addresses.size() == 0) {
-                Toast.makeText(getBaseContext(), "No Location Found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "No locations found.", Toast.LENGTH_SHORT).show();
             }
-
-            //clear all existing markers on the map
-            //mMap.clear();
 
             //add markers for all matching addresses
             for (int i = 0; i < addresses.size(); i++) {
@@ -695,7 +692,7 @@ public class MapsActivity extends ActionBarActivity {
                 }
                 catch(JSONException e)
                 {
-                    Toast.makeText(getApplicationContext(), "get crumbs failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Get crumbs failed. Please try again.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
@@ -715,7 +712,7 @@ public class MapsActivity extends ActionBarActivity {
                 }
                 catch(JSONException e)
                 {
-                    Toast.makeText(getApplicationContext(), "get random crumb failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Retrieving random crumb failed. Please try again.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
@@ -743,7 +740,7 @@ public class MapsActivity extends ActionBarActivity {
                 }
                 catch(JSONException e)
                 {
-                    Toast.makeText(getApplicationContext(), "get user failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Retrieving user failed. Please try again.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }

@@ -11,24 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Calendar;
-
 
 public class MyCrumbsActivity extends ActionBarActivity {
-
-
     private MyRequestReceiver3 receiver;
     public final static String CRUMB_NAME = "crumbName";
     public final static String CRUMB_COMMENT = "crumbComment";
@@ -60,14 +48,13 @@ public class MyCrumbsActivity extends ActionBarActivity {
         msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
 
         startService(msgIntent);
-
-
     }
     @Override
     protected void onDestroy() {
         unregisterReceiver(receiver);
         super.onDestroy();
     }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, MapsActivity.class);
@@ -107,7 +94,6 @@ public class MyCrumbsActivity extends ActionBarActivity {
             Intent logoutIntent = new Intent(MyCrumbsActivity.this, LoginActivity.class);
             startActivity(logoutIntent);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -126,7 +112,6 @@ public class MyCrumbsActivity extends ActionBarActivity {
             if(responseType.trim().equalsIgnoreCase("getCrumbs")){
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println("Users crumbs: " + this.response);
 
                 JSONArray tempJSON = new JSONArray();
                 try {
@@ -134,10 +119,9 @@ public class MyCrumbsActivity extends ActionBarActivity {
                 }
                 catch(JSONException e)
                 {
-                    Toast.makeText(getApplicationContext(), "get crumbs failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Get crumbs failed. Please try again.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-
 
                 //get ListView reference from xml
                 listView = (ListView) findViewById(R.id.list);
@@ -165,19 +149,6 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         latitude[i] = tempJSON.getJSONObject(i).getDouble("latitude");
                         dates[i] = tempJSON.getJSONObject(i).getString("crumbDate");
                         isPrivate[i] = tempJSON.getJSONObject(i).getBoolean("isPrivate");
-
-                        /*String dateString = tempJSON.getJSONObject(i).getString("crumbDate");
-                        System.out.println("Date string for mycrumbs: " + dateString);
-                        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-                        try {
-                            Date crumbDate = sdf.parse(dateString);
-                            System.out.println("After string parse to date in mycrumbs: " + crumbDate.toString());
-                            String newDate = sdf.format(crumbDate);
-                            System.out.println("Date to format in mycrumbs: " + newDate);
-                            dates[i] = crumbDate;
-                        }catch(ParseException e){
-                            e.printStackTrace();
-                        }*/
                     }
                 }
                 catch(JSONException j)
@@ -186,18 +157,8 @@ public class MyCrumbsActivity extends ActionBarActivity {
                 }
 
                 //define adapter to populate each row in ListView
-
                 CustomListAdapter adapter = new CustomListAdapter(MyCrumbsActivity.this, names, dates, imgID);
                 listView.setAdapter(adapter);
-
-
-        /*
-            simple_list_item_1 is a built-in Android template that shows only one line of text
-            for each row. I want to show both crumb name and date created
-         */
-               /* ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                        (MyCrumbsActivity.this, android.R.layout.simple_list_item_1, names);
-                listView.setAdapter(adapter);*/
 
                 //add ListView item click listener to interact with each item
                 listView.setOnItemClickListener(new OnItemClickListener(){
@@ -209,10 +170,6 @@ public class MyCrumbsActivity extends ActionBarActivity {
                         //get value of item clicked
                         String itemValue = (String) listView.getItemAtPosition(position);
 
-                        //output item
-                        Toast.makeText(getApplicationContext(),
-                                "Position :" + itemPosition + "  ListItem : " + itemValue,
-                                Toast.LENGTH_SHORT).show();
                         //position that was clicked determines array element to retrieve
                         //attributes of crumb selected and passed to EditCrumb activity
                         Intent intent = new Intent(MyCrumbsActivity.this, EditCrumb.class);
@@ -233,7 +190,6 @@ public class MyCrumbsActivity extends ActionBarActivity {
             else{
                 //you can choose to implement another transaction here
             }
-
         }
         public String getResponse()
         {

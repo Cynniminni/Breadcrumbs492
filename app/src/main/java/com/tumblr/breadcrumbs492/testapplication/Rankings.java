@@ -88,7 +88,7 @@ public class Rankings extends ActionBarActivity {
         }
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        else if (id == R.id.action_settings) {
             // launch SettingsActivity with the request code. This will be referenced in
             // onActivityResult
             Intent intent = new Intent();
@@ -97,7 +97,7 @@ public class Rankings extends ActionBarActivity {
             return true;
         }
 
-        if(id == R.id.action_logout){
+        else if(id == R.id.action_logout){
             GlobalContainer.user = new User();
             GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(Rankings.this, LoginActivity.class);

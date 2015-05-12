@@ -124,10 +124,13 @@ public class RegisterActivity extends ActionBarActivity {
                         startActivity(intent1);
                         finish();
                     }
+                    else if(tempJSON.getString("registerResult").equals("false")) {
+                        Toast.makeText(getApplicationContext(), "Invalid username or email. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 catch(JSONException e)
                 {
-                    Toast.makeText(getApplicationContext(), "register error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Registration error. Please try again.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
