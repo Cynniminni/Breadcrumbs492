@@ -23,12 +23,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URISyntaxException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-
 
 public class AddCrumbActivity extends ActionBarActivity {
 
@@ -44,7 +40,6 @@ public class AddCrumbActivity extends ActionBarActivity {
     private String name;
     private String comment;
     private String tags;
-    private String addResult;
     private String visibility;
     private boolean isPrivate;
 
@@ -61,11 +56,9 @@ public class AddCrumbActivity extends ActionBarActivity {
         else if(visibility.equals("Public"))
             isPrivate = false;
 
-
         //get username
         Intent intent = getIntent();
         uName = GlobalContainer.user.getInfo()[0];
-
 
         if (name.equals("")) {
             //if user entered nothing then cancel adding a crumb
@@ -92,9 +85,7 @@ public class AddCrumbActivity extends ActionBarActivity {
             intent.putExtra(MapsActivity.NAME, name);
             intent.putExtra(MapsActivity.COMMENT, comment);
             setResult(RESULT_OK, intent);//send result code
-
         }
-
     }
 
     @Override
@@ -185,6 +176,7 @@ public class AddCrumbActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     //broadcast receiver to receive messages sent from the JSON IntentService
     public class MyRequestReceiver2 extends BroadcastReceiver {
 
@@ -193,17 +185,13 @@ public class AddCrumbActivity extends ActionBarActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
-            System.out.println(responseType);
             Intent addCrumbIntent = new Intent(AddCrumbActivity.this, MapsActivity.class);
             if(responseType.trim().equalsIgnoreCase("addCrumb")){
 
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
 
                 JSONObject tempJSON = new JSONObject();
-
-
 
                 try {
                     tempJSON = new JSONObject(response);
@@ -225,9 +213,7 @@ public class AddCrumbActivity extends ActionBarActivity {
             else{
                 //you can choose to implement another transaction here
             }
-
         }
-
         public String getResponse()
         {
             return response;

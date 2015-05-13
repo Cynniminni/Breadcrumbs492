@@ -204,7 +204,6 @@ public class UserProfile extends ActionBarActivity {
                             } else {
                                 intent.putExtra("activity", "UserProfile");
                             }
-
                             startActivity(intent);
                             finish();
                         }
@@ -212,7 +211,6 @@ public class UserProfile extends ActionBarActivity {
                 }
             }
         });
-
     }
 
     @Override
@@ -237,19 +235,6 @@ public class UserProfile extends ActionBarActivity {
         else
             intent = new Intent(this, MapsActivity.class);
 
-//        intent.putExtra(CRUMB_EMAIL, getIntent().getStringExtra(CrumbDetails.EMAIL));
-//        intent.putExtra(USERNAME, getIntent().getStringExtra(CrumbDetails.USERNAME));
-//        intent.putExtra(SEARCH, getIntent().getStringExtra(CrumbDetails.SEARCH));
-//        intent.putExtra(CRUMB_NAME, getIntent().getStringExtra(CrumbDetails.CRUMB_NAME));
-//        intent.putExtra(CRUMB_COMMENT, getIntent().getStringExtra(CrumbDetails.CRUMB_COMMENT));
-//        intent.putExtra(CRUMB_UPVOTES, getIntent().getIntExtra(CrumbDetails.CRUMB_UPVOTES, 0));
-//        intent.putExtra(CRUMB_DATE, getIntent().getStringExtra(CrumbDetails.CRUMB_DATE));
-//        intent.putExtra(CRUMBS_TAGS, getIntent().getStringExtra(CrumbDetails.CRUMB_TAGS));
-//        intent.putExtra(CRUMB_ID, getIntent().getStringExtra(CrumbDetails.CRUMB_ID));
-//        intent.putExtra(CRUMB_LATITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LATITUDE, 0.0));
-//        intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LONGITUDE, 0.0));
-//        intent.putExtra("activity", "UserProfile");
-//        setResult(RESULT_OK, intent);
         startActivity(intent);
         super.onBackPressed();
         finish();
@@ -291,7 +276,6 @@ public class UserProfile extends ActionBarActivity {
             startActivity(logoutIntent);
             UserProfile.this.finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -300,7 +284,6 @@ public class UserProfile extends ActionBarActivity {
 
         public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.UserProfile.MyRequestReceiver";
         public String response = null;
-
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -318,7 +301,6 @@ public class UserProfile extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "Get crumbs for this user failed.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-
 
                 //array declarations that store all of the users' crumbs' attributes
                 username = new String[tempJSON.length()];
@@ -351,7 +333,6 @@ public class UserProfile extends ActionBarActivity {
                         rank[i] = i + 1;
                         counter++;
                         upvoteCounter = upvoteCounter + upvotes[i];
-
                     }
 
                     TextView numDropped = (TextView) findViewById(R.id.tv_numOfCrumbs);
@@ -393,7 +374,6 @@ public class UserProfile extends ActionBarActivity {
                     longitudeForLikes = new Double[tempJSONForLikes.length()];
                     latitudeForLikes = new Double[tempJSONForLikes.length()];
 
-
                     try {
                         int likeCounter = 0;
                         //populate the arrays with each crumbs' attributes
@@ -419,6 +399,5 @@ public class UserProfile extends ActionBarActivity {
                     }
             }
         }
-
     }
 }

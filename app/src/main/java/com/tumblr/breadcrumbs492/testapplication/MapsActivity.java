@@ -20,7 +20,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +58,6 @@ public class MapsActivity extends ActionBarActivity {
     public final static String COMMENT = "comment";
     public final static String LATITUDE = "latitude";
     public final static String LONGITUDE = "longitude";
-    public final static String GUESTLOGIN = "guest login";
     public final static String SEARCH = "search";
 
     public final static String CRUMB_NAME = "crumbName";
@@ -78,7 +76,6 @@ public class MapsActivity extends ActionBarActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private MarkerOptions markerOptions;
     private LatLng currentLocation;//store user's current location
-    private boolean isGuestLogin;
     private static String[] tagsArr;
     private String[] usernameArr;
 
@@ -247,7 +244,6 @@ public class MapsActivity extends ActionBarActivity {
                 email = intent.getStringExtra("email");
                 username = intent.getStringExtra("username");
                 //extract boolean, false is the default value if there is none
-                isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, false);
             }
             else{
                 username = GlobalContainer.user.getInfo()[0];
@@ -290,29 +286,12 @@ public class MapsActivity extends ActionBarActivity {
         ImageButton profileButton = (ImageButton) findViewById(R.id.button_1);
         ImageButton myCrumbsButton = (ImageButton) findViewById(R.id.button_2);
 
-        if (isGuestLogin) {
-            //disable buttons
-            profileButton.setEnabled(false);
-            myCrumbsButton.setEnabled(false);
-        } else {
-            //enable buttons
-            profileButton.setEnabled(true);
-            profileButton.setEnabled(true);
+        //enable buttons
+        profileButton.setEnabled(true);
+        profileButton.setEnabled(true);
 
-            //load settings for user login
-            SettingsActivity.Settings.loadSettings(this);
-
-//            if(GlobalContainer.user.getInfo()[0] != null && Session.getActiveSession().isClosed())
-//            {
-//                //get all crumbs if user is already defined
-//                Intent msgIntent = new Intent(this, JSONRequest.class);
-//                msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
-//                msgIntent.putExtra("queryID", "getAllCrumbs");
-//                msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
-//
-//                startService(msgIntent);
-//            }
-        }
+        //load settings for user login
+        SettingsActivity.Settings.loadSettings(this);
 
         // Setting a custom info window adapter for the google map
         mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
@@ -519,10 +498,6 @@ public class MapsActivity extends ActionBarActivity {
                 //move camera to new crumb
                 moveCameraToCurrentLocation();
 
-                //show output
-                //later this will add a crumb
-                Toast.makeText(getApplicationContext(),
-                        "Name = " + name + " Comment = " + comment, Toast.LENGTH_SHORT).show();
                 finish();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getApplicationContext(), "Please enter a valid name for your crumb",
@@ -805,11 +780,6 @@ public class MapsActivity extends ActionBarActivity {
                 JSONObject tempJSON;
                 try {
                     tempJSON = new JSONObject(response);
-                    if(tempJSON.get("registerResult").equals("alreadyRegistered"))
-                        Toast.makeText(getApplicationContext(), "Already Registered", Toast.LENGTH_SHORT).show();
-                    else if(tempJSON.get("registerResult").equals("true"))
-                        Toast.makeText(getApplicationContext(), "Register success", Toast.LENGTH_SHORT).show();
-
                     //initialize user object
                     //populate user information fields through database
                     Intent msgIntent2 = new Intent(MapsActivity.this, JSONRequest.class);

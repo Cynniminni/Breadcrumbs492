@@ -45,13 +45,7 @@ public class LoginActivity extends ActionBarActivity {
         String usernameText = username.getText().toString();
         String passwordText = password.getText().toString();
 
-        if (usernameText.equalsIgnoreCase("admin") && passwordText.equals("admin")) {
-            //this is the default user login that will launch the map activity
-            Intent intent = new Intent(this, MapsActivity.class);
-            intent.putExtra(MapsActivity.GUESTLOGIN, false);
-            startActivity(intent);
-        }
-        else if(usernameText.equalsIgnoreCase("") && passwordText.equals("")){
+        if(usernameText.equalsIgnoreCase("") && passwordText.equals("")){
             Toast.makeText(getApplicationContext(), "Please ensure both fields are filled in.", Toast.LENGTH_SHORT).show();
         }
         else {
@@ -64,7 +58,6 @@ public class LoginActivity extends ActionBarActivity {
     }//end signInOrRegister
 
     public void createAccount(View view) {
-        //automatically launch MapsActivity when signing in as guest
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
@@ -93,7 +86,6 @@ public class LoginActivity extends ActionBarActivity {
         } catch (PackageManager.NameNotFoundException e) {
 
         } catch (NoSuchAlgorithmException e) {
-
         }
 
         if (savedInstanceState == null) {
@@ -148,7 +140,6 @@ public class LoginActivity extends ActionBarActivity {
 
     public void login(String queryID, String username, String passEntered) {
         Intent intent = new Intent(this, MapsActivity.class);
-        intent.putExtra(MapsActivity.GUESTLOGIN, false);
         //pass the request to your service so that it can
         //run outside the scope of the main UI thread
         Intent msgIntent = new Intent(this, JSONRequest.class);
@@ -193,14 +184,10 @@ public class LoginActivity extends ActionBarActivity {
                      Toast.makeText(getApplicationContext(), "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
                      e.printStackTrace();
                  }
-
-
              } else {
                  //you can choose to implement another transaction here
              }
-
         }
-
         public String getResponse() {
             return response;
         }

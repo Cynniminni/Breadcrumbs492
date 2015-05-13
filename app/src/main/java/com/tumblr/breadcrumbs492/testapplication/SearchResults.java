@@ -50,11 +50,6 @@ public class SearchResults extends ActionBarActivity {
         System.out.println(search);
 
         if (search != null && !search.equals("")) {
-            //if location exists, mark it on map
-            //new GeocoderTask().execute(location);
-            //not using Geocoder class will remove the Google location searches
-
-            //insert code to find tags
             Intent msgIntent = new Intent(SearchResults.this, JSONRequest.class);
             msgIntent.putExtra(JSONRequest.IN_MSG, "findTagsResults");
             msgIntent.putExtra("queryID", "findTagsResults");
@@ -91,7 +86,6 @@ public class SearchResults extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent();
             intent.setClass(this, SettingsActivity.class);

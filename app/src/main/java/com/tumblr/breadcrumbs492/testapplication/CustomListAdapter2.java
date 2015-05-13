@@ -20,7 +20,6 @@ public class CustomListAdapter2 extends ArrayAdapter<String> {
     private final String[] crumbUser;
 
     public CustomListAdapter2(Activity context, String[] crumbName, String[] crumbDate, Integer[] crumbRank, Integer[] crumbUpvotes, String[] crumbUser ) {
-
         super(context, R.layout.crumblist2, crumbName);
         this.context = context;
         this.crumbName = crumbName;

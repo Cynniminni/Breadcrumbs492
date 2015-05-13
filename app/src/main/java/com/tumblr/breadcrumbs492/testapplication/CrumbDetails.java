@@ -287,12 +287,9 @@ public class CrumbDetails extends ActionBarActivity{
                     Intent intent = new Intent(CrumbDetails.this, MapsActivity.class);
                     startActivity(intent);
                     finish();
-                    //     super.onBackPressed();
                 }
             });
-
         }
-
         TextView clickUserName = (TextView) findViewById(R.id.userTextView);
         clickUserName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -301,39 +298,10 @@ public class CrumbDetails extends ActionBarActivity{
 
             }
         });
-
-
     }
 
     @Override
     public void onBackPressed() {
-//        Intent intent;
-//        if(whichActivity.equals("SearchResults")) {
-//            intent = new Intent(this, SearchResults.class);
-//            intent.putExtra(MapsActivity.SEARCH, search);
-//        }
-//        else if(whichActivity.equals("Rankings")) {
-//            intent = new Intent(this, Rankings.class);
-//        }
-//        else if(whichActivity.equals("UserProfile")) {
-//            intent = new Intent(this, UserProfile.class);
-//            intent.putExtra(EMAIL, getIntent().getStringExtra(UserProfile.ORIGINAL_EMAIL));
-//            intent.putExtra(USERNAME, getIntent().getStringExtra(CrumbDetails.USERNAME));
-//            intent.putExtra(SEARCH, getIntent().getStringExtra(CrumbDetails.SEARCH));
-//            intent.putExtra(CRUMB_NAME, getIntent().getStringExtra(CrumbDetails.CRUMB_NAME));
-//            intent.putExtra(CRUMB_COMMENT, getIntent().getStringExtra(CrumbDetails.CRUMB_COMMENT));
-//            intent.putExtra(CRUMB_UPVOTES, getIntent().getIntExtra(CrumbDetails.CRUMB_UPVOTES, 0));
-//            intent.putExtra(CRUMB_DATE, getIntent().getStringExtra(CrumbDetails.CRUMB_DATE));
-//            intent.putExtra(CRUMB_TAGS, getIntent().getStringExtra(CrumbDetails.CRUMB_TAGS));
-//            intent.putExtra(CRUMB_ID, getIntent().getStringExtra(CrumbDetails.CRUMB_ID));
-//            intent.putExtra(CRUMB_LATITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LATITUDE, 0.0));
-//            intent.putExtra(CRUMB_LONGITUDE, getIntent().getDoubleExtra(CrumbDetails.CRUMB_LONGITUDE, 0.0));
-//            intent.putExtra(UserProfile.ORIGINAL_EMAIL, getIntent().getStringExtra(UserProfile.ORIGINAL_EMAIL));
-//        }
-//        else{
-//            intent = new Intent(this, MapsActivity.class);
-//        }
-//        startActivity(intent);
         backToResults(this.getCurrentFocus());
         finish();
         super.onBackPressed();
@@ -374,7 +342,6 @@ public class CrumbDetails extends ActionBarActivity{
             startActivity(logoutIntent);
             CrumbDetails.this.finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
