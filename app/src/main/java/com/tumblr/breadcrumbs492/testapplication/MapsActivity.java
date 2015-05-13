@@ -233,7 +233,6 @@ public class MapsActivity extends ActionBarActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                     }
                 }
             }).executeAsync();
@@ -343,7 +342,6 @@ public class MapsActivity extends ActionBarActivity {
                 // Getting reference to the TextView to set latitude
                 TextView tvLat = (TextView) v.findViewById(R.id.tv_crumbName);
 
-
                 TextView tvRating = (TextView) v.findViewById(R.id.tv_crumbRating);
 
                 // Getting reference to the TextView to set longitude
@@ -358,10 +356,8 @@ public class MapsActivity extends ActionBarActivity {
                 else
                     tvLng.setText(tempComment);
 
-
                 // Returning the view containing InfoWindow contents
                 return v;
-
             }
         });
 
@@ -447,7 +443,6 @@ public class MapsActivity extends ActionBarActivity {
             msgIntent.putExtra("queryID", "getAllCrumbs");
             msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
             startService(msgIntent);
-
         }
 
         //noinspection SimplifiableIfStatement
@@ -654,14 +649,12 @@ public class MapsActivity extends ActionBarActivity {
     public class MyRequestReceiver4 extends BroadcastReceiver {
         public static final String PROCESS_RESPONSE = "com.tumblr.breadcrumbs492.testapplication.MapsActivity.MyRequestReceiver";
         public String response = null;
-        private ListView listView;
 
         @Override
         public void onReceive(Context context, Intent intent) {
             String responseType = intent.getStringExtra(JSONRequest.IN_MSG);
             if(responseType.trim().equalsIgnoreCase("getAllCrumbs")){
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println("Get all crumbs: " + this.response);
                 JSONArray tempJSON;
                 try {
                     tempJSON = new JSONArray(response);
@@ -674,7 +667,6 @@ public class MapsActivity extends ActionBarActivity {
                     idArr = new String[tempJSON.length()];
                     int upvotes = 0;
                     crumbsArr = new Crumb[tempJSON.length()];
-
 
                     for(int i = 0; i < tempJSON.length(); i++)
                     {
@@ -690,7 +682,6 @@ public class MapsActivity extends ActionBarActivity {
                         idArr[i] = tempJSON.getJSONObject(i).getString("crumbID");
                         markCrumb(crumbsArr[i]);
                     }
-
                 }
                 catch(JSONException e)
                 {
@@ -698,9 +689,9 @@ public class MapsActivity extends ActionBarActivity {
                     e.printStackTrace();
                 }
             }
+
             else if(responseType.trim().equalsIgnoreCase("getRandomCrumb")){
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println("Get random crumb: " + this.response);
                 JSONObject tempJSON;
                 try {
                     tempJSON = new JSONObject(response);
@@ -776,7 +767,6 @@ public class MapsActivity extends ActionBarActivity {
 
             else if(responseType.trim().equalsIgnoreCase("findTags")){
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
-                System.out.println("Find tags: " + this.response);
                 JSONArray tempJSON;
                 mMap.clear();
                 try {
@@ -794,12 +784,6 @@ public class MapsActivity extends ActionBarActivity {
                     if (tempJSON.length() > 0) {
                         for (int i = 0; i < tempJSON.length(); i++) {
                             date = tempJSON.getJSONObject(i).getString("crumbDate");
-                            /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            try {
-                                date = sdf.parse(dateString);
-                            }catch(ParseException e){
-                                e.printStackTrace();
-                            }*/
                             name = tempJSON.getJSONObject(i).getString("crumbName");
                             comment = tempJSON.getJSONObject(i).getString("comment");
                             location = new LatLng(tempJSON.getJSONObject(i).getDouble("latitude"),tempJSON.getJSONObject(i).getDouble("longitude"));
@@ -836,7 +820,6 @@ public class MapsActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "Get crumbs failed.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-
             }
         }
         public String getResponse()

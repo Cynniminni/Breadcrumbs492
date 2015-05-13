@@ -80,8 +80,6 @@ public class CrumbDetails extends ActionBarActivity{
     }
 
     public void backToResults(View view) {
-        System.out.println("From rankings in crumbdetails: " + fromRankings);
-        System.out.println("From info window: " + fromInfoWindow);
         if(fromInfoWindow){
             Intent intent = new Intent(CrumbDetails.this, MapsActivity.class);
             startActivity(intent);
@@ -173,7 +171,6 @@ public class CrumbDetails extends ActionBarActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         whichActivity = getIntent().getStringExtra("activity");
-        System.out.println("WHICH ACTIVITY IS IT COMING FORM IN CRUMBDETAILS? " + whichActivity);
         IntentFilter filter = new IntentFilter(MyRequestReceiver9.PROCESS_RESPONSE);
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         receiver = new MyRequestReceiver9();
@@ -207,7 +204,6 @@ public class CrumbDetails extends ActionBarActivity{
             tags = getIntent().getStringExtra(Rankings.CRUMBS_TAGS);
             longitude = getIntent().getDoubleExtra(Rankings.CRUMB_LONGITUDE, 0.0);
             latitude = getIntent().getDoubleExtra(Rankings.CRUMB_LATITUDE, 0.0);
-            System.out.println("Tags: " + tags);
         }
         else if(whichActivity.equals("UserProfile")) {
             //retrieve extras from previous UserProfile class

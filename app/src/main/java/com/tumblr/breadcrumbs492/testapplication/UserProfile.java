@@ -340,6 +340,7 @@ public class UserProfile extends ActionBarActivity {
 
                 try {
                     //populate the arrays with each crumbs' attributes
+                    int upvoteCounter = 0;
                     int counter = 0;
                     for (int i = 0; i < tempJSON.length(); i++) {
                         username[i] = tempJSON.getJSONObject(i).getString("username");
@@ -354,6 +355,7 @@ public class UserProfile extends ActionBarActivity {
                         emails[i] = tempJSON.getJSONObject(i).getString("email");
                         rank[i] = i + 1;
                         counter++;
+                        upvoteCounter = upvoteCounter + upvotes[i];
 
                     }
 
@@ -416,7 +418,7 @@ public class UserProfile extends ActionBarActivity {
                         }
 
                         TextView numDropped = (TextView) findViewById(R.id.tv_numOfLikes);
-                        numDropped.setText("\n\n\n Number of crumbs liked: " + likeCounter);
+                        numDropped.setText("\n\n\n Number of crumbs upvoted: " + likeCounter);
                     } catch (JSONException j) {
                         j.printStackTrace();
                     }
