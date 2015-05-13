@@ -88,11 +88,12 @@ public class MyCrumbsActivity extends ActionBarActivity {
             return true;
         }
 
-        if(id == R.id.action_logout){
+        if(id == R.id.action_logout_my_crumbs){
             GlobalContainer.user = new User();
             GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(MyCrumbsActivity.this, LoginActivity.class);
             startActivity(logoutIntent);
+            MyCrumbsActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }

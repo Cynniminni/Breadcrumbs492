@@ -168,11 +168,12 @@ public class ProfileActivity extends ActionBarActivity {
             onBackPressed();
             return true;
         }
-        else if(id == R.id.action_logout){
+        else if(id == R.id.action_logout_profile){
             GlobalContainer.user = new User();
             GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(ProfileActivity.this, LoginActivity.class);
             startActivity(logoutIntent);
+            ProfileActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }

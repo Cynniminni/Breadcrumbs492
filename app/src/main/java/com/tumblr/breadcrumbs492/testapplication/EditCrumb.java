@@ -211,11 +211,12 @@ public class EditCrumb extends ActionBarActivity {
             return true;
         }
 
-        if(id == R.id.action_logout){
+        if(id == R.id.action_logout_edit_crumb){
             GlobalContainer.user = new User();
             GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(EditCrumb.this, LoginActivity.class);
             startActivity(logoutIntent);
+            EditCrumb.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }

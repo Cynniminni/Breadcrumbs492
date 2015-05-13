@@ -371,11 +371,12 @@ public class CrumbDetails extends ActionBarActivity{
             return true;
         }
 
-        if(id == R.id.action_logout){
+        if(id == R.id.action_logout_crumb_details){
             GlobalContainer.user = new User();
             GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(CrumbDetails.this, LoginActivity.class);
             startActivity(logoutIntent);
+            CrumbDetails.this.finish();
         }
 
         return super.onOptionsItemSelected(item);

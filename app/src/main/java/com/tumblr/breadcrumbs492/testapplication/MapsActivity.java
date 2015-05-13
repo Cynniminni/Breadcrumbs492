@@ -460,11 +460,12 @@ public class MapsActivity extends ActionBarActivity {
             return true;
         }
 
-        if(id == R.id.action_logout){
+        if(id == R.id.action_logout_maps){
             GlobalContainer.user = new User();
             GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(MapsActivity.this, LoginActivity.class);
             startActivity(logoutIntent);
+            MapsActivity.this.finish();
         }
 
         return super.onOptionsItemSelected(item);

@@ -102,11 +102,12 @@ public class SearchResults extends ActionBarActivity {
             onBackPressed();
             return true;
         }
-        if(id == R.id.action_logout){
+        if(id == R.id.action_logout_search_results){
             GlobalContainer.user = new User();
             GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(SearchResults.this, LoginActivity.class);
             startActivity(logoutIntent);
+            SearchResults.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -172,11 +172,12 @@ public class AddCrumbActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         }
-        if(id == R.id.action_logout){
+        if(id == R.id.action_logout_add_crumb){
             GlobalContainer.user = new User();
             GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(AddCrumbActivity.this, LoginActivity.class);
             startActivity(logoutIntent);
+            AddCrumbActivity.this.finish();
         }
         else if(id == android.R.id.home) {
             onBackPressed();

@@ -23,7 +23,7 @@
         android:title="@string/action_about"
         android:orderInCategory="100" app:showAsAction="never" />
     <item
-        android:id="@+id/action_logout"
+        android:id="@+id/action_logout_maps"
         android:title="Logout"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

@@ -288,11 +288,12 @@ public class UserProfile extends ActionBarActivity {
             return true;
         }
 
-        if(id == R.id.action_logout){
+        if(id == R.id.action_logout_user_profile){
             GlobalContainer.user = new User();
             GlobalContainer.userIsInitialized = false;
             Intent logoutIntent = new Intent(UserProfile.this, LoginActivity.class);
             startActivity(logoutIntent);
+            UserProfile.this.finish();
         }
 
         return super.onOptionsItemSelected(item);

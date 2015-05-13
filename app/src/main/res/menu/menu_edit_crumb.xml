@@ -7,7 +7,7 @@
         android:orderInCategory="100" app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_logout"
+        android:id="@+id/action_logout_edit_crumb"
         android:title="Logout"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
