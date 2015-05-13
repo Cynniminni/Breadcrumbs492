@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -188,8 +189,9 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstancestate) {
+        super.onCreate(savedInstancestate);
+        System.out.println("create");
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
 
@@ -241,10 +243,16 @@ public class MapsActivity extends ActionBarActivity {
             //non-facebook login
             //get intent received from LoginActivity
             Intent intent = getIntent();
-            email = intent.getStringExtra("email");
-            username = intent.getStringExtra("username");
-            //extract boolean, false is the default value if there is none
-            isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, false);
+            if(intent != null) {
+                email = intent.getStringExtra("email");
+                username = intent.getStringExtra("username");
+                //extract boolean, false is the default value if there is none
+                isGuestLogin = intent.getBooleanExtra(GUESTLOGIN, false);
+            }
+            else{
+                username = GlobalContainer.user.getInfo()[0];
+                email = GlobalContainer.user.getInfo()[1];
+            }
 
             if(!GlobalContainer.userIsInitialized) {
                 //initialize user object
@@ -409,10 +417,30 @@ public class MapsActivity extends ActionBarActivity {
     }//end onCreate
 
     @Override
+    protected void onStop(){
+        super.onStop();
+        System.out.println("Stopping");
+        // We need an Editor object to make preference changes.
+        // All objects are from android.context.Context
+        SharedPreferences settings = getSharedPreferences("facebookSave", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("email", GlobalContainer.user.getInfo()[1]);
+        editor.putString("username", GlobalContainer.user.getInfo()[0]);
+        editor.putString("firstName",  GlobalContainer.user.getInfo()[2]);
+        editor.putString("lastName",  GlobalContainer.user.getInfo()[3]);
+        editor.putString("gender", GlobalContainer.user.getInfo()[4]);
+        editor.putString("city", GlobalContainer.user.getInfo()[5]);
+        editor.putString("state", GlobalContainer.user.getInfo()[6]);
+        // Commit the edits!
+        editor.commit();
+    }
+
+
+    @Override
     protected void onDestroy() {
+        System.out.println("destroying");
         unregisterReceiver(receiver);
-        username = null;
-        email = null;
+
         super.onDestroy();
     }
 
@@ -510,15 +538,47 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onRestart(){
+        super.onRestart();
+        System.out.println("Restarting");
+        // Restore preferences
+        SharedPreferences settings = getSharedPreferences("facebookSave", 0);
+        GlobalContainer.user = new User(settings.getString("username", ""), settings.getString("email", ""),
+                settings.getString("firstName", ""),settings.getString("lastName", ""),
+                settings.getString("gender", ""),settings.getString("city", ""),settings.getString("state", ""));
+        email = settings.getString("email", "");
+        username = settings.getString("username", "");
+        GlobalContainer.userIsInitialized = true;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        GlobalContainer.fromResume = true;
+        SharedPreferences settings = getSharedPreferences("facebookSave", 0);
+        GlobalContainer.user = new User(settings.getString("username", ""), settings.getString("email", ""),
+                settings.getString("firstName", ""),settings.getString("lastName", ""),
+                settings.getString("gender", ""),settings.getString("city", ""),settings.getString("state", ""));
+        email = settings.getString("email", "");
+        username = settings.getString("username", "");
+        GlobalContainer.userIsInitialized = true;
+
         setUpMapIfNeeded();
+
 
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getSupportFragmentManager().findFragmentById(R.id.map);
 
         //get reference to the map
         mMap = supportMapFragment.getMap();
+
+        //user is initialized so get all crumbs
+        Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
+        msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
+        msgIntent.putExtra("queryID", "getAllCrumbs");
+        msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
+
+        startService(msgIntent);
 
         //get reference to the find button in the xml
         Button buttonFind = (Button) findViewById(R.id.button_find);
@@ -715,26 +775,28 @@ public class MapsActivity extends ActionBarActivity {
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
 
                 JSONObject tempJSON;
-                try {
-                    tempJSON = new JSONObject(response);
+                if(!GlobalContainer.userIsInitialized) {
+                    try {
+                        tempJSON = new JSONObject(response);
 
-                    GlobalContainer.user = new User(tempJSON.getString("username"), tempJSON.getString("email"),
-                            tempJSON.getString("firstName"),tempJSON.getString("lastName"), tempJSON.getString("gender"),
-                            tempJSON.getString("city"), tempJSON.getString("state"));
+                        GlobalContainer.user = new User(tempJSON.getString("username"), tempJSON.getString("email"),
+                                tempJSON.getString("firstName"), tempJSON.getString("lastName"), tempJSON.getString("gender"),
+                                tempJSON.getString("city"), tempJSON.getString("state"));
 
-                    GlobalContainer.userIsInitialized = true;
-                    //populate user information fields through database
-                    Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
-                    msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
-                    msgIntent.putExtra("queryID", "getAllCrumbs");
-                    msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
+                        GlobalContainer.userIsInitialized = true;
+                        //populate user information fields through database
+                        Intent msgIntent = new Intent(MapsActivity.this, JSONRequest.class);
+                        msgIntent.putExtra(JSONRequest.IN_MSG, "getAllCrumbs");
+                        msgIntent.putExtra("queryID", "getAllCrumbs");
+                        msgIntent.putExtra("jsonObject", "{\"email\":\"" + GlobalContainer.user.getInfo()[1] + "\"}");
 
-                    startService(msgIntent);
-                }
-                catch(JSONException e)
-                {
-                    Toast.makeText(getApplicationContext(), "Retrieving user failed. Please try again.", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
+                        startService(msgIntent);
+                    } catch (JSONException e) {
+                        if (!GlobalContainer.fromResume) {
+                            Toast.makeText(getApplicationContext(), "Retrieving user failed. Please try again.", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
