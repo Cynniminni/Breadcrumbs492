@@ -340,6 +340,7 @@ public class UserProfile extends ActionBarActivity {
 
                 try {
                     //populate the arrays with each crumbs' attributes
+                    int counter = 0;
                     for (int i = 0; i < tempJSON.length(); i++) {
                         username[i] = tempJSON.getJSONObject(i).getString("username");
                         names[i] = tempJSON.getJSONObject(i).getString("crumbName");
@@ -352,8 +353,13 @@ public class UserProfile extends ActionBarActivity {
                         tags[i] = tempJSON.getJSONObject(i).getString("crumbTags");
                         emails[i] = tempJSON.getJSONObject(i).getString("email");
                         rank[i] = i + 1;
+                        counter++;
 
                     }
+
+                    TextView numDropped = (TextView) findViewById(R.id.tv_numOfCrumbs);
+                    numDropped.setText("Number of crumbs dropped: " + counter);
+
                     Intent likeCrumbsIntent = new Intent(UserProfile.this, JSONRequest.class);
                     likeCrumbsIntent.putExtra(JSONRequest.IN_MSG, "getLikedCrumbs");
                     likeCrumbsIntent.putExtra("queryID", "getLikedCrumbs");
@@ -390,7 +396,9 @@ public class UserProfile extends ActionBarActivity {
                     longitudeForLikes = new Double[tempJSONForLikes.length()];
                     latitudeForLikes = new Double[tempJSONForLikes.length()];
 
+
                     try {
+                        int likeCounter = 0;
                         //populate the arrays with each crumbs' attributes
                         for (int i = 0; i < tempJSONForLikes.length(); i++) {
                             usernameForLikes[i] = tempJSONForLikes.getJSONObject(i).getString("username");
@@ -404,7 +412,11 @@ public class UserProfile extends ActionBarActivity {
                             tagsForLikes[i] = tempJSONForLikes.getJSONObject(i).getString("crumbTags");
                             emailsForLikes[i] = tempJSONForLikes.getJSONObject(i).getString("email");
                             rankForLikes[i] = i+1;
+                            likeCounter++;
                         }
+
+                        TextView numDropped = (TextView) findViewById(R.id.tv_numOfLikes);
+                        numDropped.setText("\n\n\n Number of crumbs liked: " + likeCounter);
                     } catch (JSONException j) {
                         j.printStackTrace();
                     }

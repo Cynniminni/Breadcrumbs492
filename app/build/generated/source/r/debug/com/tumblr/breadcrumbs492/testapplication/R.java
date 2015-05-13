@@ -1999,7 +1999,7 @@ containing a value of this type.
         public static final int white_rectangle=0x7f020096;
     }
     public static final class id {
-        public static final int action_about=0x7f0c00cc;
+        public static final int action_about=0x7f0c00ce;
         public static final int action_bar=0x7f0c0050;
         public static final int action_bar_activity_content=0x7f0c0000;
         public static final int action_bar_container=0x7f0c004f;
@@ -2008,13 +2008,21 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f0c003e;
         public static final int action_bar_title=0x7f0c003d;
         public static final int action_context_bar=0x7f0c0051;
-        public static final int action_logout=0x7f0c00ca;
+        public static final int action_logout_add_crumb=0x7f0c00ca;
+        public static final int action_logout_crumb_details=0x7f0c00cb;
+        public static final int action_logout_edit_crumb=0x7f0c00cc;
+        public static final int action_logout_maps=0x7f0c00cf;
+        public static final int action_logout_my_crumbs=0x7f0c00d0;
+        public static final int action_logout_profile=0x7f0c00d1;
+        public static final int action_logout_rankings=0x7f0c00d2;
+        public static final int action_logout_search_results=0x7f0c00d3;
+        public static final int action_logout_user_profile=0x7f0c00d4;
         public static final int action_menu_divider=0x7f0c0002;
         public static final int action_menu_presenter=0x7f0c0003;
         public static final int action_mode_bar=0x7f0c004d;
         public static final int action_mode_bar_stub=0x7f0c004c;
         public static final int action_mode_close_button=0x7f0c003f;
-        public static final int action_refresh=0x7f0c00cb;
+        public static final int action_refresh=0x7f0c00cd;
         public static final int action_settings=0x7f0c00c9;
         public static final int activity_chooser_view_content=0x7f0c0040;
         public static final int activity_login=0x7f0c0072;

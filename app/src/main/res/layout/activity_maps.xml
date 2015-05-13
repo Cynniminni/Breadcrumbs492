@@ -20,7 +20,7 @@
             android:inputType="text"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
-            android:hint="@string/edittext_hint_location"/>
+            android:hint="Enter Tag"/>
 
         <Button
             android:id="@+id/remove_text"
