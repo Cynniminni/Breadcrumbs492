@@ -66,6 +66,7 @@ public class UserProfile extends ActionBarActivity {
     Double[] longitudeForLikes;
     Double[] latitudeForLikes;
     public int numOfCrumbsDropped;
+    public boolean showMyCrumbs = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,8 @@ public class UserProfile extends ActionBarActivity {
 
         //get ListView reference from xml
         listView = (ListView) findViewById(R.id.listView);
+
+
 
         final ToggleButton displaySwitch = (ToggleButton) findViewById(R.id.toggleDisplay);
         displaySwitch.setOnClickListener(new View.OnClickListener() {
@@ -143,13 +146,11 @@ public class UserProfile extends ActionBarActivity {
                             intent.putExtra(CRUMB_EMAIL, emails[itemPosition]);
                             intent.putExtra(ORIGINAL_EMAIL, email);
 
-                            if(getIntent().getStringExtra("activity").equals("infoWindowClick")) {
+                            if (getIntent().getStringExtra("activity").equals("infoWindowClick")) {
                                 intent.putExtra("activity", "infoWindowClick");
-                            }
-                            else if(getIntent().getStringExtra("activity").equals("Rankings")) {
+                            } else if (getIntent().getStringExtra("activity").equals("Rankings")) {
                                 intent.putExtra("activity", "Rankings");
-                            }
-                            else {
+                            } else {
                                 intent.putExtra("activity", "UserProfile");
                             }
 
@@ -158,9 +159,9 @@ public class UserProfile extends ActionBarActivity {
                         }
                     });
                     //END OF IF
-                } else if(displaySwitch.isChecked()){
+                } else if (displaySwitch.isChecked()) {
                     //Default behavior, display the user's own crumbs
-             //       listView
+                    //       listView
                     CustomListAdapter2 adapter2 = new CustomListAdapter2(UserProfile.this, namesForLikes, datesForLikes, rankForLikes, upvotesForLikes, usernameForLikes);
                     listView.setAdapter(adapter2);
 
@@ -194,16 +195,13 @@ public class UserProfile extends ActionBarActivity {
                             intent.putExtra(CRUMB_EMAIL, emailsForLikes[itemPosition]);
                             intent.putExtra(ORIGINAL_EMAIL, email);
 
-                            if(getIntent().getStringExtra("activity").equals("infoWindowClick")) {
+                            if (getIntent().getStringExtra("activity").equals("infoWindowClick")) {
                                 intent.putExtra("activity", "infoWindowClick");
-                            }
-                            else if(getIntent().getStringExtra("activity").equals("Rankings")) {
+                            } else if (getIntent().getStringExtra("activity").equals("Rankings")) {
                                 intent.putExtra("activity", "Rankings");
-                            }
-                            else if(getIntent().getStringExtra("activity").equals("SearchResults")) {
+                            } else if (getIntent().getStringExtra("activity").equals("SearchResults")) {
                                 intent.putExtra("activity", "SearchResults");
-                            }
-                            else {
+                            } else {
                                 intent.putExtra("activity", "UserProfile");
                             }
 
@@ -215,8 +213,6 @@ public class UserProfile extends ActionBarActivity {
             }
         });
 
-        TextView numDropped = (TextView) findViewById(R.id.tv_numOfCrumbs);
-        numDropped.setText("Number of crumbs dropped: " + numOfCrumbsDropped);
     }
 
     @Override
@@ -316,7 +312,6 @@ public class UserProfile extends ActionBarActivity {
                 this.response = intent.getStringExtra(JSONRequest.OUT_MSG);
 
                 JSONArray tempJSON = new JSONArray();
-                numOfCrumbsDropped = tempJSON.length();
                 try {
                     tempJSON = new JSONArray(response);
                 } catch (JSONException e) {
@@ -418,7 +413,7 @@ public class UserProfile extends ActionBarActivity {
                         }
 
                         TextView numDropped = (TextView) findViewById(R.id.tv_numOfLikes);
-                        numDropped.setText("\n\n\n Number of crumbs upvoted: " + likeCounter);
+                        numDropped.setText("\n\n Number of crumbs upvoted: " + likeCounter);
                     } catch (JSONException j) {
                         j.printStackTrace();
                     }
