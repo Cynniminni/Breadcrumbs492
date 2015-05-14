@@ -175,8 +175,8 @@ public class MapsActivity extends ActionBarActivity {
 
     //find user's current location and mark it on the map
     public void markCurrentLocation() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").
-                snippet("Snippet"));
+        // mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").
+                //snippet("Snippet"));
 
         saveCurrentLocation();
         moveCameraToCurrentLocation();
