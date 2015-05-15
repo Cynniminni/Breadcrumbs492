@@ -632,7 +632,7 @@ public class MapsActivity extends ActionBarActivity {
                 markerOptions.position(latLng);
                 markerOptions.title(addressText);
 
-                mMap.addMarker(markerOptions);
+                // mMap.addMarker(markerOptions);
 
                 //locate the first location
                 if (i == 0) {
