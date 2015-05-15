@@ -127,9 +127,7 @@ public class UserProfile extends ActionBarActivity {
                             String itemValue = (String) listView.getItemAtPosition(position);
 
                             //output item
-                            Toast.makeText(getApplicationContext(),
-                                    "Position :" + itemPosition + "  ListItem : " + itemValue,
-                                    Toast.LENGTH_SHORT).show();
+
                             //position that was clicked determines array element to retrieve
                             //attributes of crumb selected and passed to EditCrumb activity
                             Intent intent = new Intent(UserProfile.this, CrumbDetails.class);
@@ -175,10 +173,7 @@ public class UserProfile extends ActionBarActivity {
                             //get value of item clicked
                             String itemValue = (String) listView.getItemAtPosition(position);
 
-                            //output item
-                            Toast.makeText(getApplicationContext(),
-                                    "Position :" + itemPosition + "  ListItem : " + itemValue,
-                                    Toast.LENGTH_SHORT).show();
+
                             //position that was clicked determines array element to retrieve
                             //attributes of crumb selected and passed to EditCrumb activity
                             Intent intent = new Intent(UserProfile.this, CrumbDetails.class);
@@ -189,6 +184,7 @@ public class UserProfile extends ActionBarActivity {
                             intent.putExtra(CRUMB_UPVOTES, upvotesForLikes[itemPosition]);
                             intent.putExtra(CRUMB_DATE, datesForLikes[itemPosition]);
                             intent.putExtra(SEARCH, getIntent().getStringExtra(CrumbDetails.SEARCH));
+
                             intent.putExtra(USERNAME, usernameForLikes[itemPosition]);
                             intent.putExtra(CRUMB_LONGITUDE, longitudeForLikes[itemPosition]);
                             intent.putExtra(CRUMB_LATITUDE, latitudeForLikes[itemPosition]);

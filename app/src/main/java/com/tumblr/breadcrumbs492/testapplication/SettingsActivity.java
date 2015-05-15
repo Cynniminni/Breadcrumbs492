@@ -50,27 +50,14 @@ public class SettingsActivity extends Activity {
             boolean publicCrumbsPreference =
                     sharedPreferences.getBoolean("public_crumbs_preference", true);
 
-            if (publicCrumbsPreference) {
-                //show message if preference is true
-                Toast.makeText(activity.getApplicationContext(),
-                        "Crumbs set to public", Toast.LENGTH_SHORT).show();
 
-                //make crumbs public...
-            } else {
-                //show message if preference is false
-                Toast.makeText(activity.getApplicationContext(),
-                        "Crumbs set to private", Toast.LENGTH_SHORT).show();
-
-                //make crumbs private...
-            }
 
             /*
                 Handle when user sets crumbs display radius
              */
             String crumbsDisplayRadius =
                     sharedPreferences.getString("display_crumbs_radius", "no selection");
-            Toast.makeText(activity.getApplicationContext(),
-                    "Radius = " + crumbsDisplayRadius, Toast.LENGTH_SHORT).show();
+
         }
     }
 }
