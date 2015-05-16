@@ -523,7 +523,7 @@ public class MapsActivity extends ActionBarActivity {
                 settings.getString("gender", ""),settings.getString("city", ""),settings.getString("state", ""));
         email = settings.getString("email", "");
         username = settings.getString("username", "");
-        GlobalContainer.userIsInitialized = true;
+
     }
 
     @Override
@@ -536,7 +536,7 @@ public class MapsActivity extends ActionBarActivity {
                 settings.getString("gender", ""),settings.getString("city", ""),settings.getString("state", ""));
         email = settings.getString("email", "");
         username = settings.getString("username", "");
-        GlobalContainer.userIsInitialized = true;
+
 
         setUpMapIfNeeded();
 
