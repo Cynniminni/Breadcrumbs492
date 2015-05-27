@@ -8,20 +8,13 @@
 
 Technology Stack:
 <ul>
- <li></li>
- <li></li>
- <li></li>
- <li></li>
- <li></li><li></li>
+ <li>Google Maps API</li>
+ <li>SQL Database</li>
+ <li>Android SDK, Android Studio</li>
+ <li>Github</li>
+ <li>Amazon Web Services</li>
+ <li>Apache Tomcat for web layer</li>
 </ul>
-Google Maps API
-SQL Database
-Android SDK, Android Studio
-Github (Source code repository)
-Amazon Web Services
-Server for interfacing the database with the app
-Database hosting
-Apache Tomcat for web layer
 
 Features:
 <ul>
