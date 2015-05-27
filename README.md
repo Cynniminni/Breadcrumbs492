@@ -6,6 +6,13 @@
 <img src="https://cloud.githubusercontent.com/assets/6732705/7846239/31d07dba-0471-11e5-9c7d-5b67d23b7b16.png" height="400px"/>
 <img src="https://cloud.githubusercontent.com/assets/6732705/7846236/31bf6822-0471-11e5-80e6-709caa983ecf.png" height="400px"/>
 
+Features:
+<ul>
+ <li>Includes both native and Facebook login</li>
+ <li>Google Maps API that allows users to add markers/tags to the map using their current location</li>
+ <li>Users can view, add, edit, or delete their tags</li>
+ <li>Users can view a random tag or the listings of the most popular tags, ordered by number of likes</li>
+</ul>
 
 <h3>3/15/2015</h3>
 Added the rest of the screens needed for the app: ProfileActivity, MyCrumbsActivity, AddCrumbActivity, and SettingsActivity. LoginActivity now supports user login, and upon guest login disables user features in MapsActivity. Function to add crumbs on db still in progress. Considering moving user profile information into Settings.
