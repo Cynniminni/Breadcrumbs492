@@ -1,5 +1,5 @@
 # <a href="http://www.breadcrumbs492.tumblr.com/">Breadcrumbs 492</a>.
- "We are a team in CSULB's CECS 492A course, Team Bread Crumbs. Our objective is to develop a mobile app called 'Crumbs' that will allow users to connect and share their favorite locations by leaving their tags on a map."
+ "We are a team in CSULB's Distributed Cloud Computing (CECS 492A) course, Team Bread Crumbs. Our objective is to develop a mobile app called 'Crumbs' that will allow users to connect and share their favorite locations by leaving their tags on a map."
 
 <h3>Completed</h3>
 <img src="https://cloud.githubusercontent.com/assets/6732705/7846233/31b0f4ea-0471-11e5-92df-c3b3e7779b61.png" height="400px"/>
